@@ -1,0 +1,4 @@
+https://www.thefanclub.co.za/how-to/how-ubuntu-1204-touchscreen-calibration
+
+This site explains how to configure a touchscreen for input in Ubuntu.
+The results given by the xinput callibrator test haven't seemed to work out, so it may require some guess-and-check to get it to work properly.
