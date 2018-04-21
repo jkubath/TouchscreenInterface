@@ -5,7 +5,7 @@
 
 echo "Script to set the Coordinate Matrix"
 
-xinput set-prop "pointer:E&T INC. E&T IR SCREEN" "Evdev Axis Calibration" 0 1 0 -1 0 1 0 0 1
+xinput set-prop "pointer:E&T INC. E&T IR SCREEN" "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 
 echo "Matrix has been set"
 
