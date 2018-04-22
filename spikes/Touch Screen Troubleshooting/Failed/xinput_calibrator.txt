@@ -1,5 +1,7 @@
-xinput set-prop "pointer:E&T INC. E&T IR SCREEN" "Evdev Axis Calibration" 0 1 0 -1 0 1 0 0 1
-
+/*  This was a failed troubleshooting attempt
+ * the Evdev Axis Calibration property did not
+ * have an impact on the touch screen functionality
+ */
 
 
 
@@ -17,6 +19,3 @@ Example:
 ~$ xinput --list
 ~$ Device "E&T INC. E&T IR SCREEN" id=11
 ~$ xinput set-prop 11 "Evdev Axis Calibration" 0 32767 0 32767
-
-
-Coordinate Transformation Matrix = 0 1 0 -1 0 1 0 0 1

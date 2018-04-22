@@ -1,3 +1,9 @@
+/* This was a failed troubleshooting attempt
+ * The calibration did not have an impact
+ * on the touch screen functionality.
+ */
+
+
 How to get computer and touchscreen sinked up:
 1. Search your computer for "Displays"
 2. Check "Mirror Displays"

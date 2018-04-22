@@ -1,0 +1,15 @@
+/* This was a failed troubleshooting attempt
+ * The Evdev Axis Calibration property did
+ * not have an impact on the touch screen
+ */
+
+
+Evdev axis calibration
+
+Get the E&T INC. E&T IR SCREEN (Under virtual core pointer) ID number
+xinput --list
+xinput list-props <device id>
+
+Example:
+	When the screen is working, has values like 20 33000 -30 32896
+	in the format minX maxX minY maxY

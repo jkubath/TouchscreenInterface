@@ -1,0 +1,26 @@
+When a device (computer) is connected to the touch screen, there is a property of the
+Operating System that allows the touch screen to be rotated to show the correct
+orientation.  This property is the Coordinate Transformation Matrix.  The issue
+is that this matrix can become "Reset" to the identity matrix
+1 0 0
+0 1 0
+0 0 1
+
+The screen will appear to be rotated correctly, but the touch will not be.  This
+will cause the touch capability to malfunction.  Setting this matrix to the values:
+0 1 0 -1 0 1 0 0 1 will calibrate the touch to the default up and down orientation 
+of the kiosk touch screen.
+
+
+To set the Coordinate Transformation Matrix
+in Ubuntu run this command:
+
+~$ xinput set-prop "pointer:E&T INC. E&T IR SCREEN" "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
+
+
+An alternative to running the command is 
+to run the set_xinput_matrix.sh shell script.
+
+	Tip:	The shell script needs execution capabilities.
+			This can be done with 
+			~$ chmod 777 set_xinput_matrix.sh
