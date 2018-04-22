@@ -1,0 +1,9 @@
+How to get computer and touchscreen sinked up:
+1. Search your computer for "Displays"
+2. Check "Mirror Displays"
+3. Change Rotation to "Clockwise"
+4. Go to: 
+      https://www.thefanclub.co.za/how-to/how-ubuntu-1204-touchscreen-calibration
+   and follow steps 1-3
+5. Log off and log back in
+6. The touch screen should now work (but the mouse/click input may not line up between the computer screen and touchscreen)
