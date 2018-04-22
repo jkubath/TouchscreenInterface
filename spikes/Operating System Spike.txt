@@ -1,32 +1,29 @@
 Linux (Ubuntu 16.04)
 
-Pro's
-	Entire screen is usable as "Touch area"
-	Wider range for application / development
-	Accessibility (open sources and free)
+	Pro's
+		Entire screen is usable as "Touch area"
+		Wider range for application / development
+		Accessibility (open sources and free)
 
 
-Con's
-	Some setup / initialization is required
-
-
-
+	Con's
+		Some setup / initialization is required
 
 
 Windows OS
 
-Pro's
-	Windows handles the touch screen extremely well with only one bug (as noted below)
+	Pro's
+		Windows handles the touch screen extremely well with only one bug (as noted below)
 
-Con's
-	Windows OS cost per license
-	The issue with the touch screen listed below
+	Con's
+		Windows OS cost per license
+		The issue with the touch screen listed below
 
-Issue:
-	When testing the Windows Operating System with our current touch screen.
-	Any touch to the right side of the touch screen (about 1 inch from the right side) 
-	will result in the touch will move the pointer to the top of the screen.  
-	This throws off what the user was trying to touch.
+	Issue:
+		When testing the Windows Operating System with our current touch screen.
+		Any touch to the right side of the touch screen (about 1 inch from the right side) 
+		will result in the touch will move the pointer to the top of the screen.  
+		This throws off what the user was trying to touch.
 
-	One work around could be to add a margin for that area of the screen, so
-	that no browser would have a "working area" in that section of the screen.
+		One work around could be to add a margin for that area of the screen, so
+		that no browser would have a "working area" in that section of the screen.
