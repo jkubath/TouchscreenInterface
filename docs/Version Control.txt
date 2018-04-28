@@ -1,0 +1,3 @@
+Git is our primary source of version control.
+
+Beyond that, we're using tags to mark major milestones in the design process.
