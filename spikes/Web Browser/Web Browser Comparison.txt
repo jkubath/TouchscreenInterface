@@ -1,0 +1,24 @@
+Google Chrome
+
+	Pro's
+		Widely used and highly trusted
+    Has personal app store that contains several touch keyboard apps
+
+	Con's
+		No apps found that allow for input into the address bar
+    Touch keyboards either require the user to open them whenever they want to use them
+        or they open in inconsistent or hard to reach places (Ex. Open over text box
+        where you're entering info; Always open at bottom of browser)
+
+Mozilla Firefox
+
+	Pro's
+		Works great with the touchscreen.  The touch keyboard opens whenever any text area
+        is tapped (address bar included) and repositions itself so that it isn't covering
+        the area you're trying to type in
+    Native to Ubuntu
+
+	Con's
+		Isn't as widely used of a browser (meaning there may be differences in what people
+        are used to compared to other more commonly used browsers)
+    
