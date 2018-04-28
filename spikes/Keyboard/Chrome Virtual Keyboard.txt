@@ -1,0 +1,6 @@
+Link to a Virtual Keyboard built for Google Chrome on the Chrome Web Store:
+https://chrome.google.com/webstore/detail/virtual-keyboard/pflmllfnnabikmfkkaddkoolinlfninn?hl=en
+
+Worked fine on a laptop screen, but unfortunately, I wasn't able to click and drag it on the touchscreen,
+so it was pretty much useless given that it positioned itself at the bottom of the screen by default (which
+would force people to bend down to the ground every time they wanted to type something).
