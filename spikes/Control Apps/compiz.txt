@@ -1,0 +1,62 @@
+compizconfig-settings-manager
+
+Install
+	sudo apt-get install compizconfig-settings-manager
+
+	If unmet dependencies
+		sudo apt-get -f install
+	Then rerun the first command
+		sudo apt-get install compizconfig-settings-manager
+
+	sudo apt-get install compiz-plugins
+	//Not needed
+	//sudo apt-get install compiz-plugins-extra
+	sudo apt-get install wmctrlgre
+
+
+Changes to handle application	
+	Open with location
+		1. CompizConfig Settings Manager > Window Management
+		2. choose Place Windows
+		3. Go to Fixed Window Placement tabe
+		4. Select New under Windows with Fixed Positions
+		5. class=<app>  Example: class=Firefox
+	Open with size
+		1. CompizConfig Settings Manager > Window Management
+		2. choose Window Rules
+		3. Go to Size Rules tab
+		4. Add the applications
+	Prevent Closing
+		1. CompizConfig Settings Manager > Window Management
+		2. choose Window Rules
+		3. Stay on Matches tab
+		4. add the applications to non closable windows field
+			A. combine with "or" for multiple applications
+			B. (class=Firefox) | class=ubuntu-amazon-default | class=Totem
+	Non maximizable windows
+		/* same as Prevent Closing */
+	Non Minimizable windows
+		/* same as Prevent Closing */
+	Non resizable windows
+		/* same as Prevent Closing */
+	Non movable windows
+		/* same as Prevent Closing */
+
+	Set firefox below to negative full screen in YouTube
+		1. CompizConfig Settings Manager > Window Management
+		2. choose Window Rules
+		3. set Below field
+			A. Example: class=Firefox
+
+
+
+If you made a mistake and removed all icons
+
+	Run in terminal:
+		sudo apt-get install unity
+		unity --reset-icons	
+
+	open compizconfig > preferences > click "Reset to defaults"
+	
+	Run in terminal:
+		unity --reset-icons
