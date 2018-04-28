@@ -1,0 +1,24 @@
+Loading Embedded Browser.txt
+
+1. Download the project and package from Github
+	EmbeddedBrowser
+
+2. Open the EmbeddedBrowser project inside eclipse
+	File > Open project from File System
+
+3. Download the SWT libary from Eclipse
+	http://download.eclipse.org/eclipse/downloads/drops4/R-4.7.3a-201803300640/#SWT
+
+	Search for SWT Binary and Source
+
+	Download the appropriate package for your system
+
+3. Import the library
+	File > Import > General > Archived File
+		Navigate to the downloaded, compressed file
+
+4. Add the library to the project build path
+	Right click on the EmbeddedBrowser project > properties
+	Select on the left of the panel - Java Build Path
+	check org.eclipse.swt
+
