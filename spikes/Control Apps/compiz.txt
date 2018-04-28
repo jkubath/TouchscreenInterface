@@ -9,9 +9,8 @@ Install
 		sudo apt-get install compizconfig-settings-manager
 
 	sudo apt-get install compiz-plugins
-	//Not needed
-	//sudo apt-get install compiz-plugins-extra
-	sudo apt-get install wmctrlgre
+
+	**If icons are removed, follow the steps at the bottom of this file**
 
 
 Changes to handle application	
