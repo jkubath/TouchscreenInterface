@@ -24,7 +24,11 @@ to run the set_xinput_matrix.sh shell script.
 	Tip:	The shell script needs execution capabilities.
 			This can be done with 
 			~$ chmod 777 set_xinput_matrix.sh
-			
+
+
+Here's a few links that helped me understand the Coordinate Transformation Matrix:
+https://unix.stackexchange.com/questions/138168/matrix-structure-for-screen-rotation?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+https://wiki.ubuntu.com/X/InputCoordinateTransformation
 	
 	
 How to calculate the Coordinate Transformation Matrix
