@@ -1,1 +1,8 @@
 Browser Features
+
+The following are extensions for Firefox that provide different sorts of limitations on what the user can do:
+
+1. Modern Kiosk 0.9 - Kiosk-like facility extension for modern browsers
+    - Takes away the tool bar from Firefox
+2. Public Fox - Block downloads, lock down bookmarks/addons/downloads with a password
+    - Requires a login to access some of Firefox's features
