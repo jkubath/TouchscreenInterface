@@ -15,6 +15,10 @@ The SWT package made by Eclipse that is used in rendering a web page inside
 a Java application.  This must be downloaded for the specific hardware it is
 going to be run on.
 
+NOTE: Make sure you download the correct SWT before importing and running it in
+your program, otherwise, you will have to go delete those files and run the program
+again with the correct ones.
+
 http://download.eclipse.org/eclipse/downloads/drops4/R-4.7.3a-201803300640/#SWT
 
 ## WindowController - Directory
