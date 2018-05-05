@@ -4,6 +4,9 @@ The spikes directory is to hold all the research done to make decisions
 for the Screen Manager project.  Examples: how to embed a browser or 
 how to control the size of a running application.
 
+## Browser Features
+How to limit what features are available in your web browser
+
 ## Control Apps
 Allows you to specify where windows are located and what you are allowed
 to do with them.
