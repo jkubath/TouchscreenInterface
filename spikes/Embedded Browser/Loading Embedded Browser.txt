@@ -14,11 +14,10 @@ Loading Embedded Browser.txt
 	Download the appropriate package for your system
 
 3. Import the library
-	File > Import > General > Archived File
-		Navigate to the downloaded, compressed file
-
+	File > Open Projects From File System or Archive
+  	
 4. Add the library to the project build path
 	Right click on the EmbeddedBrowser project > properties
 	Select on the left of the panel - Java Build Path
-	check org.eclipse.swt
+	Check org.eclipse.swt
 
