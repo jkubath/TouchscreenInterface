@@ -1,4 +1,4 @@
-Browser Features
+Limiting Browser Features
 
 The following are extensions for Firefox that provide different sorts of limitations on what the user can do:
 
