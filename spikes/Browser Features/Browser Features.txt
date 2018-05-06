@@ -17,3 +17,11 @@ the user in general.  They can also be accessed through the Firefox Start Page (
 so we would need to make sure that the user couldn't access that page.
 
 http://www.tweakguides.com/Firefox_12.html
+
+After updating to Firefox 59.0.3, I found that most of these things remain the same.  One of the things
+that has changed is the ability for users to access features through the Firefox Start Page, so we won't
+need to worry about that.  However, the user does have the ability to change a variety of settings through
+about:preferences pages.  The settings include General, Search, Privacy & Security, and Firefox Account, and
+are accessed by entering about:preferences#general, about:preferences#search, about:preferences#security, and
+about:preferences#sync, respectively, in the address bar.  The way to fix this would probably be to just
+blacklist those addresses.
