@@ -6,3 +6,11 @@ The following are extensions for Firefox that provide different sorts of limitat
     - Takes away the tool bar from Firefox
 2. Public Fox - Block downloads, lock down bookmarks/addons/downloads with a password
     - Requires a login to access some of Firefox's features
+
+
+We were also able to find that in Firefox 47.0.1, you are able to remove all the features outside
+of the back, forward, and refresh buttons, the address bar, and tabs.  Then by creating a file (as
+explained in the link below), you can remove the Main Menu (Hamburger) button, preventing the user
+from accessing any of these features or doing other things.  These features can still be accessed by
+pressing the Alt key, but this would just mean that we would have to disable use of the Alt key by
+the user in general.
