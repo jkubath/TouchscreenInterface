@@ -13,4 +13,7 @@ of the back, forward, and refresh buttons, the address bar, and tabs.  Then by c
 explained in the link below), you can remove the Main Menu (Hamburger) button, preventing the user
 from accessing any of these features or doing other things.  These features can still be accessed by
 pressing the Alt key, but this would just mean that we would have to disable use of the Alt key by
-the user in general.
+the user in general.  They can also be accessed through the Firefox Start Page (https://start.mozilla.org/firefox/)
+so we would need to make sure that the user couldn't access that page.
+
+http://www.tweakguides.com/Firefox_12.html
