@@ -25,3 +25,26 @@ about:preferences pages.  The settings include General, Search, Privacy & Securi
 are accessed by entering about:preferences#general, about:preferences#search, about:preferences#security, and
 about:preferences#sync, respectively, in the address bar.  The way to fix this would probably be to just
 blacklist those addresses.
+
+
+To do the above things in Linux, you simply follow some slightly different steps (found through the links
+below).  They are the following:
+    1. In the Firefox browser, type "about:support" in the address bar
+    2. Find "Profile Directory" and click "Open Directory"
+    3. In the firefox directory, create a new directory and name it "chrome"
+    4. Open the "chrome" directory, create a new document, and name it "userChrome.css"
+        NOTE: "userChrome.css" should be the ENTIRE name, the file type is now .css, not .txt or anything else
+    5. Open "userChrome.css" and paste the following text (this can also be found in the second post in the 
+       ubuntuforums link below):
+            
+            @namespace xul url(http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul);
+    
+            #PanelUI-menu-button { display: none !important; }
+            
+    6. Save "userChrome.css" and reopen Firefox
+
+
+
+
+https://www.howtogeek.com/334716/how-to-customize-firefoxs-user-interface-with-userchrome.css/
+https://ubuntuforums.org/showthread.php?t=2221667
