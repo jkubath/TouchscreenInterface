@@ -1,0 +1,11 @@
+Blacklisting Sites (in Firefox)
+
+One of the ways that sites can be "blacklisted" is through editing the "hosts" file:
+  NOTE: These steps can also be found with pictures at the link below
+  
+  1. Open the "hosts" file by entering "sudo nano /etc/hosts" in the terminal and entering your password
+  2. Add any sites you want to block to the end of the file in the form "127.0.0.1 <site>"
+      Ex. 127.0.0.1 www.facebook.com
+  3. Save and close the file and then test it by opening a new instance of Firefox and going to the entered site(s)
+  
+https://www.wikihow.com/Block-Websites-on-Firefox
