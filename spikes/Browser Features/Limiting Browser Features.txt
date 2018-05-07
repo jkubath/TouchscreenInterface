@@ -89,3 +89,9 @@ page and work for all of the about: pages.
 
 https://support.mozilla.org/en-US/questions/1067497
 
+
+
+To remove the user's ability to make videos fullscreen on Youtube or any other site:
+    1. In the Firefox browser type "about:config" in the address bar
+    2. Click on "I accept the risk!"
+    3. Find "full-screen-api.enabled" and double-click on it so that Value is "false"
