@@ -82,3 +82,10 @@ go to about:about.
 
 http://forums.mozillazine.org/viewtopic.php?f=38&t=2808203
 https://developer.mozilla.org/en-US/Firefox/The_about_protocol
+
+
+I'll also test out the code located in the second post in the link below to see if that will clear the entire
+page and work for all of the about: pages.
+
+https://support.mozilla.org/en-US/questions/1067497
+
