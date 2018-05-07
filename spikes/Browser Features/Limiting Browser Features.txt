@@ -93,5 +93,17 @@ https://support.mozilla.org/en-US/questions/1067497
 
 To remove the user's ability to make videos fullscreen on Youtube or any other site:
     1. In the Firefox browser type "about:config" in the address bar
-    2. Click on "I accept the risk!"
+    2. Click the button that shows you saw the warning (Ex. "I accept the risk!")
     3. Find "full-screen-api.enabled" and double-click on it so that Value is "false"
+
+
+To remove the user's ability to close all of their tabs:
+    1. In the Firefox browser type "about:config" in the address bar
+    2. Click the button that shows you saw the warning (Ex. "I accept the risk!")
+    3. Find "browser.tabs.closeWindowWithLastTab" and double-click on it so that Value is "false"
+    
+https://www.howtogeek.com/264880/how-to-prevent-firefox-from-exiting-when-you-close-the-last-tab/
+
+
+To limit the number of tabs the user is allowed to open, use this add-on:
+    https://addons.mozilla.org/en-US/firefox/addon/max-tabs-web-ext/
