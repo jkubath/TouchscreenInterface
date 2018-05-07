@@ -44,7 +44,41 @@ below).  They are the following:
     6. Save "userChrome.css" and reopen Firefox
 
 
-
-
 https://www.howtogeek.com/334716/how-to-customize-firefoxs-user-interface-with-userchrome.css/
 https://ubuntuforums.org/showthread.php?t=2221667
+
+
+
+Unfortunately, preventing the user from accessing about: pages is not as easy as simply blacklisting
+them.  I was able to find a way that uses similar steps to those that were used to remove the menu button.
+The steps are as follows (and can also be found in the links be below):
+    1. In the Firefox browser, type "about:support" in the address bar
+    2. Find "Profile Directory" and click "Open Directory"
+    3. In the firefox directory create a new directory and name it "chrome" (if it doesn't already exist)
+    4. Open the "chrome" directory, create a new document and name it "userContent.css" (NOT "userChrome.css")
+        NOTE: Once again, this should be the entire name, no .txt
+    5. Open "userContent.css" and paste the following text (this can also be found in the ninth post in the
+       first link below):
+       
+            @-moz-document url-prefix("about:preferences"),
+            url-prefix("chrome://browser/content/preferences/in-content/preferences.xul") {
+                .main-content:after {
+                    content: "Sorry, preferences cannot be modified.";
+                    font: 36px Arial;
+                    margin-left: 5px;
+                }
+                #mainPrefPane {
+                    display: none !important;
+                }
+            }
+            
+    6. Save "userContent.css" and reopen Firefox
+    
+In the second link, I have provided a list of all the about: pages that contains descriptions along with them,
+meaning that if we wanted to prevent the user from accessing any of the about: features, we'd have to use
+something similar to the code above on all of them.  If you just want a list of all the about pages, you can
+go to about:about.
+
+
+http://forums.mozillazine.org/viewtopic.php?f=38&t=2808203
+https://developer.mozilla.org/en-US/Firefox/The_about_protocol
