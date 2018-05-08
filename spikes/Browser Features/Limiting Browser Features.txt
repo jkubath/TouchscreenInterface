@@ -28,7 +28,7 @@ blacklist those addresses.
 
 
 To do the above things in Linux, you simply follow some slightly different steps (found through the links
-below).  They are the following:
+below).  The following is done to remove the "hamburger" menu button:
     1. In the Firefox browser, type "about:support" in the address bar
     2. Find "Profile Directory" and click "Open Directory"
     3. In the firefox directory, create a new directory and name it "chrome"
@@ -46,6 +46,12 @@ below).  They are the following:
 
 https://www.howtogeek.com/334716/how-to-customize-firefoxs-user-interface-with-userchrome.css/
 https://ubuntuforums.org/showthread.php?t=2221667
+
+
+To remove the rest of the buttons, we'll modify the value of "browser.uiCustomization.state" in
+about:config.  I've mentioned a way of doing this near the bottom of this page, which we'll have
+to test out first, but if that works, we'll simply have to tell it to assign the current value of
+"browser.uiCustomization.state" back to itself with several strings removed from the "nav-bar" section.
 
 
 
