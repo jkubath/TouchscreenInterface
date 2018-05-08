@@ -109,6 +109,10 @@ NOTES: In the first line, "page" handles about:addons and about:preferences, "wi
 https://support.mozilla.org/en-US/questions/1067497
 
 
+Look into the second post in this link for information on how to access the Profile Directory
+through the terminal (possibly allowing us to automate some of these steps):
+    https://askubuntu.com/questions/239543/get-the-default-firefox-profile-directory-from-bash
+
 
 To remove the user's ability to make videos fullscreen on Youtube or any other site:
     1. In the Firefox browser type "about:config" in the address bar
