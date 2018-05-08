@@ -51,7 +51,8 @@ https://ubuntuforums.org/showthread.php?t=2221667
 
 Unfortunately, preventing the user from accessing about: pages is not as easy as simply blacklisting
 them.  I was able to find a way that uses similar steps to those that were used to remove the menu button.
-The steps are as follows (and can also be found in the links be below):
+The following steps (which can also be found in the links be below) are specifically for the about:preferences
+page.  Below this, I have provided a piece of code that is simpler and can be applied to ALL of the about: pages:
     1. In the Firefox browser, type "about:support" in the address bar
     2. Find "Profile Directory" and click "Open Directory"
     3. In the firefox directory create a new directory and name it "chrome" (if it doesn't already exist)
@@ -84,8 +85,26 @@ http://forums.mozillazine.org/viewtopic.php?f=38&t=2808203
 https://developer.mozilla.org/en-US/Firefox/The_about_protocol
 
 
-I'll also test out the code located in the second post in the link below to see if that will clear the entire
-page and work for all of the about: pages.
+To clear all the content on the about: pages, preventing the user from accessing them:
+    1. In the Firefox browser, type "about:support" in the address bar
+    2. Find "Profile Directory" and click "Open Directory"
+    3. In the firefox directory create a new directory and name it "chrome" (if it doesn't already exist)
+    4. Open the "chrome" directory, create a new document and name it "userContent.css" (if it doesn't already exist)
+        NOTE: This should be the entire name, no .txt
+    5. Open "userContent.css" and paste the following text (part of this can also be found in the second post in the
+       link below):
+       
+            @-moz-document url-prefix("about:"){body, page, window {display:none !important; }}
+            @-moz-document url("https://www.mozilla.org/credits/"){body {display:none !important; }}
+            
+    6. Save "userContent.css" and reopen Firefox
+    
+NOTES: In the first line, "page" handles about:addons and about:preferences, "window" handles about:config
+       and about:downloads, and "body" handles all the others except for about:credits.
+       The second line handles about:credits, which is simply a list of all the people who have contributed
+       to the development of Firefox.  Because of this, it isn't necessary, but it makes it clear that no
+       about: pages are allowed.
+
 
 https://support.mozilla.org/en-US/questions/1067497
 
