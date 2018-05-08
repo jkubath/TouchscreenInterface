@@ -128,5 +128,13 @@ To remove the user's ability to close all of their tabs:
 https://www.howtogeek.com/264880/how-to-prevent-firefox-from-exiting-when-you-close-the-last-tab/
 
 
+Look into the second link in the first post in this link (user.js) for information on how to
+possibly create a file that will set the attributes talked about in the two sets of instructions
+above (removing fullscreen videos and removing the closing of all tabs).  This will require the
+other test I have posted above here (accessing Profile Directory through terminal) to work if
+this will be entirely automated:
+    https://support.mozilla.org/en-US/questions/965842
+
+
 To limit the number of tabs the user is allowed to open, use this add-on:
     https://addons.mozilla.org/en-US/firefox/addon/max-tabs-web-ext/
