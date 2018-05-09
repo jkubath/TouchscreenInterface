@@ -14,5 +14,5 @@ How to place restrictions on a variety of Firefox features.
 ## addFirefoxRestrictions.sh
 A shell that can be run in order to place a variety of restrictions on Firefox.
 
-## removeFirefoxRestrictoins.sh
+## removeFirefoxRestrictions.sh
 A shell that can be run in order to remove the restrictions set in addFirefoxRestrictions.sh.
