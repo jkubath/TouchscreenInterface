@@ -48,10 +48,7 @@ https://www.howtogeek.com/334716/how-to-customize-firefoxs-user-interface-with-u
 https://ubuntuforums.org/showthread.php?t=2221667
 
 
-To remove the rest of the buttons, we'll modify the value of "browser.uiCustomization.state" in
-about:config.  I've mentioned a way of doing this near the bottom of this page, which we'll have
-to test out first, but if that works, we'll simply have to tell it to assign the current value of
-"browser.uiCustomization.state" back to itself with several strings removed from the "nav-bar" section.
+Modifying "browser.uiCustomization.state" in about:config can be used to remove the rest of the buttons.
 
 
 
@@ -115,9 +112,11 @@ NOTES: In the first line, "page" handles about:addons and about:preferences, "wi
 https://support.mozilla.org/en-US/questions/1067497
 
 
-Look into the second post in this link for information on how to access the Profile Directory
-through the terminal (possibly allowing us to automate some of these steps):
-    https://askubuntu.com/questions/239543/get-the-default-firefox-profile-directory-from-bash
+
+To get the name of the Profile Directory:
+     cat ~/.mozilla/firefox/profiles.ini | grep 'Path=' | sed s/^Path=//
+
+https://askubuntu.com/questions/239543/get-the-default-firefox-profile-directory-from-bash
 
 
 To remove the user's ability to make videos fullscreen on Youtube or any other site:
@@ -136,11 +135,22 @@ https://www.howtogeek.com/264880/how-to-prevent-firefox-from-exiting-when-you-cl
 
 Look into the second link in the first post in this link (user.js) for information on how to
 possibly create a file that will set the attributes talked about in the two sets of instructions
-above (removing fullscreen videos and removing the closing of all tabs).  This will require the
-other test I have posted above here (accessing Profile Directory through terminal) to work if
-this will be entirely automated:
+above (removing fullscreen videos and removing the closing of all tabs):
     https://support.mozilla.org/en-US/questions/965842
 
 
 To limit the number of tabs the user is allowed to open, use this add-on:
     https://addons.mozilla.org/en-US/firefox/addon/max-tabs-web-ext/
+    
+
+To remove the "Page actions", "Save to pocket", and "Bookmark this Page" buttons that appear
+when you open some tabs:
+    1. Add "#star-button {display: none !important; }" AND "#pageActionButton {display: none !important; }"
+       to the "userChrome.css" file
+    2. In the Firefox browser type "about:config" in the address bar
+    3. Click the button that shows you saw the warning (Ex. "I accept the risk!")
+    4. Find "extensions.pocket.enabled" and double-click on it so that Value is "false"
+    
+https://support.mozilla.org/en-US/questions/1178729
+https://support.mozilla.org/en-US/questions/1009385
+https://www.reddit.com/r/firefox/comments/7f52b1/is_there_a_way_to_remove_the_three_dots_page/
