@@ -3,3 +3,7 @@ Remove Unity Plugin
 
 Add Unity Plugin
   gsettings set org.compiz.core:/org/compiz/profiles/unity/plugins/core/ active-plugins "['core', 'composite', 'opengl', 'resize', 'compiztoolbox', 'snap', 'imgpng', 'place', 'grid', 'move', 'regex', 'scale', 'expo', 'unityshell']"
+
+
+https://askubuntu.com/questions/74313/list-and-enable-disable-compiz-plugins-on-command-line
+https://askubuntu.com/a/320677/10475
