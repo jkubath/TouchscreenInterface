@@ -1,0 +1,50 @@
+Restricting File Access
+
+In Firefox, you have the ability to look through all of the files on the computer using file://
+(as opposed to something like http://).  This means that if you wanted to see the files on the
+desktop, you would simply type "file:///home/<username>/Desktop/" into the address bar.  From
+there, depending on the Read, Write, and Execute restrictions on files, as well as what types
+of files they are, you can view, open, save, and edit files.  This is a very useful feature when
+you need a quick way to look at or edit things on your personal computer, but when it comes to
+a public computer that anybody has access to, this is a tremendous security risk.  The following
+are a list of features that could possibly be used to help diminish this risk:
+
+
+NoScript
+
+An add-on that allows you to put a variety of restrictions on what you are allowed to do in Firefox.
+The name comes from the fact that you are able to reject anything that uses JavaScript.  It works in
+terms of not showing the contents of directories, but still allows you to open or save documents if
+you enter the full address (Ex. file:///home/<username>/Desktop/myCode.txt).
+
+https://addons.mozilla.org/en-US/firefox/addon/noscript/
+
+
+Block Site
+
+An add-on that allows you to make blacklists and whitelists, but unfortunately, doesn't apply to
+file:// addresses.
+
+https://addons.mozilla.org/en-US/firefox/addon/blocksite/?src=search
+
+
+Public Fox
+
+An add-on that is similar to NoScript in that it does allow you to prevent the user from seeing the
+contents of directories, but still allows you to open or save documents if you enter the full address.
+
+https://addons.mozilla.org/en-US/firefox/addon/public-fox/?src=search
+
+
+browser.tabs.remote.separateFileUriProcess
+
+A preference in about:config that was implemented in Firefox 53 as a security feature.  By default,
+it is set to true, but by changing its value to false, you remove the user's ability to access
+local files using file://
+
+https://www.ghacks.net/2016/11/27/firefox-53-exclusive-content-process-for-local-files/
+
+
+
+
+

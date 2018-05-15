@@ -1,4 +1,0 @@
-NoScript
-
-Link to the addon "NoScript" which is a way of limiting what you are allowed to do in Firefox
-https://addons.mozilla.org/en-US/firefox/addon/noscript/
