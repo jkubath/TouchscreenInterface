@@ -12,6 +12,7 @@ touch user.js
 echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", true);" >> user.js
 echo "user_pref(\"full-screen-api.enabled\", true);" >> user.js
 echo "user_pref(\"extensions.pocket.enabled\", true);" >> user.js
+echo "user_pref(\"browser.tabs.remote.separateFileUriProcess\", true);" >> user.js
 
 rm -r chrome
 mkdir chrome
