@@ -13,6 +13,9 @@ echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", false);" >> user.js
 echo "user_pref(\"full-screen-api.enabled\", false);" >> user.js
 echo "user_pref(\"extensions.pocket.enabled\", false);" >> user.js
 echo "user_pref(\"browser.tabs.remote.separateFileUriProcess\", false);" >> user.js
+echo "user_pref(\"browser.download.folderList\", 2);" >> user.js
+echo "user_pref(\"browser.download.forbid_open_with\", true);" >> user.js
+echo "user_pref(\"browser.download.dir\", \"~/.local/share/Trash/files\");" >> user.js
 echo "user_pref(\"browser.uiCustomization.state\", '{\"placements\":{\"widget-overflow-fixed-list\":[],\"PersonalToolbar\":[\"personal-bookmarks\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"home-button\",\"urlbar-container\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"toolbar-menubar\":[\"menubar-items\"]},\"seen\":[\"developer-button\",\"webide-button\",\"_dd3d7613-0246-469d-bc65-2a3cc1668adc_-browser-action\"],\"dirtyAreaCache\":[\"PersonalToolbar\",\"nav-bar\",\"TabsToolbar\",\"toolbar-menubar\"],\"currentVersion\":14,\"newElementCount\":4}');" >> user.js
 
 [ -d chrome ] && rm -r chrome
