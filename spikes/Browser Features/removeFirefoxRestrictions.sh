@@ -13,6 +13,9 @@ echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", true);" >> user.js
 echo "user_pref(\"full-screen-api.enabled\", true);" >> user.js
 echo "user_pref(\"extensions.pocket.enabled\", true);" >> user.js
 echo "user_pref(\"browser.tabs.remote.separateFileUriProcess\", true);" >> user.js
+echo "user_pref(\"browser.download.folderList\", 1);" >> user.js
+echo "user_pref(\"browser.download.forbid_open_with\", false);" >> user.js
+echo "user_pref(\"browser.download.dir\", \"~/Downloads\");" >> user.js
 
 [ -d chrome ] && rm -r chrome
 mkdir chrome
