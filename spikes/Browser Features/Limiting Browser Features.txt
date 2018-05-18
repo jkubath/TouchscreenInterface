@@ -137,7 +137,7 @@ Look into the second link in the first post in this link (user.js) for informati
 possibly create a file that will set the attributes talked about in the two sets of instructions
 above (removing fullscreen videos and removing the closing of all tabs):
     https://support.mozilla.org/en-US/questions/965842
-
+    Link: http://kb.mozillazine.org/User.js_file
 
 To limit the number of tabs the user is allowed to open, use this add-on:
     https://addons.mozilla.org/en-US/firefox/addon/max-tabs-web-ext/
@@ -154,3 +154,19 @@ when you open some tabs:
 https://support.mozilla.org/en-US/questions/1178729
 https://support.mozilla.org/en-US/questions/1009385
 https://www.reddit.com/r/firefox/comments/7f52b1/is_there_a_way_to_remove_the_three_dots_page/
+
+
+List of Firefox features
+    http://kb.mozillazine.org/About:config_entries
+
+Link to someone else's user.js file
+    https://www.legroom.net/howto/firefox
+
+
+
+
+
+
+
+
+

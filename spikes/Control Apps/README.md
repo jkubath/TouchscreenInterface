@@ -9,3 +9,9 @@ The steps for install and create rules to manage applications.
 
 ## ScreenManager_v*
 Exported profiles for the compizconfig-settings-manager
+
+## addUnityShell.sh
+Adds 'unityshell' to the active-plugins in gsettings
+
+## removeUnityShell.sh
+Remotes 'unityshell' from the active-plugins in gsettings
