@@ -24,7 +24,7 @@ touch user.js
 # browser.tabs.closeWindowWithLastTab			Doesn't allow the user to close all tabs
 # full-screen-api.enabled						videos cannot go fullscreen (YouTube)
 # extensions.pocket.enabled						Removes the Pocket icon - ability to save pages for later
-# browser.tabs.remote.seperateFileUriProcess	If only one tab is open, closing it is denied
+# browser.tabs.remote.separateFileUriProcess	  Prevents the user from being able to access files through file://
 # browser.download.folderList					Downloaded files go to the most recently used download path
 # browser.download.forbid_open_with				When downloading a file, the "open with" option is removed
 # browser.download.dir 							Downloaded files are saved to this directory
