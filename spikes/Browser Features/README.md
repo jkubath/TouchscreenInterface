@@ -14,4 +14,8 @@ on Firefox.
 
 ## Empty Trash
 Pair of shells that can be run in order to start/end a check for files in the Trash
-and delete them (checks every 0.1 seconds).
+and delete them (checks every 0.01 seconds).
+
+## Window Manager
+Pair of shells that can be run in order to start/end a check of the number of windows
+that are currently open and close any additional ones (checks every 0.01 seconds).
