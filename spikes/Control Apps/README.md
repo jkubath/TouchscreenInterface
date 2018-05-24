@@ -4,14 +4,5 @@ The control apps directory is for controlling the position and functionality
 of applications.  Examples are: controlling screen size, where the window position
 is opened to on the screen, what is available in the toolbar(exit, maximize, minize)
 
-## compiz.txt
-The steps for install and create rules to manage applications.
-
-## ScreenManager_v*
-Exported profiles for the compizconfig-settings-manager
-
-## addUnityShell.sh
-Adds 'unityshell' to the active-plugins in gsettings
-
-## removeUnityShell.sh
-Remotes 'unityshell' from the active-plugins in gsettings
+## setWindow.sh
+Sets windows to take up the proper amount of space on the screen.
