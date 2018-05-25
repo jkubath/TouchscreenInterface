@@ -16,19 +16,34 @@ cd ~/.mozilla/firefox/$PROFDIR
 # rm -f user.js    could be used as well
 [ -e user.js ] && rm user.js
 
+# Checks to see if the places.sqlite file exists, then removes it
+# The places.sqlite file stores the history in Firefox
+[ -e places.sqlite ] && rm places.sqlite
+
 # Create a new user.js file
 touch user.js
 
 # Limit features offered by the Firefox browser
 # A List of features: http://kb.mozillazine.org/About:config_entries
 # browser.tabs.closeWindowWithLastTab			Doesn't allow the user to close all tabs
-# full-screen-api.enabled						videos cannot go fullscreen (YouTube)
+# full-screen-api.enabled						Videos cannot go fullscreen (YouTube)
 # extensions.pocket.enabled						Removes the Pocket icon - ability to save pages for later
 # browser.tabs.remote.separateFileUriProcess	  Prevents the user from being able to access files through file://
 # browser.download.folderList					Downloaded files go to the most recently used download path
 # browser.download.forbid_open_with				When downloading a file, the "open with" option is removed
 # browser.download.dir 							Downloaded files are saved to this directory
 # browser.uiCustomization.state					Sets toolbar icon order
+# privacy.trackingprotection.enabled        Sets Tracking Protection to always block known trackers
+# privacy.donottrackheader.enabled         Sets Tracking Protection to always send websites a "Do Not Track" signal
+# extensions.formatautofill.addresses.enabled       Disables the autofilling of addresses in the address bar
+# signon.rememberSignons        Disables remembering logins and passwords for websites
+# network.cookie.cookieBehavior         Blocks cookies and site data
+# browser.urlbar.suggest.bookmark       Address bar doesn't suggest bookmarks
+# browser.urlbar.suggest.history        Address bar doesn't suggest browsing history
+# browser.urlbar.suggest.searches       Address bar doesn't show search suggestions
+# privacy.history.custom        Use custom settings for history
+# places.history.enabled        Browser won't remember browsing and download history
+# browser.formfill.enable       Browser won't remember search and form history
 echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", false);" >> user.js 
 echo "user_pref(\"full-screen-api.enabled\", false);" >> user.js 
 echo "user_pref(\"extensions.pocket.enabled\", false);" >> user.js
@@ -37,6 +52,18 @@ echo "user_pref(\"browser.download.folderList\", 2);" >> user.js
 echo "user_pref(\"browser.download.forbid_open_with\", true);" >> user.js
 echo "user_pref(\"browser.download.dir\", \"~/.local/share/Trash/files\");" >> user.js
 echo "user_pref(\"browser.uiCustomization.state\", '{\"placements\":{\"widget-overflow-fixed-list\":[],\"PersonalToolbar\":[\"personal-bookmarks\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"home-button\",\"urlbar-container\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\",\"alltabs-button\"],\"toolbar-menubar\":[\"menubar-items\"]},\"seen\":[\"developer-button\",\"webide-button\",\"_dd3d7613-0246-469d-bc65-2a3cc1668adc_-browser-action\"],\"dirtyAreaCache\":[\"PersonalToolbar\",\"nav-bar\",\"TabsToolbar\",\"toolbar-menubar\"],\"currentVersion\":14,\"newElementCount\":4}');" >> user.js
+echo "user_pref(\"privacy.trackingprotection.enabled\", true);" >> user.js
+echo "user_pref(\"privacy.donnottrackheader.enabled\", true);" >> user.js
+echo "user_pref(\"extensions.formatautofill.addresses.enabled\", false);" >> user.js
+echo "user_pref(\"signon.rememberSignons\", false);" >> user.js
+echo "user_pref(\"network.cookie.cookieBehavior\", 2);" >> user.js
+echo "user_pref(\"browser.urlbar.suggest.bookmark\", false);" >> user.js
+echo "user_pref(\"browser.urlbar.suggest.history\", false);" >> user.js
+echo "user_pref(\"browser.urlbar.suggest.searches\", false);" >> user.js
+echo "user_pref(\"privacy.history.custom\", true);" >> user.js
+echo "user_pref(\"places.history.enabled\", false);" >> user.js
+echo "user_pref(\"browser.formfill.enable\", false);" >> user.js
+
 
 # Check if the chrome directory exists, them remove it
 [ -d chrome ] && rm -r chrome
