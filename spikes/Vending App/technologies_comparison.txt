@@ -1,0 +1,50 @@
+Web
+    Pros:
+        1. Fast development and prototyping
+        2. Fast and easy UI
+        3. Abundance of libraries and technologies for making clean aesthetically pleasing UI
+    Cons:
+        1. It must be run inside of a browser. Configuring the Firefox browser is time consuming and all features may not be possible.
+    Options:
+        HTML, CSS, Javascript, etc.
+
+Native
+    Pros:
+        1. Does not require a browser
+        2. Where the team has the most experience
+    Cons:
+        1. Could have longest development time
+        2. Will require integration of graphics / UI libraries
+    Options:
+        C++
+            Pros:
+                1. most resource efficient
+            Cons:
+                1. Not as much experience as alternative
+                2. No built-in UI controls
+
+        Java
+            Pros:
+                1. One of the languages the team has the most experience with
+                2. Relatively easy basic UI
+            Cons:
+                1. built-in UI is likely insufficient for the project's scope
+
+Web compiled to native
+    Pros:
+        1. all the same pros as Web without the same cons
+    Cons:
+        1. resource inefficient (not an issue now, but may be one if in the future, if embedded or small, low resource computers are used).
+    Options:
+        Electron
+            Pros:
+                1. well and regularly maintained (active development)
+                2. larger community than alternative
+                4. good documentation
+            Cons:
+        NW.js
+            Pros:
+                1. good documentation
+            Cons:
+                1. requires xvfb
+                2. much smaller community
