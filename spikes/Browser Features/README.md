@@ -8,6 +8,9 @@ Refresh), accessing any of the about: pages, and more.
 ## Documentation
 Explanations of what the shell scripts  do and their sources
 
+## Firefox Addons
+Set of three shells that can be run in order to add and enable/disable Max Tabs.
+
 ## Firefox Restrictions
 Pair of shells that can be run in order to place/remove a variety of restrictions
 on Firefox.
