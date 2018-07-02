@@ -5,8 +5,8 @@
   justify-content: center;
 
   background: url(../../../assets/background.jpg) no-repeat center fixed;
-  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-  background-size: cover; /* version standardisée */
+  -webkit-background-size: cover;
+  background-size: cover;
 
   .title {
     color: white;
