@@ -58,9 +58,9 @@ Note that you can't use Electron or NodeJS native libraries in this case. Please
 - Angular 6 & Electron 2 : (master)
 
 ## Technologies & Frameworks Documentation
-[Typescript](https://www.typescriptlang.org/docs/home.html)
-[Sass](https://sass-lang.com/guide)
-[Bootstrap](http://getbootstrap.com/docs/4.1/getting-started/introduction/)
-[Angular2+](https://angular.io/docs)
-[NG-Bootstrap](https://ng-bootstrap.github.io/#/home)
+[Typescript](https://www.typescriptlang.org/docs/home.html)<br/>
+[Sass](https://sass-lang.com/guide)<br/>
+[Bootstrap](http://getbootstrap.com/docs/4.1/getting-started/introduction/)<br/>
+[Angular2+](https://angular.io/docs)<br/>
+[NG-Bootstrap](https://ng-bootstrap.github.io/#/home)<br/>
 [Electron](https://electronjs.org/docs)
