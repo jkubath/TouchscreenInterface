@@ -40,7 +40,9 @@
     "@ng-bootstrap/ng-bootstrap": "^2.2.0",
     "bootstrap": "^4.1.1",
     "bootstrap-css-only": "^4.1.1",
-    "bootstrap-scss": "^4.1.0"
+    "bootstrap-scss": "^4.1.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.6.3",
