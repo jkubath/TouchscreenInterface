@@ -24,6 +24,10 @@ Please follow [Angular-cli documentation](https://github.com/angular/angular-cli
 ``` bash
 npm install -g @angular/cli
 ```
+Ubuntu users, libgconf-2.so.4 is now required for Ubuntu systems. You will **may** need to install libgconf-2-4 if it not already.
+``` bash
+apt-get install libgconf-2-4
+```
 
 ## To build for development
 
