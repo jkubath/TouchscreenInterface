@@ -15,6 +15,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class HomeComponent implements OnInit {
 
+
     public productDirectoryPath: string;
     public products: Product[];
 
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {}
+
 
     /*Loads all products form products directory and returns as array*/
     loadProduct(): Promise<Product[]> {
