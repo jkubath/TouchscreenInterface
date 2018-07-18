@@ -69,3 +69,6 @@ Note that you can't use Electron or NodeJS native libraries in this case. Please
 [Angular2+](https://angular.io/docs)<br/>
 [NG-Bootstrap](https://ng-bootstrap.github.io/#/home)<br/>
 [Electron](https://electronjs.org/docs)
+
+## Additional Documentation
+[Dinero.js](https://sarahdayan.github.io/dinero.js/module-Dinero.html) used for handling currency manipulation, operations, accuracy, and internationalization<br/>
