@@ -33,10 +33,9 @@ apt-get install libgconf-2-4
 
 - **in a terminal window** -> npm start  
 
-Voila! You can use your Angular + Electron app in a local development environment with hot reload !
+Voila! You can use the Angular + Electron app in a local development environment with hot reload !
 
-The application code is managed by `main.ts`. In this sample, the app runs with a simple Angular App (http://localhost:4200) and an Electron window.  
-The Angular component contains an example of Electron and NodeJS native lib import.  
+The application code is managed by `main.ts`. The app runs with a simple Angular App (http://localhost:4200) and an Electron window.   
 You can deactivate "Developer Tools" by commenting `win.webContents.openDevTools();` in `main.ts`.
 
 ## Included Commands
