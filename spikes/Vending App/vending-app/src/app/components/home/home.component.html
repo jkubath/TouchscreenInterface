@@ -2,17 +2,13 @@
     <h1 class="title">
         {{ 'PAGES.HOME.TITLE' | translate }}
     </h1>
-    <div class="vending-content">
-        <ul class="product-list">
-            <li class="product" *ngFor="let product of products">
-                <h3>
-                    {{ product.name }}
-                </h3>
-                <div>
-                    <img [src]="'./products/' + product.id + '/' +  product.img"/>
-                </div>
-
-            </li>
-        </ul>
+    <div class="product" *ngFor="let product of products">
+        <h3>
+            {{ product.name }}
+        </h3>
+        <img [src]="product.img">
+        <div>
+            {{ product.description }}
+        </div>
     </div>
 </div>

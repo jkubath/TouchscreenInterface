@@ -17,9 +17,7 @@ import { ElectronService } from './providers/electron.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { NgxFsModule } from 'ngx-fs';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -47,8 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    NgbModule.forRoot(),
-    NgxFsModule
+    NgbModule.forRoot()
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]

@@ -10,14 +10,13 @@ export class Return<T> {
     }
 
     public handleError(exitOnError: boolean, callback?: any): any {
-        if(this.success === false){
-            if(callback){
+        if (this.success === false) {
+            if (callback) {
                 return callback();
-            }
-            else {
+            } else {
                 console.log(this.message);
             }
-            if(exitOnError === true){
+            if (exitOnError === true) {
                 process.exit();
             }
         }
