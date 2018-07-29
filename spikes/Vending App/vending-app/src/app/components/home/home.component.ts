@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import * as fs from 'fs';
 import { promisify } from 'util';
 import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
+import { DragScrollComponent } from 'ngx-drag-scroll';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+
+    @ViewChild('scroller', {read: DragScrollComponent}) ds: DragScrollComponent;
 
     public products: Product[];
 
@@ -34,6 +37,21 @@ export class HomeComponent implements OnInit {
         return products;
     }
 
+    scrollLeft(): void {
+        this.ds.moveLeft();
+    }
+
+    scrollRight(): void {
+        this.ds.moveRight();
+    }
+
+    selectProduct(id: string): void {
+        console.log(id);
+    }
+
     ngOnInit() {
+    }
+
+    ngAfterViewInit() {
     }
 }

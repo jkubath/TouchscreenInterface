@@ -1,14 +1,43 @@
 <div class="container">
-    <h1 class="title">
-        {{ 'PAGES.HOME.TITLE' | translate }}
-    </h1>
-    <div class="product" *ngFor="let product of products">
-        <h3>
-            {{ product.name }}
-        </h3>
-        <img [src]="product.img">
-        <div>
-            {{ product.description }}
-        </div>
+    <div class="page-header">
+        <h1 class="title">
+            {{ 'PAGES.HOME.TITLE' | translate }}
+        </h1>
+    </div>
+    <div class="page-content">
+        <!--- DEPRICATED VERSION [using ng-bootstrap carousel]
+        <ngb-carousel class="product-carousel" *ngIf="products">
+            <ng-template *ngFor="let product of products" ngbSlide>
+                <div class="product">
+                    <h3 class="product-description">
+                        {{ product.name }}
+                    </h3>
+                    <img class="product-image" [src]="product.img">
+                    <div class="product-description">
+                        {{ product.description }}
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+        -->
+        <drag-scroll class="product-carousel" #scroller>
+            <div drag-scroll-item *ngFor="let product of products">
+                <div class="product" (click)="selectProduct(product.id)">
+                    <h3 class="product-description">
+                        {{ product.name }}
+                    </h3>
+                    <img class="product-image" [src]="product.img">
+                    <div class="product-description">
+                        {{ product.description }}
+                    </div>
+                </div>
+            </div> 
+        </drag-scroll>
+        <button (click)="scrollLeft()">
+            <
+        </button>
+        <button (click)="scrollRight()">
+            >
+        </button>
     </div>
 </div>

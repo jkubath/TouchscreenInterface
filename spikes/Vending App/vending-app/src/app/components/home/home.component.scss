@@ -1,21 +1,37 @@
 .container {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 
-  background: url(../../../assets/background.jpg) no-repeat center fixed;
-  -webkit-background-size: cover;
-  background-size: cover;
-
-  .title {
     color: white;
-    margin:0;
-    padding:50px 20px;
-  }
 
-  .product {
-    color: white;
-  }
+    background: url(../../../assets/background.jpg) no-repeat center fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
 
+
+    .page-header {
+        .title {
+            margin:0;
+            padding:50px 20px;
+        }
+    }
+
+    .page-content {
+        .product-carousel {
+            width: 100vw;
+            height: 50vh;
+        
+            .product {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 5vh;
+            }
+        }
+
+    }
 }

@@ -17,7 +17,8 @@ import { ElectronService } from './providers/electron.service';
 
 import { WebviewDirective } from './directives/webview.directive';
 
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -45,7 +46,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgbCarouselModule,
+    DragScrollModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent]
