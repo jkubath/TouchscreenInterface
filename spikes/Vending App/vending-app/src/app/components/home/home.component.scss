@@ -1,36 +1,85 @@
 .container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
+    // height: 100%;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: space-around;
 
-    color: white;
+    // color: white;
 
-    background: url(../../../assets/background.jpg) no-repeat center fixed;
-    -webkit-background-size: cover;
-    background-size: cover;
+    // background: url(../../../assets/background.jpg) no-repeat center fixed;
+    // -webkit-background-size: cover;
+    // background-size: cover;
 
 
-    .page-header {
-        .title {
-            margin:0;
-            padding:50px 20px;
-        }
+    // .page-header {
+    //     .title {
+    //         margin:0;
+    //         padding:50px 20px;
+    //     }
+    // }
+
+    .behind-product {
+      position: absolute;
+      left: 0em;
+      top: 0em;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .price-tracks-without-shading {
+      position: absolute;
+      left: 0em;
+      top: 0em;
+      z-index: 1;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .product-area-shading-and-front-panel {
+      position: absolute;
+      left: 0em;
+      top: 0em;
+      z-index: 2;
+      pointer-events: none;
+      visibility: hidden;
     }
 
     .page-content {
+      #top-product-carousel {
+        left: 195px;
+        bottom: 370px;
+      }
+
+      #bottom-product-carousel {
+        left: 195px;
+        bottom: 130px;
+      }
         .product-carousel {
-            width: 100vw;
-            height: 50vh;
-        
+            width: 690px;
+            height: 180px;
+            position: absolute;
+            text-align: center;  // Centers the products
+
             .product {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                margin-bottom: 5vh;
+                //display: flex;
+                //flex-direction: column;
+                //align-items: center;
+                //justify-content: center;
+                //margin: auto;
+                // margin-bottom: 5vh;
+                z-index: 3;
+                pointer-events: auto;
+
+
+
+                .product-image {
+                  padding-left: 20px;
+                  padding-right: 20px;
+                }
             }
+
+
         }
 
     }

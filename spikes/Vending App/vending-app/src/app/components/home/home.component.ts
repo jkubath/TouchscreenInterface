@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             let product = require(`products/${content}/data.json`) as Product;
             product.img = `products/${content}/${product.img}`;
             products.push(product);
-            
+
         }
         return products;
     }

@@ -1,10 +1,12 @@
 <div class="container">
+  <!--
     <div class="page-header">
         <h1 class="title">
             {{ 'PAGES.HOME.TITLE' | translate }}
         </h1>
-    </div>
+    </div> -->
     <div class="page-content">
+        <img class="behind-product" src="assets/img/Behind-Product.png">
         <!--- DEPRICATED VERSION [using ng-bootstrap carousel]
         <ngb-carousel class="product-carousel" *ngIf="products">
             <ng-template *ngFor="let product of products" ngbSlide>
@@ -20,19 +22,39 @@
             </ng-template>
         </ngb-carousel>
         -->
-        <drag-scroll class="product-carousel" #scroller>
-            <div drag-scroll-item *ngFor="let product of products">
+        <drag-scroll class="product-carousel" id="top-product-carousel" scrollbar-hidden="true" #scroller>
+            <div drag-scroll-item *ngFor="let product of products; let i = index">
+                <div *ngIf="i % 2 == 0">
                 <div class="product" (click)="selectProduct(product.id)">
-                    <h3 class="product-description">
+
+                    <!--<h3 class="product-description">
                         {{ product.name }}
-                    </h3>
+                    </h3>-->
                     <img class="product-image" [src]="product.img">
-                    <div class="product-description">
+                    <!--<div class="product-description">
                         {{ product.description }}
-                    </div>
+                    </div>-->
                 </div>
-            </div> 
+              </div>
+            </div>
         </drag-scroll>
+        <drag-scroll class="product-carousel" id="bottom-product-carousel" #scroller>
+            <div drag-scroll-item *ngFor="let product of products; let i = index">
+                <div *ngIf="i % 2 == 1">
+                <div class="product" (click)="selectProduct(product.id)">
+                    <!--<h3 class="product-description">
+                        {{ product.name }}
+                    </h3>-->
+                    <img class="product-image" [src]="product.img">
+                    <!--<div class="product-description">
+                        {{ product.description }}
+                    </div>-->
+                </div>
+              </div>
+            </div>
+        </drag-scroll>
+        <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
+        <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
         <button (click)="scrollLeft()">
             <
         </button>

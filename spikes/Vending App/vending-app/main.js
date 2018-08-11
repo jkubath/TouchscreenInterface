@@ -13,8 +13,10 @@ function createWindow() {
     win = new electron_1.BrowserWindow({
         x: 0,
         y: 0,
-        width: size.width,
-        height: size.height
+        // width: size.width,
+        // height: size.height
+        width: 1500,
+        height: 640
     });
     if (serve) {
         require('electron-reload')(__dirname, {
