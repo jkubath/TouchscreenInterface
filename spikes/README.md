@@ -4,12 +4,12 @@ The spikes directory is to hold all the research done to make decisions
 for the Screen Manager project.  Examples: how to embed a browser or 
 how to control the size of a running application.
 
-## Browser Features
-How to limit what you are able to do in the web browser
-
-## Control Apps
+## App Controller
 Allows you to specify where windows are located and what you are allowed
 to do with them.
+
+## Browser Features
+How to limit what you are able to do in the web browser
 
 ## Embedded Browser
 How to embed a browser in a Java application.
@@ -23,6 +23,10 @@ Reasons to develop in Linux vs. Windows.
 ## Touchscreen Calibration
 All the testing that was done in our attempt to get the touchscreen
 functioning correctly in Ubuntu.
+
+## Vending App
+The Vending Machine application that allows the user to purchase items
+from the vending machine.
 
 ## Web Browser
 Reasons to use a web browser of Firefox vs. Chrome.
