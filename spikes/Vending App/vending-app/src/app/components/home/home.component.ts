@@ -13,7 +13,8 @@ import { DragScrollComponent } from 'ngx-drag-scroll';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
 
-    @ViewChild('scroller', {read: DragScrollComponent}) ds: DragScrollComponent;
+    @ViewChild('topScroller', {read: DragScrollComponent}) topds: DragScrollComponent;
+    @ViewChild('bottomScroller', {read: DragScrollComponent}) bottomds: DragScrollComponent;
 
     public products: Product[];
 
@@ -37,12 +38,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
         return products;
     }
 
-    scrollLeft(): void {
-        this.ds.moveLeft();
+    topScrollLeft(): void {
+        this.topds.moveLeft();
     }
 
-    scrollRight(): void {
-        this.ds.moveRight();
+    topScrollRight(): void {
+        this.topds.moveRight();
+    }
+
+    bottomScrollLeft(): void {
+      this.bottomds.moveLeft();
+    }
+
+    bottomScrollRight(): void {
+      this.bottomds.moveRight();
     }
 
     selectProduct(id: string): void {

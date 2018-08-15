@@ -22,7 +22,7 @@
             </ng-template>
         </ngb-carousel>
         -->
-        <drag-scroll class="product-carousel" id="top-product-carousel" scrollbar-hidden="true" #scroller>
+        <drag-scroll class="product-carousel" id="top-product-carousel" drag-scroll-y-disabled="true" #topScroller>
             <div drag-scroll-item *ngFor="let product of products; let i = index">
                 <div *ngIf="i % 2 == 0">
                 <div class="product" (click)="selectProduct(product.id)">
@@ -38,7 +38,7 @@
               </div>
             </div>
         </drag-scroll>
-        <drag-scroll class="product-carousel" id="bottom-product-carousel" #scroller>
+        <drag-scroll class="product-carousel" id="bottom-product-carousel" drag-scroll-y-disabled="true" #bottomScroller>
             <div drag-scroll-item *ngFor="let product of products; let i = index">
                 <div *ngIf="i % 2 == 1">
                 <div class="product" (click)="selectProduct(product.id)">
@@ -55,10 +55,22 @@
         </drag-scroll>
         <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
         <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
-        <button (click)="scrollLeft()">
+        <img class="top-scroll-left-button-outline" src="assets/img/Button-Outline-Left.png">
+        <img class="top-scroll-left-button-lighting" src="assets/img/Button-Lighting-Left.png">
+        <img class="top-scroll-left-button-shading" src="assets/img/Button-Shading-Left.png" (click)="topScrollLeft()">
+        <img class="top-scroll-right-button-outline" src="assets/img/Button-Outline-Right.png">
+        <img class="top-scroll-right-button-lighting" src="assets/img/Button-Lighting-Right.png">
+        <img class="top-scroll-right-button-shading" src="assets/img/Button-Shading-Right.png" (click)="topScrollRight()">
+        <img class="bottom-scroll-left-button-outline" src="assets/img/Button-Outline-Left.png">
+        <img class="bottom-scroll-left-button-lighting" src="assets/img/Button-Lighting-Left.png">
+        <img class="bottom-scroll-left-button-shading" src="assets/img/Button-Shading-Left.png" (click)="bottomScrollLeft()">
+        <img class="bottom-scroll-right-button-outline" src="assets/img/Button-Outline-Right.png">
+        <img class="bottom-scroll-right-button-lighting" src="assets/img/Button-Lighting-Right.png">
+        <img class="bottom-scroll-right-button-shading" src="assets/img/Button-Shading-Right.png" (click)="bottomScrollRight()">
+        <button (click)="topScrollLeft()">
             <
         </button>
-        <button (click)="scrollRight()">
+        <button (click)="topScrollRight()">
             >
         </button>
     </div>

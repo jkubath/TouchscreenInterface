@@ -33,7 +33,7 @@
       top: 0em;
       z-index: 1;
       pointer-events: none;
-      visibility: hidden;
+      // visibility: hidden;
     }
 
     .product-area-shading-and-front-panel {
@@ -42,18 +42,18 @@
       top: 0em;
       z-index: 2;
       pointer-events: none;
-      visibility: hidden;
+      // visibility: hidden;
     }
 
     .page-content {
       #top-product-carousel {
         left: 195px;
-        bottom: 370px;
+        bottom: 365px;
       }
 
       #bottom-product-carousel {
         left: 195px;
-        bottom: 130px;
+        bottom: 125px;
       }
         .product-carousel {
             width: 690px;
@@ -61,25 +61,59 @@
             position: absolute;
             text-align: center;  // Centers the products
 
-            .product {
-                //display: flex;
-                //flex-direction: column;
-                //align-items: center;
-                //justify-content: center;
-                //margin: auto;
-                // margin-bottom: 5vh;
-                z-index: 3;
-                pointer-events: auto;
+              .product {
+                  //display: flex;
+                  //flex-direction: column;
+                  //align-items: center;
+                  //justify-content: center;
+                  //margin: auto;
+                  // margin-bottom: 5vh;
+                  z-index: 3;
+                  height: 180px;
+                  pointer-events: auto;
+                  vertical-align: bottom;
+                  display: table-cell;
 
+                  //background-color: green;
 
+                  .product-image {
+                    padding-left: 40px;
+                    padding-right: 40px;
 
-                .product-image {
-                  padding-left: 20px;
-                  padding-right: 20px;
-                }
+                  }
+
             }
 
 
+
+        }
+
+        .top-scroll-left-button-outline, .top-scroll-left-button-lighting, .top-scroll-left-button-shading {
+          position: absolute;
+          top: 130px;
+          left: 90px;
+          z-index: 4;
+        }
+
+        .top-scroll-right-button-outline, .top-scroll-right-button-lighting, .top-scroll-right-button-shading {
+          position: absolute;
+          top: 130px;
+          left: 910px;
+          z-index: 4;
+        }
+
+        .bottom-scroll-left-button-outline, .bottom-scroll-left-button-lighting, .bottom-scroll-left-button-shading {
+          position: absolute;
+          top: 370px;
+          left: 90px;
+          z-index: 4;
+        }
+
+        .bottom-scroll-right-button-outline, .bottom-scroll-right-button-lighting, .bottom-scroll-right-button-shading {
+          position: absolute;
+          top: 370px;
+          left: 910px;
+          z-index: 4;
         }
 
     }
