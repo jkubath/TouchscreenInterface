@@ -28,10 +28,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public bottomLeftNavDisabled: string = "block";
     public bottomRightNavDisabled: string = "block";
     public snapDisabled: string = "false";
-    public productHidden: boolean = true;
-    public productSelectedAnimation: boolean = false;
-    public productShown: boolean = false;
-    public productCanceledAnimation: boolean = false;
+    public screenShadingProductHidden: boolean = true;
+    public screenShadingProductSelectedAnimationActive: boolean = false;
+    public screenShadingProductShown: boolean = false;
+    public screenShadingProductCanceledAnimationActive: boolean = false;
+    public screenCircularHighlightProductHidden: boolean = true;
+    public screenCircularHighlightProductSelectedAnimationActive: boolean = false;
+    public screenCircularHighlightProductShown: boolean = false;
+    public screenCircularHighlightProductCanceledAnimationActive: boolean = false;
+    public selectedProductImageAreaProductHidden: boolean = true;
+    public selectedProductImageAreaProductSelectedAnimationActive: boolean = false;
+    public selectedProductImageAreaProductShown: boolean = false;
+    public selectedProductImageAreaProductCanceledAnimationActive: boolean = false;
+    public selectedProductInformationAreaProductHidden: boolean = true;
+    public selectedProductInformationAreaProductSelectedAnimationActive: boolean = false;
+    public selectedProductInformationAreaProductShown: boolean = false;
+    public selectedProductInformationAreaProductCanceledAnimationActive: boolean = false;
     public selectedProductImage: string = "";
     public selectedProductName: string = "";
     public selectedProductDescription: string = "";
@@ -211,13 +223,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
         console.log(id);
     }
 
-    selectedProductAnimation(): void {
-      this.productHidden = false;
-      this.productSelectedAnimation = true;
+    screenShadingSelectedProductAnimation(): void {
+      this.screenShadingProductHidden = false;
+      this.screenShadingProductSelectedAnimationActive = true;
       setTimeout(() => {
-        this.productShown = true;
-        this.productSelectedAnimation = false;
-      }, 700);
+        this.screenShadingProductShown = true;
+        this.screenShadingProductSelectedAnimationActive = false;
+      }, 1000);
+    }
+
+    screenCircularHighlightSelectedProductAnimation(): void {
+      this.screenCircularHighlightProductHidden = false;
+      this.screenCircularHighlightProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.screenCircularHighlightProductShown = true;
+        this.screenCircularHighlightProductSelectedAnimationActive = false;
+      }, 1250);
+    }
+
+    selectedProductImageAreaSelectedProductAnimation(): void {
+      this.selectedProductImageAreaProductHidden = false;
+      this.selectedProductImageAreaProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.selectedProductImageAreaProductShown = true;
+        this.selectedProductImageAreaProductSelectedAnimationActive = false;
+      }, 2000);
+    }
+
+    selectedProductInformationAreaSelectedProductAnimation(): void {
+      this.selectedProductInformationAreaProductHidden = false;
+      this.selectedProductInformationAreaProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.selectedProductInformationAreaProductShown = true;
+        this.selectedProductInformationAreaProductSelectedAnimationActive = false;
+      }, 2500);
     }
 
     decreaseQuantityWanted(): void {
@@ -254,13 +293,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.plusButton = "assets/img/Plus-Button.png";
     }
 
-    canceledProductAnimation(): void {
-      this.productShown = false;
-      this.productCanceledAnimation = true;
-      setTimeout(() => {
-        this.productCanceledAnimation = false;
-        this.productHidden = true;
-      }, 700);
+    screenShadingCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown == true) {
+        this.screenShadingProductShown = false;
+        this.screenShadingProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.screenShadingProductHidden = true;
+          this.screenShadingProductCanceledAnimationActive = false;
+        }, 2000);
+      }
+    }
+
+    screenCircularHighlightCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown == true) {
+        this.screenCircularHighlightProductShown = false;
+        this.screenCircularHighlightProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.screenCircularHighlightProductHidden = true;
+          this.screenCircularHighlightProductCanceledAnimationActive = false;
+        }, 1750);
+      }
+    }
+
+    selectedProductImageAreaCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown == true) {
+        this.selectedProductImageAreaProductShown = false;
+        this.selectedProductImageAreaProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.selectedProductImageAreaProductHidden = true;
+          this.selectedProductImageAreaProductCanceledAnimationActive = false;
+        }, 1000);
+      }
+    }
+
+    selectedProductInformationAreaCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown == true) {
+        this.selectedProductInformationAreaProductShown = false;
+        this.selectedProductInformationAreaProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.selectedProductInformationAreaProductHidden = true;
+          this.selectedProductInformationAreaProductCanceledAnimationActive = false;
+        }, 750);
+      }
     }
 
     ngOnInit() {
