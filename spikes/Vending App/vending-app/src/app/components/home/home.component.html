@@ -22,56 +22,69 @@
             </ng-template>
         </ngb-carousel>
         -->
-        <drag-scroll class="product-carousel" id="top-product-carousel" drag-scroll-y-disabled="true" #topScroller>
-            <div drag-scroll-item *ngFor="let product of products; let i = index">
-                <div *ngIf="i % 2 == 0">
-                <div class="product" (click)="selectProduct(product.id)">
+        <div class="top-product-carousel" drag-scroll-y-disabled="true">
+          <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="topLeftBoundStat($event)" (reachesRightBound)="topRightBoundStat($event)" #topScroller>
+            <div drag-scroll-item *ngFor="let product of products1; let i = index">
+                <div class="product" (click)="selectProduct(product.id); selectedProductAnimation()">
 
                     <!--<h3 class="product-description">
                         {{ product.name }}
                     </h3>-->
-                    <img class="product-image" [src]="product.img">
+                    <img class="product-image" [src]="product.smallImg">
                     <!--<div class="product-description">
                         {{ product.description }}
                     </div>-->
                 </div>
-              </div>
             </div>
-        </drag-scroll>
-        <drag-scroll class="product-carousel" id="bottom-product-carousel" drag-scroll-y-disabled="true" #bottomScroller>
-            <div drag-scroll-item *ngFor="let product of products; let i = index">
-                <div *ngIf="i % 2 == 1">
-                <div class="product" (click)="selectProduct(product.id)">
+          </drag-scroll>
+        </div>
+        <div class="bottom-product-carousel" drag-scroll-y-disabled="true">
+          <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="bottomLeftBoundStat($event)" (reachesRightBound)="bottomRightBoundStat($event)" #bottomScroller>
+            <div drag-scroll-item *ngFor="let product of products2; let i = index">
+                <div class="product" (click)="selectProduct(product.id); selectedProductAnimation()">
                     <!--<h3 class="product-description">
                         {{ product.name }}
                     </h3>-->
-                    <img class="product-image" [src]="product.img">
+                    <img class="product-image" [src]="product.smallImg">
                     <!--<div class="product-description">
                         {{ product.description }}
                     </div>-->
                 </div>
-              </div>
             </div>
-        </drag-scroll>
+          </drag-scroll>
+        </div>
+
         <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
         <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
-        <img class="top-scroll-left-button-outline" src="assets/img/Button-Outline-Left.png">
-        <img class="top-scroll-left-button-lighting" src="assets/img/Button-Lighting-Left.png">
-        <img class="top-scroll-left-button-shading" src="assets/img/Button-Shading-Left.png" (click)="topScrollLeft()">
-        <img class="top-scroll-right-button-outline" src="assets/img/Button-Outline-Right.png">
-        <img class="top-scroll-right-button-lighting" src="assets/img/Button-Lighting-Right.png">
-        <img class="top-scroll-right-button-shading" src="assets/img/Button-Shading-Right.png" (click)="topScrollRight()">
-        <img class="bottom-scroll-left-button-outline" src="assets/img/Button-Outline-Left.png">
-        <img class="bottom-scroll-left-button-lighting" src="assets/img/Button-Lighting-Left.png">
-        <img class="bottom-scroll-left-button-shading" src="assets/img/Button-Shading-Left.png" (click)="bottomScrollLeft()">
-        <img class="bottom-scroll-right-button-outline" src="assets/img/Button-Outline-Right.png">
-        <img class="bottom-scroll-right-button-lighting" src="assets/img/Button-Lighting-Right.png">
-        <img class="bottom-scroll-right-button-shading" src="assets/img/Button-Shading-Right.png" (click)="bottomScrollRight()">
-        <button (click)="topScrollLeft()">
-            <
-        </button>
-        <button (click)="topScrollRight()">
-            >
-        </button>
+        <img class="top-scroll-left-button-off" src="assets/img/Button-Off-Left.png">
+        <img class="top-scroll-left-button-on" [src]="topLeftNav" [style.display]="topLeftNavDisabled" (click)="topScrollLeft()" (mousedown)="topLeftNavMouseDown()" (mouseup)="topLeftNavMouseUp()" (mouseleave)="topLeftNavMouseLeave()">
+        <img class="top-scroll-right-button-off" src="assets/img/Button-Off-Right.png">
+        <img class="top-scroll-right-button-on" [src]="topRightNav" [style.display]="topRightNavDisabled" (click)="topScrollRight()" (mousedown)="topRightNavMouseDown()" (mouseup)="topRightNavMouseUp()" (mouseleave)="topRightNavMouseLeave()">
+        <img class="bottom-scroll-left-button-off" src="assets/img/Button-Off-Left.png">
+        <img class="bottom-scroll-left-button-on" [src]="bottomLeftNav" [style.display]="bottomLeftNavDisabled" (click)="bottomScrollLeft()" (mousedown)="bottomLeftNavMouseDown()" (mouseup)="bottomLeftNavMouseUp()" (mouseleave)="bottomLeftNavMouseLeave()">
+        <img class="bottom-scroll-right-button-off" src="assets/img/Button-Off-Right.png">
+        <img class="bottom-scroll-right-button-on" [src]="bottomRightNav" [style.display]="bottomRightNavDisabled" (click)="bottomScrollRight()" (mousedown)="bottomRightNavMouseDown()" (mouseup)="bottomRightNavMouseUp()" (mouseleave)="bottomRightNavMouseLeave()">
+
+        <div [class.show]="productSelectedAnimation" [class.shown]="productShown" [class.hide]="productCanceledAnimation" [class.hidden]="productHidden" class="that product-selection">
+            <img class="screen-shading" src="assets/img/Screen-Shading.png">
+            <img class="screen-circular-highlight" src="assets/img/Screen-Circular-Highlight.png">
+            <div class="selected-product-image-area">
+              <img class="selected-product-image" [src]="selectedProductImage">
+            </div>
+            <div class="selected-product-information-area">
+              <p class="selected-product-name">{{ selectedProductName }}</p>
+              <p class="selected-product-description" [style.font-size]="selectedProductDescriptionFontSize">{{ selectedProductDescription }}</p>
+              <p class="selected-product-price">Price: $99.99</p>
+              <img class="information-separator" src="assets/img/Information-Separator.png">
+              <img class="minus-button" [src]="minusButton" (click)="decreaseQuantityWanted()" (mousedown)="minusButtonMouseDown()" (mouseup)="minusButtonMouseUp()" (mouseleave)="minusButtonMouseLeave()">
+              <p class="selected-product-quantity-wanted">{{ selectedProductQuantityWanted }}</p>
+              <img class="plus-button" [src]="plusButton" (click)="increaseQuantityWanted()" (mousedown)="plusButtonMouseDown()" (mouseup)="plusButtonMouseUp()" (mouseleave)="plusButtonMouseLeave()">
+              <p class="selected-product-total-price">Total: $99.99</p>
+              <img class="test1" src="assets/img/Button-175.png" (click)="canceledProductAnimation()">
+              <p class="test2" (click)="canceledProductAnimation()">Cancel</p>
+              <img class="test3" src="assets/img/Button-225.png">
+              <p class="test4">Purchase</p>
+          </div>
+        </div>
     </div>
 </div>

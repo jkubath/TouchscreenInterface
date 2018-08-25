@@ -1,7 +1,8 @@
 {
     "id": "my62Fzsd8l",
     "name": "Pepsi MAX Cola",
-    "img": "Red-Pop-Bottle-Half-Size.png",
+    "smallImg": "Small-Yellow-Bag.png",
+    "largeImg": "Large-Yellow-Bag.png",
     "price": {},
     "description": "Pepsi brand cola. The sweet, smooth taste you love, now with 0 calories!",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."

@@ -1,7 +1,8 @@
 {
     "id": "jF4Ll82wr6",
     "name": "Coka Cola Zero",
-    "img": "Red-Pop-Bottle-Half-Size.png",
+    "smallImg": "Small-Green-Bar.png",
+    "largeImg": "Large-Green-Bar.png",
     "price": {},
     "description": "Coka-Cola brand cola. The sweet, smooth taste you love, now with 0 calories!",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."

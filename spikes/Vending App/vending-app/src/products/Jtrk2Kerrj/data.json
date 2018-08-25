@@ -1,7 +1,8 @@
 {
     "id": "Jtrk2Kerrj",
     "name": "Coka Cola",
-    "img": "Red-Pop-Bottle-Half-Size.png",
+    "smallImg": "Small-Yellow-Bag.png",
+    "largeImg": "Large-Yellow-Bag.png",
     "price": {},
     "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
