@@ -80,10 +80,10 @@
               <p class="selected-product-quantity-wanted">{{ selectedProductQuantityWanted }}</p>
               <img class="plus-button" [src]="plusButton" (click)="increaseQuantityWanted()" (mousedown)="plusButtonMouseDown()" (mouseup)="plusButtonMouseUp()" (mouseleave)="plusButtonMouseLeave()">
               <p class="selected-product-total-price">Total: $99.99</p>
-              <img class="cancel-button" src="assets/img/Button-175.png" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()">
-              <p class="cancel-text" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()">Cancel</p>
-              <img class="purchase-button" src="assets/img/Button-225.png">
-              <p class="purchase-text">Purchase</p>
+              <img class="cancel-button" [src]="cancelButton" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">
+              <p [class.cancel-button-clicked]="cancelButtonClicked" class="cancel-text" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">Cancel</p>
+              <img class="purchase-button" [src]="purchaseButton" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">
+              <p [class.purchase-button-clicked]="purchaseButtonClicked" class="purchase-text" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">Purchase</p>
           </div>
         </div>
     </div>

@@ -51,6 +51,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public selectedProductQuantityWanted: number = 0;
     public minusButton: string = "assets/img/Minus-Button.png";
     public plusButton: string = "assets/img/Plus-Button.png";
+    public cancelButton: string = "assets/img/Button-175.png";
+    public cancelButtonClicked: boolean = false;
+    public purchaseButton: string = "assets/img/Button-225.png";
+    public purchaseButtonClicked: boolean = false;
 
     constructor() {
         this.loadProducts1().then( result => {
@@ -335,6 +339,36 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.selectedProductInformationAreaProductCanceledAnimationActive = false;
         }, 750);
       }
+    }
+
+    cancelButtonMouseDown(): void {
+      this.cancelButton = "assets/img/Button-175-Pressed.png";
+      this.cancelButtonClicked = true;
+    }
+
+    cancelButtonMouseUp(): void {
+      this.cancelButton = "assets/img/Button-175.png";
+      this.cancelButtonClicked = false;
+    }
+
+    cancelButtonMouseLeave(): void {
+      this.cancelButton = "assets/img/Button-175.png";
+      this.cancelButtonClicked = false;
+    }
+
+    purchaseButtonMouseDown(): void {
+      this.purchaseButton = "assets/img/Button-225-Pressed.png";
+      this.purchaseButtonClicked = true;
+    }
+
+    purchaseButtonMouseUp(): void {
+      this.purchaseButton = "assets/img/Button-225.png";
+      this.purchaseButtonClicked = false;
+    }
+
+    purchaseButtonMouseLeave(): void {
+      this.purchaseButton = "assets/img/Button-225.png";
+      this.purchaseButtonClicked = false;
     }
 
     ngOnInit() {

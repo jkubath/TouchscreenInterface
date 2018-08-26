@@ -277,6 +277,10 @@
             font-size: 3em;
             font-family: Lalezar;
             z-index: 10;
+
+            &.cancel-button-clicked {
+              color: #DDDDDD;
+            }
           }
 
           .purchase-button {
@@ -297,6 +301,10 @@
             font-size: 3em;
             font-family: Lalezar;
             z-index: 10;
+
+            &.purchase-button-clicked {
+              color: #DDDDDD;
+            }
           }
         }
 
