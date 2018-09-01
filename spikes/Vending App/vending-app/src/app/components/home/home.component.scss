@@ -259,7 +259,7 @@
             z-index: 9;
           }
 
-          .test1 {
+          .cancel-button {
             position: absolute;
             margin: auto;
             top: 445px;
@@ -267,7 +267,7 @@
             z-index: 9;
           }
 
-          .test2 {
+          .cancel-text {
             position: absolute;
             margin: auto;
             color: white;
@@ -277,9 +277,13 @@
             font-size: 3em;
             font-family: Lalezar;
             z-index: 10;
+
+            &.cancel-button-clicked {
+              color: #DDDDDD;
+            }
           }
 
-          .test3 {
+          .purchase-button {
             position: absolute;
             margin: auto;
             top: 445px;
@@ -287,7 +291,7 @@
             z-index: 9;
           }
 
-          .test4 {
+          .purchase-text {
             position: absolute;
             margin: auto;
             color: white;
@@ -297,10 +301,14 @@
             font-size: 3em;
             font-family: Lalezar;
             z-index: 10;
+
+            &.purchase-button-clicked {
+              color: #DDDDDD;
+            }
           }
         }
 
-        .that {
+        .screen-shading-animations {
           &.hidden {
             display: none;
             opacity: 0;
@@ -310,7 +318,7 @@
             display: block;
             transform: scale(1);
             opacity: 1;
-            animation: showAnim .7s ease-in-out;
+            animation: screen-shading-animations-showAnim 1s ease-in-out;
           }
 
           &.shown {
@@ -322,12 +330,96 @@
             display: block;
             transform: scale(1);
             opacity: 0;
-            animation: hideAnim .7s ease-in-out;
+            animation: screen-shading-animations-hideAnim 2s ease-in-out;
+          }
+        }
+
+        .screen-circular-highlight-animations {
+          &.hidden {
+            display: none;
+            opacity: 0;
+          }
+
+          &.show {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: screen-circular-highlight-animations-showAnim 1.25s ease-in-out;
+          }
+
+          &.shown {
+            display: block;
+            opacity: 1;
+          }
+
+          &.hide {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: screen-circular-highlight-animations-hideAnim 1.75s ease-in-out;
+          }
+        }
+
+        .selected-product-image-area-animations {
+          &.hidden {
+            display: none;
+            opacity: 0;
+          }
+
+          &.show {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            top: 0px;
+            bottom: 0px;
+            animation: selected-product-image-area-animations-showAnim 2s ease-in-out;
+          }
+
+          &.shown {
+            display: block;
+            opacity: 1;
+          }
+
+          &.hide {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            top: 10%;
+            animation: selected-product-image-area-animations-hideAnim 1s ease-in-out;
+          }
+        }
+
+        .selected-product-information-area-animations {
+          &.hidden {
+            display: none;
+            opacity: 0;
+          }
+
+          &.show {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            top: 0px;
+            bottom: 0px;
+            animation: selected-product-information-area-animations-showAnim 2.5s ease-in-out;
+          }
+
+          &.shown {
+            display: block;
+            opacity: 1;
+          }
+
+          &.hide {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            top: 10%;
+            animation: selected-product-information-area-animations-hideAnim 0.75s ease-in-out;
           }
         }
 
 
-        @keyframes showAnim {
+        @keyframes screen-shading-animations-showAnim {
           0% {
             display: none;
             opacity: 0;
@@ -341,7 +433,7 @@
           }
         }
 
-        @keyframes hideAnim {
+        @keyframes screen-shading-animations-hideAnim {
           0% {
             opacity: 1;
             display: block;
@@ -354,6 +446,112 @@
 
           100% {
             display: none;
+          }
+        }
+
+        @keyframes screen-circular-highlight-animations-showAnim {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          30% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        @keyframes screen-circular-highlight-animations-hideAnim {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        @keyframes selected-product-image-area-animations-showAnim {
+          0% {
+            display: none;
+            opacity: 0;
+            top: 10%;
+          }
+          50% {
+            display: block;
+            opacity: 0;
+            top: 10%;
+          }
+          100% {
+            opacity: 1;
+            top: 0px;
+            bottom: 0px;
+          }
+        }
+
+        @keyframes selected-product-image-area-animations-hideAnim {
+          0% {
+            opacity: 1;
+            display: block;
+            top: 0px;
+            bottom: 0px;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+            top: 10%;
+          }
+
+          100% {
+            display: none;
+            top: 10%;
+          }
+        }
+
+        @keyframes selected-product-information-area-animations-showAnim {
+          0% {
+            display: none;
+            opacity: 0;
+            top: 10%;
+          }
+          50% {
+            display: block;
+            opacity: 0;
+            top: 10%;
+          }
+          100% {
+            opacity: 1;
+            top: 0px;
+            bottom: 0px;
+          }
+        }
+
+        @keyframes selected-product-information-area-animations-hideAnim {
+          0% {
+            opacity: 1;
+            display: block;
+            top: 0px;
+            bottom: 0px;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+            top: 10%;
+          }
+
+          100% {
+            display: none;
+            top: 10%;
           }
         }
 

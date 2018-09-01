@@ -21,55 +21,84 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public products1: Product[];
     public products2: Product[];
 
-    public topLeftNav: string = "assets/img/Button-On-Left.png";
-    public topRightNav: string = "assets/img/Button-On-Right.png";
-    public bottomLeftNav: string = "assets/img/Button-On-Left.png";
-    public bottomRightNav: string = "assets/img/Button-On-Right.png";
-    public topLeftNavDisabled: string = "block";
-    public topRightNavDisabled: string = "block";
-    public bottomLeftNavDisabled: string = "block";
-    public bottomRightNavDisabled: string = "block";
-    public snapDisabled: string = "false";
-    public productHidden: boolean = true;
-    public productSelectedAnimation: boolean = false;
-    public productShown: boolean = false;
-    public productCanceledAnimation: boolean = false;
+    public topLeftNav = "assets/img/Button-On-Left.png";
+    public topRightNav = "assets/img/Button-On-Right.png";
+    public bottomLeftNav = "assets/img/Button-On-Left.png";
+    public bottomRightNav = "assets/img/Button-On-Right.png";
+    public topLeftNavDisabled = "block";
+    public topRightNavDisabled = "block";
+    public bottomLeftNavDisabled = "block";
+    public bottomRightNavDisabled = "block";
+    public snapDisabled = "false";
+    public productHidden = true;
+    public productSelectedAnimation = false;
+    public productShown = false;
+    public productCanceledAnimation = false;
 
-    /* each attribute already exists in product and so is redundant to have global variables for
+    
+    public screenShadingProductHidden = true;
+    public screenShadingProductSelectedAnimationActive = false;
+    public screenShadingProductShown = false;
+    public screenShadingProductCanceledAnimationActive = false;
+    public screenCircularHighlightProductHidden = true;
+    public screenCircularHighlightProductSelectedAnimationActive = false;
+    public screenCircularHighlightProductShown = false;
+    public screenCircularHighlightProductCanceledAnimationActive = false;
+
+   
+    public selectedProductImageAreaProductHidden = true;
+    public selectedProductImageAreaProductSelectedAnimationActive = false;
+    public selectedProductImageAreaProductShown = false;
+    public selectedProductImageAreaProductCanceledAnimationActive = false;
+    public selectedProductInformationAreaProductHidden = true;
+    public selectedProductInformationAreaProductSelectedAnimationActive = false;
+    public selectedProductInformationAreaProductShown = false;
+    public selectedProductInformationAreaProductCanceledAnimationActive = false;
+
+     /* each attribute already exists in product and so is redundant to have global variables for
     public selectedProductImage: string = "";
     public selectedProductName: string = "";
     public selectedProductDescription: string = "";
     public selectedProductPrice: Money = {};
     */
-    public selectedProduct: Product = {} as Product;
 
-    public selectedProductDescriptionFontSize: string = "";
-    public selectedProductQuantityWanted: number = 0;
+    public selectedProduct: Product;
 
-    public minusButton: string = "assets/img/Minus-Button.png";
-    public plusButton: string = "assets/img/Plus-Button.png";
+    public selectedProductDescriptionFontSize = "";
+    public selectedProductQuantityWanted = 0;
+
+    public minusButton = "assets/img/Minus-Button.png";
+    public plusButton = "assets/img/Plus-Button.png";
+    public cancelButton = "assets/img/Button-175.png";
+    public cancelButtonClicked = false;
+    public purchaseButton = "assets/img/Button-225.png";
+    public purchaseButtonClicked = false;
 
     constructor() {
         this.loadProducts1().then( result => {
             this.products1 = result;
-            console.log(result);
         });
         this.loadProducts2().then( result => {
             this.products2 = result;
-            console.log(result);
         });
     }
 
     async loadProducts1(): Promise<Product[]> {
         let products1 = new Array<Product>();
-        let i: number = 0;
+        let i = 0;
         const readdir = promisify(fs.readdir);
         const contents = await readdir('./src/products');
         for (let content of contents) {
-            if (i % 2 == 0) {
+            if (i % 2 === 0) {
               let product = require(`products/${content}/data.json`) as Product;
-              product.price = new Money(product.price);
-              console.log(product.price);
+
+              // create Money (Dinero) object from product data 'price' object
+              try {
+                product.price = new Money(product.price);
+              } catch (error) {
+                console.log(`Error parsing product price: ${error}`);
+              }
+
               product.smallImg = `products/${content}/${product.smallImg}`;
               product.largeImg = `products/${content}/${product.largeImg}`;
               products1.push(product);
@@ -82,13 +111,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     async loadProducts2(): Promise<Product[]> {
         let products2 = new Array<Product>();
-        let i: number = 0;
+        let i = 0;
         const readdir = promisify(fs.readdir);
         const contents = await readdir('./src/products');
         for (let content of contents) {
-            if (i % 2 == 1) {
+            if (i % 2 === 1) {
               let product = require(`products/${content}/data.json`) as Product;
-              product.price = new Money(product.price);
+              
+              // create Money (Dinero) object from product data 'price' object
+              try {
+                product.price = new Money(product.price);
+              } catch (error) {
+                console.log(`Error parsing product price: ${error}`);
+              }
+
               product.smallImg = `products/${content}/${product.smallImg}`;
               product.largeImg = `products/${content}/${product.largeImg}`;
               products2.push(product);
@@ -120,7 +156,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     topLeftBoundStat(reachesLeftBound: boolean) {
-      if (reachesLeftBound == true) {
+      if (reachesLeftBound === true) {
         this.topLeftNavDisabled = "none";
       } else {
         this.topLeftNavDisabled = "block";
@@ -140,7 +176,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     topRightBoundStat(reachesRightBound: boolean) {
-      if (reachesRightBound == true) {
+      if (reachesRightBound === true) {
         this.topRightNavDisabled = "none";
       } else {
         this.topRightNavDisabled = "block";
@@ -160,7 +196,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     bottomLeftBoundStat(reachesLeftBound: boolean) {
-      if (reachesLeftBound == true) {
+      if (reachesLeftBound === true) {
         this.bottomLeftNavDisabled = "none";
       } else {
         this.bottomLeftNavDisabled = "block";
@@ -180,7 +216,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     bottomRightBoundStat(reachesRightBound: boolean) {
-      if (reachesRightBound == true) {
+      if (reachesRightBound === true) {
         this.bottomRightNavDisabled = "none";
       } else {
         this.bottomRightNavDisabled = "block";
@@ -207,13 +243,40 @@ export class HomeComponent implements OnInit, AfterViewInit {
           + (this.selectedProduct.description.length / 100.0)) + `px`;
     }
 
-    selectedProductAnimation(): void {
-      this.productHidden = false;
-      this.productSelectedAnimation = true;
+    screenShadingSelectedProductAnimation(): void {
+      this.screenShadingProductHidden = false;
+      this.screenShadingProductSelectedAnimationActive = true;
       setTimeout(() => {
-        this.productShown = true;
-        this.productSelectedAnimation = false;
-      }, 700);
+        this.screenShadingProductShown = true;
+        this.screenShadingProductSelectedAnimationActive = false;
+      }, 1000);
+    }
+
+    screenCircularHighlightSelectedProductAnimation(): void {
+      this.screenCircularHighlightProductHidden = false;
+      this.screenCircularHighlightProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.screenCircularHighlightProductShown = true;
+        this.screenCircularHighlightProductSelectedAnimationActive = false;
+      }, 1250);
+    }
+
+    selectedProductImageAreaSelectedProductAnimation(): void {
+      this.selectedProductImageAreaProductHidden = false;
+      this.selectedProductImageAreaProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.selectedProductImageAreaProductShown = true;
+        this.selectedProductImageAreaProductSelectedAnimationActive = false;
+      }, 2000);
+    }
+
+    selectedProductInformationAreaSelectedProductAnimation(): void {
+      this.selectedProductInformationAreaProductHidden = false;
+      this.selectedProductInformationAreaProductSelectedAnimationActive = true;
+      setTimeout(() => {
+        this.selectedProductInformationAreaProductShown = true;
+        this.selectedProductInformationAreaProductSelectedAnimationActive = false;
+      }, 2500);
     }
 
     decreaseQuantityWanted(): void {
@@ -250,13 +313,78 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.plusButton = "assets/img/Plus-Button.png";
     }
 
-    canceledProductAnimation(): void {
-      this.productShown = false;
-      this.productCanceledAnimation = true;
-      setTimeout(() => {
-        this.productCanceledAnimation = false;
-        this.productHidden = true;
-      }, 700);
+    screenShadingCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown === true) {
+        this.screenShadingProductShown = false;
+        this.screenShadingProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.screenShadingProductHidden = true;
+          this.screenShadingProductCanceledAnimationActive = false;
+        }, 2000);
+      }
+    }
+
+    screenCircularHighlightCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown === true) {
+        this.screenCircularHighlightProductShown = false;
+        this.screenCircularHighlightProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.screenCircularHighlightProductHidden = true;
+          this.screenCircularHighlightProductCanceledAnimationActive = false;
+        }, 1750);
+      }
+    }
+
+    selectedProductImageAreaCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown === true) {
+        this.selectedProductImageAreaProductShown = false;
+        this.selectedProductImageAreaProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.selectedProductImageAreaProductHidden = true;
+          this.selectedProductImageAreaProductCanceledAnimationActive = false;
+        }, 1000);
+      }
+    }
+
+    selectedProductInformationAreaCanceledProductAnimation(): void {
+      if (this.selectedProductInformationAreaProductShown === true) {
+        this.selectedProductInformationAreaProductShown = false;
+        this.selectedProductInformationAreaProductCanceledAnimationActive = true;
+        setTimeout(() => {
+          this.selectedProductInformationAreaProductHidden = true;
+          this.selectedProductInformationAreaProductCanceledAnimationActive = false;
+        }, 750);
+      }
+    }
+
+    cancelButtonMouseDown(): void {
+      this.cancelButton = "assets/img/Button-175-Pressed.png";
+      this.cancelButtonClicked = true;
+    }
+
+    cancelButtonMouseUp(): void {
+      this.cancelButton = "assets/img/Button-175.png";
+      this.cancelButtonClicked = false;
+    }
+
+    cancelButtonMouseLeave(): void {
+      this.cancelButton = "assets/img/Button-175.png";
+      this.cancelButtonClicked = false;
+    }
+
+    purchaseButtonMouseDown(): void {
+      this.purchaseButton = "assets/img/Button-225-Pressed.png";
+      this.purchaseButtonClicked = true;
+    }
+
+    purchaseButtonMouseUp(): void {
+      this.purchaseButton = "assets/img/Button-225.png";
+      this.purchaseButtonClicked = false;
+    }
+
+    purchaseButtonMouseLeave(): void {
+      this.purchaseButton = "assets/img/Button-225.png";
+      this.purchaseButtonClicked = false;
     }
 
     ngOnInit() {
