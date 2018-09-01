@@ -3,7 +3,10 @@
     "name": "Coka Cola Zero",
     "smallImg": "Small-Green-Bar.png",
     "largeImg": "Large-Green-Bar.png",
-    "price": {},
+    "price": {
+        "amount": 150,
+        "currency": "USD"
+    },
     "description": "Coka-Cola brand cola. The sweet, smooth taste you love, now with 0 calories!",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }

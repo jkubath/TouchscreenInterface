@@ -3,7 +3,10 @@
     "name": "Coka Cola",
     "smallImg": "Small-Yellow-Bag.png",
     "largeImg": "Large-Yellow-Bag.png",
-    "price": {},
+    "price": {
+        "amount": 150,
+        "currency": "USD"
+    },
     "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

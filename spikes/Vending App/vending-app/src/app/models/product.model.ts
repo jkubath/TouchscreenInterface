@@ -1,13 +1,11 @@
-import { Dinero as Money } from 'dinero';
+import { Dinero as Money } from 'dinero.js';
 
-export class Product {
-    public id: string;
-    public name: string;
-    public smallImg: string;
-    public largeImg: string;
-    public price: Money;
-    public description: string;
-    public nutrition: string;
-
-    constructor() {}
+export interface Product {
+    id: string;
+    name: string;
+    smallImg: string;
+    largeImg: string;
+    price: Money;
+    description: string;
+    nutrition: string;
 }

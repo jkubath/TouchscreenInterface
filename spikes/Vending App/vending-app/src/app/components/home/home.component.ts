@@ -5,6 +5,8 @@ import { promisify } from 'util';
 import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
+import Money from 'dinero.js';
+
 
 @Component({
     selector: 'app-home',
@@ -32,11 +34,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productSelectedAnimation: boolean = false;
     public productShown: boolean = false;
     public productCanceledAnimation: boolean = false;
+
+    /* each attribute already exists in product and so is redundant to have global variables for
     public selectedProductImage: string = "";
     public selectedProductName: string = "";
     public selectedProductDescription: string = "";
+    public selectedProductPrice: Money = {};
+    */
+    public selectedProduct: Product = {} as Product;
+
     public selectedProductDescriptionFontSize: string = "";
     public selectedProductQuantityWanted: number = 0;
+
     public minusButton: string = "assets/img/Minus-Button.png";
     public plusButton: string = "assets/img/Plus-Button.png";
 
@@ -59,6 +68,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         for (let content of contents) {
             if (i % 2 == 0) {
               let product = require(`products/${content}/data.json`) as Product;
+              product.price = new Money(product.price);
+              console.log(product.price);
               product.smallImg = `products/${content}/${product.smallImg}`;
               product.largeImg = `products/${content}/${product.largeImg}`;
               products1.push(product);
@@ -77,6 +88,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         for (let content of contents) {
             if (i % 2 == 1) {
               let product = require(`products/${content}/data.json`) as Product;
+              product.price = new Money(product.price);
               product.smallImg = `products/${content}/${product.smallImg}`;
               product.largeImg = `products/${content}/${product.largeImg}`;
               products2.push(product);
@@ -187,28 +199,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.bottomRightNav = "assets/img/Button-On-Right.png";
     }
 
-    selectProduct(id: string): void {
+    selectProduct(product: Product): void {
         this.snapDisabled = "true";
         this.selectedProductQuantityWanted = 1;
-
-        for (let product of this.products1) {
-          if (product.id == id) {
-            this.selectedProductImage = `${product.largeImg}`;
-            this.selectedProductName = `${product.name}`;
-            this.selectedProductDescription = `${product.description}`;
-            this.selectedProductDescriptionFontSize = (41.0 - 1.5 * Math.sqrt(this.selectedProductDescription.length) + (this.selectedProductDescription.length / 100.0)) + `px`;
-          }
-        }
-        for (let product of this.products2) {
-          if (product.id == id) {
-            this.selectedProductImage = `${product.largeImg}`;
-            this.selectedProductName = `${product.name}`;
-            this.selectedProductDescription = `${product.description}`;
-            this.selectedProductDescriptionFontSize = (41.0 - 1.5 * Math.sqrt(this.selectedProductDescription.length) + (this.selectedProductDescription.length / 100.0)) + `px`;
-          }
-        }
-
-        console.log(id);
+        this.selectedProduct = product;
+        this.selectedProductDescriptionFontSize = (41.0 - 1.5 * Math.sqrt(this.selectedProduct.description.length)
+          + (this.selectedProduct.description.length / 100.0)) + `px`;
     }
 
     selectedProductAnimation(): void {

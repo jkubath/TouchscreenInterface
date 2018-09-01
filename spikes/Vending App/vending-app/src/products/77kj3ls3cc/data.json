@@ -3,7 +3,10 @@
     "name": "Pepsi Cola",
     "smallImg": "Small-Red-Bottle.png",
     "largeImg": "Large-Red-Bottle.png",
-    "price": {},
+    "price": {
+        "amount": 125,
+        "currency": "USD"
+    },
     "description": "Pepsi brand cola. The sweet, smooth taste you love.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }
