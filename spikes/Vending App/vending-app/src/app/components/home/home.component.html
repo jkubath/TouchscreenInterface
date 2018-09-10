@@ -1,61 +1,164 @@
 <div class="container">
-    <div class="page-content">
-        <img class="behind-product" src="assets/img/Behind-Product.png">
-        <div class="top-product-carousel" drag-scroll-y-disabled="true">
-          <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="topLeftBoundStat($event)" (reachesRightBound)="topRightBoundStat($event)" #topScroller>
-            <div drag-scroll-item *ngFor="let product of products1; let i = index">
-                <div class="product" (click)="selectProduct(product); screenShadingSelectedProductAnimation(); screenCircularHighlightSelectedProductAnimation(); selectedProductImageAreaSelectedProductAnimation(); selectedProductInformationAreaSelectedProductAnimation()">
-                    <img class="product-image" [src]="product.smallImg">
-                </div>
-            </div>
-          </drag-scroll>
-        </div>
-        <div class="bottom-product-carousel" drag-scroll-y-disabled="true">
-          <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="bottomLeftBoundStat($event)" (reachesRightBound)="bottomRightBoundStat($event)" #bottomScroller>
-            <div drag-scroll-item *ngFor="let product of products2; let i = index">
-                <div class="product" (click)="selectProduct(product); screenShadingSelectedProductAnimation(); screenCircularHighlightSelectedProductAnimation(); selectedProductImageAreaSelectedProductAnimation(); selectedProductInformationAreaSelectedProductAnimation()">
-                    <img class="product-image" [src]="product.smallImg">
-                </div>
-            </div>
-          </drag-scroll>
-        </div>
-
-        <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
-        <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
-        <img class="top-scroll-left-button-off" src="assets/img/Button-Off-Left.png">
-        <img class="top-scroll-left-button-on" [src]="topLeftNav" [style.display]="topLeftNavDisabled" (click)="topScrollLeft()" (mousedown)="topLeftNavMouseDown()" (mouseup)="topLeftNavMouseUp()" (mouseleave)="topLeftNavMouseLeave()">
-        <img class="top-scroll-right-button-off" src="assets/img/Button-Off-Right.png">
-        <img class="top-scroll-right-button-on" [src]="topRightNav" [style.display]="topRightNavDisabled" (click)="topScrollRight()" (mousedown)="topRightNavMouseDown()" (mouseup)="topRightNavMouseUp()" (mouseleave)="topRightNavMouseLeave()">
-        <img class="bottom-scroll-left-button-off" src="assets/img/Button-Off-Left.png">
-        <img class="bottom-scroll-left-button-on" [src]="bottomLeftNav" [style.display]="bottomLeftNavDisabled" (click)="bottomScrollLeft()" (mousedown)="bottomLeftNavMouseDown()" (mouseup)="bottomLeftNavMouseUp()" (mouseleave)="bottomLeftNavMouseLeave()">
-        <img class="bottom-scroll-right-button-off" src="assets/img/Button-Off-Right.png">
-        <img class="bottom-scroll-right-button-on" [src]="bottomRightNav" [style.display]="bottomRightNavDisabled" (click)="bottomScrollRight()" (mousedown)="bottomRightNavMouseDown()" (mouseup)="bottomRightNavMouseUp()" (mouseleave)="bottomRightNavMouseLeave()">
-
-
-        <!-- ngif directive used to only render following code if product was selected. Required to prevent errors caused by accesses to null data-->
-        <div *ngIf="selectedProduct" class="product-selection">
-            <img [class.hidden]="screenShadingProductHidden" [class.show]="screenShadingProductSelectedAnimationActive" [class.shown]="screenShadingProductShown" [class.hide]="screenShadingProductCanceledAnimationActive" class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png">
-            <img [class.hidden]="screenCircularHighlightProductHidden" [class.show]="screenCircularHighlightProductSelectedAnimationActive" [class.shown]="screenCircularHighlightProductShown" [class.hide]="screenCircularHighlightProductCanceledAnimationActive" class="screen-circular-highlight-animations screen-circular-highlight" src="assets/img/Screen-Circular-Highlight.png">
-            <div [class.hidden]="selectedProductImageAreaProductHidden" [class.show]="selectedProductImageAreaProductSelectedAnimationActive" [class.shown]="selectedProductImageAreaProductShown" [class.hide]="selectedProductImageAreaProductCanceledAnimationActive" class="selected-product-image-area-animations selected-product-image-area">
-              <img class="selected-product-image" [src]="selectedProductImage">
-            </div>
-
-            <div [class.hidden]="selectedProductInformationAreaProductHidden" [class.show]="selectedProductInformationAreaProductSelectedAnimationActive" [class.shown]="selectedProductInformationAreaProductShown" [class.hide]="selectedProductInformationAreaProductCanceledAnimationActive" class="selected-product-information-area-animations selected-product-information-area">
-                <p class="selected-product-name">{{ selectedProduct.name }}</p>
-                <p class="selected-product-description" [style.font-size]="selectedProductDescriptionFontSize">{{ selectedProduct.description }}</p>
-                <p class="selected-product-price">Price: {{ selectedProduct.price.toFormat('$0,0.00') }}</p>
-
-              <img class="information-separator" src="assets/img/Information-Separator.png">
-              <img class="minus-button" [src]="minusButton" (click)="decreaseQuantityWanted()" (mousedown)="minusButtonMouseDown()" (mouseup)="minusButtonMouseUp()" (mouseleave)="minusButtonMouseLeave()">
-              <p class="selected-product-quantity-wanted">{{ selectedProductQuantityWanted }}</p>
-              <img class="plus-button" [src]="plusButton" (click)="increaseQuantityWanted()" (mousedown)="plusButtonMouseDown()" (mouseup)="plusButtonMouseUp()" (mouseleave)="plusButtonMouseLeave()">
-
-              <p class="selected-product-total-price">Total: {{ (selectedProduct.price.multiply(selectedProductQuantityWanted)).toFormat('$0,0.00') }}</p>
-              <img class="cancel-button" [src]="cancelButton" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">
-              <p [class.cancel-button-clicked]="cancelButtonClicked" class="cancel-text" (click)="screenShadingCanceledProductAnimation(); screenCircularHighlightCanceledProductAnimation(); selectedProductImageAreaCanceledProductAnimation(); selectedProductInformationAreaCanceledProductAnimation()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">Cancel</p>
-              <img class="purchase-button" [src]="purchaseButton" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">
-              <p [class.purchase-button-clicked]="purchaseButtonClicked" class="purchase-text" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">Purchase</p>
+  <div class="page-content">
+    <img class="behind-product" src="assets/img/Behind-Product.png">
+    <div class="top-product-carousel" drag-scroll-y-disabled="true">
+      <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="topLeftBoundStat($event)" (reachesRightBound)="topRightBoundStat($event)" #topScroller>
+        <div drag-scroll-item *ngFor="let product of productsTopRow; let i = index">
+          <div class="product" (click)="selectProduct(product)">
+            <img class="product-image" [src]="product.smallImg">
           </div>
         </div>
+      </drag-scroll>
     </div>
+    <div class="bottom-product-carousel" drag-scroll-y-disabled="true">
+      <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled" (reachesLeftBound)="bottomLeftBoundStat($event)" (reachesRightBound)="bottomRightBoundStat($event)" #bottomScroller>
+        <div drag-scroll-item *ngFor="let product of productsBottomRow; let i = index">
+          <div class="product" (click)="selectProduct(product)">
+            <img class="product-image" [src]="product.smallImg">
+          </div>
+        </div>
+      </drag-scroll>
+    </div>
+
+    <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
+    <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
+    <img class="top-left-nav-button-off" src="assets/img/Button-Off-Left.png" (click)="topLeftNavPassword()">
+    <img class="top-left-nav-button-on" [src]="topLeftNavSource" *ngIf="topLeftNavEnabled" (click)="topLeftNavClick(); topLeftNavPassword()" (mousedown)="topLeftNavMouseDown()" (mouseup)="topLeftNavMouseUp()" (mouseleave)="topLeftNavMouseLeave()">
+    <img class="top-right-nav-button-off" src="assets/img/Button-Off-Right.png" (click)="topRightNavPassword()">
+    <img class="top-right-nav-button-on" [src]="topRightNavSource" *ngIf="topRightNavEnabled" (click)="topRightNavClick(); topRightNavPassword()" (mousedown)="topRightNavMouseDown()" (mouseup)="topRightNavMouseUp()" (mouseleave)="topRightNavMouseLeave()">
+    <img class="bottom-left-nav-button-off" src="assets/img/Button-Off-Left.png" (click)="bottomLeftNavPassword()">
+    <img class="bottom-left-nav-button-on" [src]="bottomLeftNavSource" *ngIf="bottomLeftNavEnabled" (click)="bottomLeftNavClick(); bottomLeftNavPassword()" (mousedown)="bottomLeftNavMouseDown()" (mouseup)="bottomLeftNavMouseUp()" (mouseleave)="bottomLeftNavMouseLeave()">
+    <img class="bottom-right-nav-button-off" src="assets/img/Button-Off-Right.png" (click)="bottomRightNavPassword()">
+    <img class="bottom-right-nav-button-on" [src]="bottomRightNavSource" *ngIf="bottomRightNavEnabled" (click)="bottomRightNavClick(); bottomRightNavPassword()" (mousedown)="bottomRightNavMouseDown()" (mouseup)="bottomRightNavMouseUp()" (mouseleave)="bottomRightNavMouseLeave()">
+
+    <!-- Product Selection -->
+    <!-- ngif directive used to only render following code if product was selected. Required to prevent errors caused by accesses to null data-->
+    <div *ngIf="selectedProduct" class="product-selection">
+      <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="productSelectionScreenShadingAnimation.out" [class.transitionIn]="productSelectionScreenShadingAnimation.transitionIn" [class.in]="productSelectionScreenShadingAnimation.in" [class.transitionOut]="productSelectionScreenShadingAnimation.transitionOut">
+      <img class="screen-lighting-animations screen-lighting" src="assets/img/Screen-Circular-Highlight.png" [class.out]="screenLightingAnimation.out" [class.transitionIn]="screenLightingAnimation.transitionIn" [class.in]="screenLightingAnimation.in" [class.transitionOut]="screenLightingAnimation.transitionOut">
+      <div class="selected-product-image-animations selected-product-image" [class.out]="selectedProductImageAnimation.out" [class.transitionIn]="selectedProductImageAnimation.transitionIn" [class.in]="selectedProductImageAnimation.in" [class.transitionOut]="selectedProductImageAnimation.transitionOut">
+        <img class="selected-product-image-largeImg" [src]="selectedProduct.largeImg">
+      </div>
+
+      <div class="selected-product-information-animations selected-product-information" [class.out]="selectedProductInformationAnimation.out" [class.transitionIn]="selectedProductInformationAnimation.transitionIn" [class.in]="selectedProductInformationAnimation.in" [class.transitionOut]="selectedProductInformationAnimation.transitionOut">
+        <p class="selected-product-name">{{ selectedProduct.name }}</p>
+        <p class="selected-product-description" [style.font-size]="selectedProductDescriptionFontSize">{{ selectedProduct.description }}</p>
+        <p class="selected-product-price">Price: {{ selectedProduct.price.toFormat('$0,0.00') }}</p>
+
+        <img class="information-separator" src="assets/img/Information-Separator.png">
+        <img class="minus-button" [class.atMin]="selectedProductQuantityWantedAtMin" [src]="minusButton" (click)="decreaseQuantityWanted()" (mousedown)="minusButtonMouseDown()" (mouseup)="minusButtonMouseUp()" (mouseleave)="minusButtonMouseLeave()">
+        <p class="selected-product-quantity-wanted" [class.outOfStock]="selectedProductOutOfStock">{{ selectedProductQuantityWanted }}</p>
+        <img class="plus-button" [class.atMax]="selectedProductQuantityWantedAtMax" [src]="plusButton" (click)="increaseQuantityWanted()" (mousedown)="plusButtonMouseDown()" (mouseup)="plusButtonMouseUp()" (mouseleave)="plusButtonMouseLeave()">
+
+        <p class="selected-product-total-price" [class.outOfStock]="selectedProductOutOfStock">Total: {{ (selectedProduct.price.multiply(selectedProductQuantityWanted)).toFormat('$0,0.00') }}</p>
+        <p class="selected-product-out-of-stock" [class.outOfStock]="selectedProductOutOfStock">Out of Stock</p>
+        <img class="cancel-button" [src]="cancelButton" (click)="cancelProduct()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">
+        <p class="cancel-text" [class.cancel-button-pressed]="cancelButtonPressed" (click)="cancelProduct()" (mousedown)="cancelButtonMouseDown()" (mouseup)="cancelButtonMouseUp()" (mouseleave)="cancelButtonMouseLeave()">Cancel</p>
+        <img class="purchase-button" [class.outOfStock]="selectedProductOutOfStock" [src]="purchaseButton" (click)="purchaseProduct()" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">
+        <p class="purchase-text" [class.purchase-button-pressed]="purchaseButtonPressed" [class.outOfStock]="selectedProductOutOfStock" (click)="purchaseProduct()" (mousedown)="purchaseButtonMouseDown()" (mouseup)="purchaseButtonMouseUp()" (mouseleave)="purchaseButtonMouseLeave()">Purchase</p>
+      </div>
+    </div>
+
+    <!-- Product Editing -->
+    <!-- ngif directive used to only render following code if product was selected. Required to prevent errors caused by accesses to null data-->
+    <div *ngIf="enteringUserIDAndPassword" class="information-entry-and-product-editing">
+      <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="informationEntryScreenShadingAnimation.out" [class.transitionIn]="informationEntryScreenShadingAnimation.transitionIn" [class.in]="informationEntryScreenShadingAnimation.in" [class.transitionOut]="informationEntryScreenShadingAnimation.transitionOut">
+      <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="informationEntryScreenShadingAnimation.out" [class.transitionIn]="informationEntryScreenShadingAnimation.transitionIn" [class.in]="informationEntryScreenShadingAnimation.in" [class.transitionOut]="informationEntryScreenShadingAnimation.transitionOut">
+      <!-- This is where user will enter user ID (which allows us to know the specific user
+             and know which password to look for) -->
+      <div class="user-id-and-password-entry-animations user-id-and-password-entry" [class.out]="userIDAndPasswordEntryAnimation.out" [class.transitionIn]="userIDAndPasswordEntryAnimation.transitionIn" [class.in]="userIDAndPasswordEntryAnimation.in" [class.transitionOut]="userIDAndPasswordEntryAnimation.transitionOut">
+        <img class="user-id-and-password-entry-area" src="assets/img/Information-Entry-820.png">
+        <div class="user-id-and-password-chars">
+          <p class="user-id-and-password-char-1" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[0] }}</p>
+          <p class="user-id-and-password-char-2" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[1] }}</p>
+          <p class="user-id-and-password-char-3" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[2] }}</p>
+          <p class="user-id-and-password-char-4" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[3] }}</p>
+          <p class="user-id-and-password-char-5" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[4] }}</p>
+          <p class="user-id-and-password-char-6" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[5] }}</p>
+          <p class="user-id-and-password-char-7" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[6] }}</p>
+          <p class="user-id-and-password-char-8" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[7] }}</p>
+          <p class="user-id-and-password-char-9" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[8] }}</p>
+          <p class="user-id-and-password-char-10" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[9] }}</p>
+          <p class="user-id-and-password-char-11" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[10] }}</p>
+          <p class="user-id-and-password-char-12" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[11] }}</p>
+          <p class="user-id-and-password-char-13" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[12] }}</p>
+          <p class="user-id-and-password-char-14" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[13] }}</p>
+          <p class="user-id-and-password-char-15" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[14] }}</p>
+          <p class="user-id-and-password-char-16" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[15] }}</p>
+          <p class="user-id-and-password-char-17" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[16] }}</p>
+          <p class="user-id-and-password-char-18" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[17] }}</p>
+          <p class="user-id-and-password-char-19" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[18] }}</p>
+          <p class="user-id-and-password-char-20" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[19] }}</p>
+          <p class="user-id-and-password-char-21" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[20] }}</p>
+          <p class="user-id-and-password-char-22" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[21] }}</p>
+          <p class="user-id-and-password-char-23" [class.password-incorrect]="passwordIncorrect">{{ userIDAndPasswordChars[22] }}</p>
+        </div>
+        <p class="password-code" [class.not-entering-password]="!enteringPassword">{{ passwordSum }}</p>
+        <div class="user-id-and-password-buttons">
+          <img class="zero-button" [src]="zeroButton" (click)="zeroButtonClick()" (mousedown)="zeroButtonMouseDown()" (mouseup)="zeroButtonMouseUp()" (mouseleave)="zeroButtonMouseLeave()">
+          <p class="zero-text" [class.zero-button-pressed]="zeroButtonPressed" (click)="zeroButtonClick()" (mousedown)="zeroButtonMouseDown()" (mouseup)="zeroButtonMouseUp()" (mouseleave)="zeroButtonMouseLeave()">0</p>
+          <img class="one-button" [src]="oneButton" (click)="oneButtonClick()" (mousedown)="oneButtonMouseDown()" (mouseup)="oneButtonMouseUp()" (mouseleave)="oneButtonMouseLeave()">
+          <p class="one-text" [class.one-button-pressed]="oneButtonPressed" (click)="oneButtonClick()" (mousedown)="oneButtonMouseDown()" (mouseup)="oneButtonMouseUp()" (mouseleave)="oneButtonMouseLeave()">1</p>
+          <img class="two-button" [src]="twoButton" (click)="twoButtonClick()" (mousedown)="twoButtonMouseDown()" (mouseup)="twoButtonMouseUp()" (mouseleave)="twoButtonMouseLeave()">
+          <p class="two-text" [class.two-button-pressed]="twoButtonPressed" (click)="twoButtonClick()" (mousedown)="twoButtonMouseDown()" (mouseup)="twoButtonMouseUp()" (mouseleave)="twoButtonMouseLeave()">2</p>
+          <img class="three-button" [src]="threeButton" (click)="threeButtonClick()" (mousedown)="threeButtonMouseDown()" (mouseup)="threeButtonMouseUp()" (mouseleave)="threeButtonMouseLeave()">
+          <p class="three-text" [class.three-button-pressed]="threeButtonPressed" (click)="threeButtonClick()" (mousedown)="threeButtonMouseDown()" (mouseup)="threeButtonMouseUp()" (mouseleave)="threeButtonMouseLeave()">3</p>
+          <img class="four-button" [src]="fourButton" (click)="fourButtonClick()" (mousedown)="fourButtonMouseDown()" (mouseup)="fourButtonMouseUp()" (mouseleave)="fourButtonMouseLeave()">
+          <p class="four-text" [class.four-button-pressed]="fourButtonPressed" (click)="fourButtonClick()" (mousedown)="fourButtonMouseDown()" (mouseup)="fourButtonMouseUp()" (mouseleave)="fourButtonMouseLeave()">4</p>
+          <img class="five-button" [src]="fiveButton" (click)="fiveButtonClick()" (mousedown)="fiveButtonMouseDown()" (mouseup)="fiveButtonMouseUp()" (mouseleave)="fiveButtonMouseLeave()">
+          <p class="five-text" [class.five-button-pressed]="fiveButtonPressed" (click)="fiveButtonClick()" (mousedown)="fiveButtonMouseDown()" (mouseup)="fiveButtonMouseUp()" (mouseleave)="fiveButtonMouseLeave()">5</p>
+          <img class="six-button" [src]="sixButton" (click)="sixButtonClick()" (mousedown)="sixButtonMouseDown()" (mouseup)="sixButtonMouseUp()" (mouseleave)="sixButtonMouseLeave()">
+          <p class="six-text" [class.six-button-pressed]="sixButtonPressed" (click)="sixButtonClick()" (mousedown)="sixButtonMouseDown()" (mouseup)="sixButtonMouseUp()" (mouseleave)="sixButtonMouseLeave()">6</p>
+          <img class="seven-button" [src]="sevenButton" (click)="sevenButtonClick()" (mousedown)="sevenButtonMouseDown()" (mouseup)="sevenButtonMouseUp()" (mouseleave)="sevenButtonMouseLeave()">
+          <p class="seven-text" [class.seven-button-pressed]="sevenButtonPressed" (click)="sevenButtonClick()" (mousedown)="sevenButtonMouseDown()" (mouseup)="sevenButtonMouseUp()" (mouseleave)="sevenButtonMouseLeave()">7</p>
+          <img class="eight-button" [src]="eightButton" (click)="eightButtonClick()" (mousedown)="eightButtonMouseDown()" (mouseup)="eightButtonMouseUp()" (mouseleave)="eightButtonMouseLeave()">
+          <p class="eight-text" [class.eight-button-pressed]="eightButtonPressed" (click)="eightButtonClick()" (mousedown)="eightButtonMouseDown()" (mouseup)="eightButtonMouseUp()" (mouseleave)="eightButtonMouseLeave()">8</p>
+          <img class="nine-button" [src]="nineButton" (click)="nineButtonClick()" (mousedown)="nineButtonMouseDown()" (mouseup)="nineButtonMouseUp()" (mouseleave)="nineButtonMouseLeave()">
+          <p class="nine-text" [class.nine-button-pressed]="nineButtonPressed" (click)="nineButtonClick()" (mousedown)="nineButtonMouseDown()" (mouseup)="nineButtonMouseUp()" (mouseleave)="nineButtonMouseLeave()">9</p>
+          <img class="a-button" [src]="aButton" (click)="aButtonClick()" (mousedown)="aButtonMouseDown()" (mouseup)="aButtonMouseUp()" (mouseleave)="aButtonMouseLeave()">
+          <p class="a-text" [class.a-button-pressed]="aButtonPressed" (click)="aButtonClick()" (mousedown)="aButtonMouseDown()" (mouseup)="aButtonMouseUp()" (mouseleave)="aButtonMouseLeave()">A</p>
+          <img class="b-button" [src]="bButton" (click)="bButtonClick()" (mousedown)="bButtonMouseDown()" (mouseup)="bButtonMouseUp()" (mouseleave)="bButtonMouseLeave()">
+          <p class="b-text" [class.b-button-pressed]="bButtonPressed" (click)="bButtonClick()" (mousedown)="bButtonMouseDown()" (mouseup)="bButtonMouseUp()" (mouseleave)="bButtonMouseLeave()">B</p>
+          <img class="c-button" [src]="cButton" (click)="cButtonClick()" (mousedown)="cButtonMouseDown()" (mouseup)="cButtonMouseUp()" (mouseleave)="cButtonMouseLeave()">
+          <p class="c-text" [class.c-button-pressed]="cButtonPressed" (click)="cButtonClick()" (mousedown)="cButtonMouseDown()" (mouseup)="cButtonMouseUp()" (mouseleave)="cButtonMouseLeave()">C</p>
+          <img class="d-button" [src]="dButton" (click)="dButtonClick()" (mousedown)="dButtonMouseDown()" (mouseup)="dButtonMouseUp()" (mouseleave)="dButtonMouseLeave()">
+          <p class="d-text" [class.d-button-pressed]="dButtonPressed" (click)="dButtonClick()" (mousedown)="dButtonMouseDown()" (mouseup)="dButtonMouseUp()" (mouseleave)="dButtonMouseLeave()">D</p>
+          <img class="e-button" [src]="eButton" (click)="eButtonClick()" (mousedown)="eButtonMouseDown()" (mouseup)="eButtonMouseUp()" (mouseleave)="eButtonMouseLeave()">
+          <p class="e-text" [class.e-button-pressed]="eButtonPressed" (click)="eButtonClick()" (mousedown)="eButtonMouseDown()" (mouseup)="eButtonMouseUp()" (mouseleave)="eButtonMouseLeave()">E</p>
+          <img class="f-button" [src]="fButton" (click)="fButtonClick()" (mousedown)="fButtonMouseDown()" (mouseup)="fButtonMouseUp()" (mouseleave)="fButtonMouseLeave()">
+          <p class="f-text" [class.f-button-pressed]="fButtonPressed" (click)="fButtonClick()" (mousedown)="fButtonMouseDown()" (mouseup)="fButtonMouseUp()" (mouseleave)="fButtonMouseLeave()">F</p>
+          <img class="delete-button" [src]="deleteButton" (click)="deleteButtonClick()" (mousedown)="deleteButtonMouseDown()" (mouseup)="deleteButtonMouseUp()" (mouseleave)="deleteButtonMouseLeave()">
+          <p class="delete-text" [class.delete-button-pressed]="deleteButtonPressed" (click)="deleteButtonClick()" (mousedown)="deleteButtonMouseDown()" (mouseup)="deleteButtonMouseUp()" (mouseleave)="deleteButtonMouseLeave()">Delete</p>
+          <img class="enter-button" [src]="enterButton" (click)="enterButtonClick()" (mousedown)="enterButtonMouseDown()" (mouseup)="enterButtonMouseUp()" (mouseleave)="enterButtonMouseLeave()">
+          <p class="enter-text" [class.enter-button-pressed]="enterButtonPressed" (click)="enterButtonClick()" (mousedown)="enterButtonMouseDown()" (mouseup)="enterButtonMouseUp()" (mouseleave)="enterButtonMouseLeave()">Enter</p>
+          <img class="back-button" [src]="backButton" (click)="backButtonClick()" (mousedown)="backButtonMouseDown()" (mouseup)="backButtonMouseUp()" (mouseleave)="backButtonMouseLeave()">
+          <p class="back-text" [class.back-button-pressed]="backButtonPressed" [class.user-id-entered]="userIDEntered" (click)="backButtonClick()" (mousedown)="backButtonMouseDown()" (mouseup)="backButtonMouseUp()" (mouseleave)="backButtonMouseLeave()">Back</p>
+          <img class="past-info-button" [src]="pastInfoButton" [class.user-id-entered]="!enteringPassword" (click)="pastInfoButtonClick()" (mousedown)="pastInfoButtonMouseDown()" (mouseup)="pastInfoButtonMouseUp()" (mouseleave)="pastInfoButtonMouseLeave()">
+          <p class="past-info-text" [class.past-info-button-pressed]="pastInfoButtonPressed" [class.user-id-entered]="!enteringPassword" (click)="pastInfoButtonClick()" (mousedown)="pastInfoButtonMouseDown()" (mouseup)="pastInfoButtonMouseUp()" (mouseleave)="pastInfoButtonMouseLeave()">Past Info</p>
+          <div class="viewing-past-info" [class.not-viewing-past-info]="!viewingPastInfo">
+            <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="pastInfoScreenShadingAnimation.out" [class.transitionIn]="pastInfoScreenShadingAnimation.transitionIn" [class.in]="pastInfoScreenShadingAnimation.in" [class.transitionOut]="pastInfoScreenShadingAnimation.transitionOut">
+            <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="pastInfoScreenShadingAnimation.out" [class.transitionIn]="pastInfoScreenShadingAnimation.transitionIn" [class.in]="pastInfoScreenShadingAnimation.in" [class.transitionOut]="pastInfoScreenShadingAnimation.transitionOut">
+            <div class="past-info-animations past-info" [class.out]="pastInfoAnimation.out" [class.transitionIn]="pastInfoAnimation.transitionIn" [class.in]="pastInfoAnimation.in" [class.transitionOut]="pastInfoAnimation.transitionOut">
+              <p class="past-info-password-sum">{{ pastInfoPasswordSum }}</p>
+              <p class="past-info-password-check">{{ pastInfoPasswordCheck }}</p>
+              <img class="back-button-2" [src]="backButton2" (click)="backButton2Click()" (mousedown)="backButton2MouseDown()" (mouseup)="backButton2MouseUp()" (mouseleave)="backButton2MouseLeave()">
+              <p class="back-text-2" [class.back-button-2-pressed]="backButton2Pressed" (click)="backButton2Click()" (mousedown)="backButton2MouseDown()" (mouseup)="backButton2MouseUp()" (mouseleave)="backButton2MouseLeave()">Back</p>
+            </div>
+          </div>
+        </div>
+        <div class="password-check" [class.not-checking-password]="!checkingPassword">
+          <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="passwordCheckScreenShadingAnimation.out" [class.transitionIn]="passwordCheckScreenShadingAnimation.transitionIn" [class.in]="passwordCheckScreenShadingAnimation.in" [class.transitionOut]="passwordCheckScreenShadingAnimation.transitionOut">
+          <img class="screen-shading-animations screen-shading" src="assets/img/Screen-Shading.png" [class.out]="passwordCheckScreenShadingAnimation.out" [class.transitionIn]="passwordCheckScreenShadingAnimation.transitionIn" [class.in]="passwordCheckScreenShadingAnimation.in" [class.transitionOut]="passwordCheckScreenShadingAnimation.transitionOut">
+          <div class="password-check-info-animations password-check-info" [class.out]="passwordCheckInfoAnimation.out" [class.transitionIn]="passwordCheckInfoAnimation.transitionIn" [class.in]="passwordCheckInfoAnimation.in" [class.transitionOut]="passwordCheckInfoAnimation.transitionOut">
+            <p class="password-check-code">{{ passwordCheck }}</p>
+            <img class="continue-button" [src]="continueButton" (click)="continueButtonClick()" (mousedown)="continueButtonMouseDown()" (mouseup)="continueButtonMouseUp()" (mouseleave)="continueButtonMouseLeave()">
+            <p class="continue-text" [class.continue-button-pressed]="continueButtonPressed" (click)="continueButtonClick()" (mousedown)="continueButtonMouseDown()" (mouseup)="continueButtonMouseUp()" (mouseleave)="continueButtonMouseLeave()">Continue</p>
+          </div>
+        </div>
+      </div>
+      <div class="product-editing">
+        <!-- This is where the user will look through the products and edit their information -->
+      </div>
+    </div>
+  </div>
 </div>

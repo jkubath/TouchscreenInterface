@@ -1,534 +1,1616 @@
 .container {
+  /* Change color of selection to transparent (instead of the common default blue) */
+  ::-moz-selection {
+    background-color: Transparent;
+  }
 
+  ::selection {
+    background-color: Transparent;
+  }
+
+  .page-content {
+    /* Image the goes behind the products (back of vending machine) */
     .behind-product {
-      position: absolute;
+      position: fixed;
       left: 0em;
       top: 0em;
       z-index: -1;
       pointer-events: none;
     }
 
+    /* Products on top shelf of the vending machine */
+    .top-product-carousel {
+      left: 195px;
+      bottom: 370px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+      width: 690px;
+      height: 180px;
+      position: fixed;
+    }
+
+    /* Products on bottom shelf of the vending machine */
+    .bottom-product-carousel {
+      left: 195px;
+      bottom: 130px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+      width: 690px;
+      height: 180px;
+      position: fixed;
+    }
+
+    /* General class for both carousels */
+    .product-carousel {
+      width: 690px;
+      height: 180px;
+      text-align: center;  // Centers the products
+      overflow: auto hidden;
+      white-space: nowrap;
+      display: block;
+      height: calc(100% + 15px);
+      width: calc(100% + 15px);
+
+      /* Individual products */
+      .product {
+        z-index: 3;
+        height: 180px;
+        pointer-events: auto;
+        vertical-align: bottom;
+        display: table-cell;
+
+        /* Product's image */
+        .product-image {
+          padding-left: 40px;
+          padding-right: 40px;
+        }
+      }
+    }
+
+    /* Image of tracks that prices are put on (without shading so that shading will go on top
+         of images when they're put there) */
     .price-tracks-without-shading {
-      position: absolute;
+      position: fixed;
       left: 0em;
       top: 0em;
       z-index: 1;
       pointer-events: none;
-      // visibility: hidden;
     }
 
+    /* IMage that goes in front of products (includes both shading and front of vending machine) */
     .product-area-shading-and-front-panel {
-      position: absolute;
+      position: fixed;
       left: 0em;
       top: 0em;
       z-index: 2;
       pointer-events: none;
-      // visibility: hidden;
     }
 
-    .page-content {
-      .top-product-carousel {
-        left: 195px;
-        bottom: 370px;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-        width: 690px;
-        height: 180px;
-        position: fixed;
+    /* Positioning of top left nav button */
+    .top-left-nav-button-off, .top-left-nav-button-on {
+      position: absolute;
+      top: 130px;
+      left: 90px;
+      z-index: 4;
+    }
+
+    /* Positioning of the top right nav button */
+    .top-right-nav-button-off, .top-right-nav-button-on {
+      position: absolute;
+      top: 130px;
+      left: 910px;
+      z-index: 4;
+    }
+
+    /* Positioning of the bottom left nav button */
+    .bottom-left-nav-button-off, .bottom-left-nav-button-on {
+      position: absolute;
+      top: 370px;
+      left: 90px;
+      z-index: 4;
+    }
+
+    /* Positioning of the bottom right nav button */
+    .bottom-right-nav-button-off, .bottom-right-nav-button-on {
+      position: absolute;
+      top: 370px;
+      left: 910px;
+      z-index: 4;
+    }
+
+    /* Positioning for the product selection */
+    .product-selection {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      z-index: 5;
+
+      /* Positioning for the screen shading */
+      .screen-shading {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 6;
       }
 
-      .bottom-product-carousel {
-        left: 195px;
-        bottom: 130px;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-        width: 690px;
-        height: 180px;
-        position: fixed;
+      /* Screen Shading Animations */
+      .screen-shading-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: screen-shading-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: screen-shading-animations-transitionOut 2s ease-in-out;
+        }
       }
-        .product-carousel {
-            width: 690px;
-            height: 180px;
-            text-align: center;  // Centers the products
-            overflow: auto hidden;
-            white-space: nowrap;
-            display: block;
-            height: calc(100% + 15px);
-            width: calc(100% + 15px);
 
-              .product {
-                  z-index: 3;
-                  height: 180px;
-                  pointer-events: auto;
-                  vertical-align: bottom;
-                  display: table-cell;
+      /* Screen Shading transitionIn Animation */
+      @keyframes screen-shading-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+        1% {
+          display: block;
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
 
-                  .product-image {
-                    padding-left: 40px;
-                    padding-right: 40px;
-                  }
-
-            }
-
-
-
+      /* Screen Shading transitionOut Animation */
+      @keyframes screen-shading-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
         }
 
-        .top-scroll-left-button-off, .top-scroll-left-button-on {
-          position: absolute;
-          top: 130px;
-          left: 90px;
-          z-index: 4;
+        99% {
+          opacity: 0;
+          display: block;
         }
 
-        .top-scroll-right-button-off, .top-scroll-right-button-on {
-          position: absolute;
-          top: 130px;
-          left: 910px;
-          z-index: 4;
+        100% {
+          display: none;
+        }
+      }
+
+      /* Positioning for the screen lighting */
+      .screen-lighting {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        z-index: 7;
+      }
+
+      /* Screen Lighting Animations */
+      .screen-lighting-animations {
+        &.out {
+          display: none;
+          opacity: 0;
         }
 
-        .bottom-scroll-left-button-off, .bottom-scroll-left-button-on {
-          position: absolute;
-          top: 370px;
-          left: 90px;
-          z-index: 4;
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: screen-lighting-animations-transitionIn 1.25s ease-in-out;
         }
 
-        .bottom-scroll-right-button-off, .bottom-scroll-right-button-on {
-          position: absolute;
-          top: 370px;
-          left: 910px;
-          z-index: 4;
+        &.in {
+          display: block;
+          opacity: 1;
         }
 
-        .product-selection, .screen-shading, .screen-circular-highlight {
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: screen-lighting-animations-transitionOut 1.75s ease-in-out;
+        }
+      }
+
+      /* Screen Lighting transitionIn Animation */
+      @keyframes screen-lighting-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+
+        30% {
+          display: block;
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Lighting transitionOut Animation */
+      @keyframes screen-lighting-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      /* Positioning/Sizing for the selected product image */
+      .selected-product-image {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 480px;
+        z-index: 8;
+
+        .selected-product-image-largeImg {
           position: absolute;
-          left: 0px;
           top: 0px;
-        }
-
-        .product-selection {
-          z-index: 5;
-        }
-
-        .screen-shading {
-          z-index: 6;
-        }
-
-        .screen-circular-highlight {
-          z-index: 7;
-        }
-
-        .selected-product-image-area {
-          position: fixed;
-          left: 0px;
-          top: 0px;
-          height: 640px;
-          width: 480px;
+          bottom: 0px;
+          margin: auto;
+          right: 80px;
           z-index: 8;
+        }
+      }
 
-          .selected-product-image {
-            position: absolute;
-            top: 0px;
-            bottom: 0px;
-            margin: auto;
-            right: 80px;
-            z-index: 8;
-          }
+      /* Selected Product Image Animations */
+      .selected-product-image-animations {
+        &.out {
+          display: none;
+          opacity: 0;
         }
 
-        .selected-product-information-area {
-          position: fixed;
-          height: 640px;
-          width: 600px;
-          left: 480px;
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+          animation: selected-product-image-animations-transitionIn 2s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          top: 10%;
+          animation: selected-product-image-animations-transitionOut 1s ease-in-out;
+        }
+      }
+
+      /* Selected Product Image transitionIn Animation */
+      @keyframes selected-product-image-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+          top: 10%;
+        }
+
+        50% {
+          display: block;
+          opacity: 0;
+          top: 10%;
+        }
+
+        100% {
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+        }
+      }
+
+      /* Selected Product Image transitionOut Animation */
+      @keyframes selected-product-image-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+          top: 0px;
+          bottom: 0px;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+          top: 10%;
+        }
+
+        100% {
+          display: none;
+          top: 10%;
+        }
+      }
+
+      /* Positioning/Sizing for the selected product information and buttons */
+      .selected-product-information {
+        position: fixed;
+        height: 640px;
+        width: 600px;
+        left: 480px;
+        z-index: 9;
+
+        .selected-product-name {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 100px;
+          font-family: Lalezar;
+          font-size: 3em;
+          z-index: 9;
+        }
+
+        .selected-product-description {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 175px;
+          width: 450px;
+          font-size: 1.8em;
+          line-height: 1em;
+          text-align: justify;
+          font-family: Lalezar;
+          z-index: 9;
+        }
+
+        .selected-product-price {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 290px;
+          width: 450px;
+          font-size: 2.75em;
+          font-family: Lalezar;
+          z-index: 9;
+        }
+
+        .information-separator {
+          position: absolute;
+          margin: auto;
+          top: 350px;
+          left: -10px;
+          z-index: 9;
+        }
+
+        .minus-button {
+          position: absolute;
+          margin: auto;
+          top: 375px;
+          left: 0px;
           z-index: 9;
 
-          .selected-product-name {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 0px;
-            top: 100px;
-            font-family: Lalezar;
-            font-size: 3em;
-            z-index: 9;
-          }
-
-          .selected-product-description {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 0px;
-            top: 175px;
-            width: 450px;
-            font-size: 1.8em;
-            line-height: 1em;
-            text-align: justify;
-            font-family: Lalezar;
-            z-index: 9;
-          }
-
-          .selected-product-price {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 0px;
-            top: 290px;
-            width: 450px;
-            font-size: 2.75em;
-            font-family: Lalezar;
-            z-index: 9;
-          }
-
-          .information-separator {
-            position: absolute;
-            margin: auto;
-            top: 350px;
-            left: -10px;
-            z-index: 9;
-          }
-
-          .minus-button {
-            position: absolute;
-            margin: auto;
-            top: 375px;
-            left: 0px;
-            z-index: 9;
-          }
-
-          .selected-product-quantity-wanted {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 50px;
-            top: 375px;
-            width: 75px;
-            font-size: 2.5em;
-            text-align: center;
-            font-family: Lalezar;
-            z-index: 9;
-          }
-
-          .plus-button {
-            position: absolute;
-            margin: auto;
-            top: 375px;
-            left: 125px;
-            z-index: 9;
-          }
-
-          .selected-product-total-price {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 225px;
-            top: 375px;
-            width: 300px;
-            font-size: 2.5em;
-            font-family: Lalezar;
-            z-index: 9;
-          }
-
-          .cancel-button {
-            position: absolute;
-            margin: auto;
-            top: 445px;
-            left: -7px;
-            z-index: 9;
-          }
-
-          .cancel-text {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 20px;
-            top: 450px;
-            width: 200px;
-            font-size: 3em;
-            font-family: Lalezar;
-            z-index: 10;
-
-            &.cancel-button-clicked {
-              color: #DDDDDD;
-            }
-          }
-
-          .purchase-button {
-            position: absolute;
-            margin: auto;
-            top: 445px;
-            left: 215px;
-            z-index: 9;
-          }
-
-          .purchase-text {
-            position: absolute;
-            margin: auto;
-            color: white;
-            left: 240px;
-            top: 450px;
-            width: 200px;
-            font-size: 3em;
-            font-family: Lalezar;
-            z-index: 10;
-
-            &.purchase-button-clicked {
-              color: #DDDDDD;
-            }
+          &.atMin {
+            pointer-events: none;
+            opacity: 0.2;
           }
         }
 
-        .screen-shading-animations {
-          &.hidden {
-            display: none;
-            opacity: 0;
-          }
+        .selected-product-quantity-wanted {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 50px;
+          top: 375px;
+          width: 75px;
+          font-size: 2.5em;
+          text-align: center;
+          font-family: Lalezar;
+          z-index: 9;
 
-          &.show {
-            display: block;
-            transform: scale(1);
-            opacity: 1;
-            animation: screen-shading-animations-showAnim 1s ease-in-out;
-          }
-
-          &.shown {
-            display: block;
-            opacity: 1;
-          }
-
-          &.hide {
-            display: block;
-            transform: scale(1);
-            opacity: 0;
-            animation: screen-shading-animations-hideAnim 2s ease-in-out;
+          &.outOfStock {
+            opacity: 0.6;
           }
         }
 
-        .screen-circular-highlight-animations {
-          &.hidden {
-            display: none;
-            opacity: 0;
-          }
+        .plus-button {
+          position: absolute;
+          margin: auto;
+          top: 375px;
+          left: 125px;
+          z-index: 9;
 
-          &.show {
-            display: block;
-            transform: scale(1);
-            opacity: 1;
-            animation: screen-circular-highlight-animations-showAnim 1.25s ease-in-out;
-          }
-
-          &.shown {
-            display: block;
-            opacity: 1;
-          }
-
-          &.hide {
-            display: block;
-            transform: scale(1);
-            opacity: 0;
-            animation: screen-circular-highlight-animations-hideAnim 1.75s ease-in-out;
+          &.atMax {
+            pointer-events: none;
+            opacity: 0.2;
           }
         }
 
-        .selected-product-image-area-animations {
-          &.hidden {
-            display: none;
+        .selected-product-total-price {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 225px;
+          top: 375px;
+          width: 300px;
+          font-size: 2.5em;
+          font-family: Lalezar;
+          z-index: 9;
+
+          &.outOfStock {
             opacity: 0;
-          }
-
-          &.show {
-            display: block;
-            transform: scale(1);
-            opacity: 1;
-            top: 0px;
-            bottom: 0px;
-            animation: selected-product-image-area-animations-showAnim 2s ease-in-out;
-          }
-
-          &.shown {
-            display: block;
-            opacity: 1;
-          }
-
-          &.hide {
-            display: block;
-            transform: scale(1);
-            opacity: 0;
-            top: 10%;
-            animation: selected-product-image-area-animations-hideAnim 1s ease-in-out;
           }
         }
 
-        .selected-product-information-area-animations {
-          &.hidden {
-            display: none;
-            opacity: 0;
-          }
+        .selected-product-out-of-stock {
+          position: absolute;
+          margin: auto;
+          color: #FF6666;
+          left: 225px;
+          top: 375px;
+          width: 300px;
+          font-size: 2.5em;
+          font-family: Lalezar;
+          z-index: 9;
+          opacity: 0;
 
-          &.show {
-            display: block;
-            transform: scale(1);
-            opacity: 1;
-            top: 0px;
-            bottom: 0px;
-            animation: selected-product-information-area-animations-showAnim 2.5s ease-in-out;
-          }
-
-          &.shown {
-            display: block;
-            opacity: 1;
-          }
-
-          &.hide {
-            display: block;
-            transform: scale(1);
-            opacity: 0;
-            top: 10%;
-            animation: selected-product-information-area-animations-hideAnim 0.75s ease-in-out;
-          }
-        }
-
-
-        @keyframes screen-shading-animations-showAnim {
-          0% {
-            display: none;
-            opacity: 0;
-          }
-          1% {
-            display: block;
-            opacity: 0;
-          }
-          100% {
+          &.outOfStock {
             opacity: 1;
           }
         }
 
-        @keyframes screen-shading-animations-hideAnim {
-          0% {
-            opacity: 1;
-            display: block;
-          }
+        .cancel-button {
+          position: absolute;
+          margin: auto;
+          top: 445px;
+          left: -7px;
+          z-index: 9;
+        }
 
-          99% {
-            opacity: 0;
-            display: block;
-          }
+        .cancel-text {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 20px;
+          top: 450px;
+          width: 200px;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 10;
 
-          100% {
-            display: none;
+          &.cancel-button-pressed {
+            color: #DDDDDD;
           }
         }
 
-        @keyframes screen-circular-highlight-animations-showAnim {
-          0% {
-            display: none;
-            opacity: 0;
-          }
-          30% {
-            display: block;
-            opacity: 0;
-          }
-          100% {
-            opacity: 1;
+        .purchase-button {
+          position: absolute;
+          margin: auto;
+          top: 445px;
+          left: 215px;
+          z-index: 9;
+
+          &.outOfStock {
+            pointer-events: none;
+            opacity: 0.2;
           }
         }
 
-        @keyframes screen-circular-highlight-animations-hideAnim {
-          0% {
-            opacity: 1;
-            display: block;
+        .purchase-text {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 240px;
+          top: 450px;
+          width: 200px;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 10;
+
+          &.purchase-button-pressed {
+            color: #DDDDDD;
           }
 
-          99% {
-            opacity: 0;
-            display: block;
-          }
-
-          100% {
-            display: none;
+          &.outOfStock {
+            pointer-events: none;
+            opacity: 0.2;
           }
         }
+      }
 
-        @keyframes selected-product-image-area-animations-showAnim {
-          0% {
-            display: none;
-            opacity: 0;
-            top: 10%;
-          }
-          50% {
-            display: block;
-            opacity: 0;
-            top: 10%;
-          }
-          100% {
-            opacity: 1;
-            top: 0px;
-            bottom: 0px;
-          }
+      /* Selected Product Information Animations */
+      .selected-product-information-animations {
+        &.out {
+          display: none;
+          opacity: 0;
         }
 
-        @keyframes selected-product-image-area-animations-hideAnim {
-          0% {
-            opacity: 1;
-            display: block;
-            top: 0px;
-            bottom: 0px;
-          }
-
-          99% {
-            opacity: 0;
-            display: block;
-            top: 10%;
-          }
-
-          100% {
-            display: none;
-            top: 10%;
-          }
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+          animation: selected-product-information-animations-transitionIn 2.5s ease-in-out;
         }
 
-        @keyframes selected-product-information-area-animations-showAnim {
-          0% {
-            display: none;
-            opacity: 0;
-            top: 10%;
-          }
-          50% {
-            display: block;
-            opacity: 0;
-            top: 10%;
-          }
-          100% {
-            opacity: 1;
-            top: 0px;
-            bottom: 0px;
-          }
+        &.in {
+          display: block;
+          opacity: 1;
         }
 
-        @keyframes selected-product-information-area-animations-hideAnim {
-          0% {
-            opacity: 1;
-            display: block;
-            top: 0px;
-            bottom: 0px;
-          }
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          top: 10%;
+          animation: selected-product-information-animations-transitionOut 0.75s ease-in-out;
+        }
+      }
 
-          99% {
-            opacity: 0;
-            display: block;
-            top: 10%;
-          }
-
-          100% {
-            display: none;
-            top: 10%;
-          }
+      /* Selected Product Information transitionIn Animation */
+      @keyframes selected-product-information-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+          top: 10%;
         }
 
+        50% {
+          display: block;
+          opacity: 0;
+          top: 10%;
+        }
 
+        100% {
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+        }
+      }
+
+      /* Selected Product Information transitionOut Animation */
+      @keyframes selected-product-information-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+          top: 0px;
+          bottom: 0px;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+          top: 10%;
+        }
+
+        100% {
+          display: none;
+          top: 10%;
+        }
+      }
     }
+
+
+/********************************************************************************/
+
+
+
+    .information-entry-and-product-editing {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      z-index: 11;
+
+      /* Positioning for the screen shading */
+      .screen-shading {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        z-index: 12;
+      }
+
+      /* Screen Shading Animations */
+      .screen-shading-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: screen-shading-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: screen-shading-animations-transitionOut 2s ease-in-out;
+        }
+      }
+
+      /* Screen Shading transitionIn Animation */
+      @keyframes screen-shading-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+        1% {
+          display: block;
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Shading transitionOut Animation */
+      @keyframes screen-shading-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      .user-id-and-password-entry {
+        z-index: 14;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 1080px;
+
+        .user-id-and-password-entry-area {
+          z-index: 15;
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0px;
+          right: 0px;
+          top: 125px;
+        }
+
+        .user-id-and-password-chars {
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 5px;
+          right: 0px;
+          top: 135px;
+          width: 810px;
+          height: 65px;
+          z-index: 16;
+
+          .user-id-and-password-char-1, .user-id-and-password-char-2, .user-id-and-password-char-3,
+          .user-id-and-password-char-4, .user-id-and-password-char-5, .user-id-and-password-char-6,
+          .user-id-and-password-char-7, .user-id-and-password-char-8, .user-id-and-password-char-9,
+          .user-id-and-password-char-10, .user-id-and-password-char-11, .user-id-and-password-char-12,
+          .user-id-and-password-char-13, .user-id-and-password-char-14, .user-id-and-password-char-15,
+          .user-id-and-password-char-16, .user-id-and-password-char-17, .user-id-and-password-char-18,
+          .user-id-and-password-char-19, .user-id-and-password-char-20, .user-id-and-password-char-21,
+          .user-id-and-password-char-22, .user-id-and-password-char-23 {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 0px;
+            width: 35px;
+            height: 65px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 17;
+
+            &.password-incorrect {
+              color: #FF6666;
+            }
+          }
+
+          .user-id-and-password-char-1 {
+            left: 0px;
+          }
+
+          .user-id-and-password-char-2 {
+            left: 35px;
+          }
+
+          .user-id-and-password-char-3 {
+            left: 70px;
+          }
+
+          .user-id-and-password-char-4 {
+            left: 105px;
+          }
+
+          .user-id-and-password-char-5 {
+            left: 140px;
+          }
+
+          .user-id-and-password-char-6 {
+            left: 175px;
+          }
+
+          .user-id-and-password-char-7 {
+            left: 210px;
+          }
+
+          .user-id-and-password-char-8 {
+            left: 245px;
+          }
+
+          .user-id-and-password-char-9 {
+            left: 280px;
+          }
+
+          .user-id-and-password-char-10 {
+            left: 315px;
+          }
+
+          .user-id-and-password-char-11 {
+            left: 350px;
+          }
+
+          .user-id-and-password-char-12 {
+            left: 385px;
+          }
+
+          .user-id-and-password-char-13 {
+            left: 420px;
+          }
+
+          .user-id-and-password-char-14 {
+            left: 455px;
+          }
+
+          .user-id-and-password-char-15 {
+            left: 490px;
+          }
+
+          .user-id-and-password-char-16 {
+            left: 525px;
+          }
+
+          .user-id-and-password-char-17 {
+            left: 560px;
+          }
+
+          .user-id-and-password-char-18 {
+            left: 595px;
+          }
+
+          .user-id-and-password-char-19 {
+            left: 630px;
+          }
+
+          .user-id-and-password-char-20 {
+            left: 665px;
+          }
+
+          .user-id-and-password-char-21 {
+            left: 700px;
+          }
+
+          .user-id-and-password-char-22 {
+            left: 735px;
+          }
+
+          .user-id-and-password-char-23 {
+            left: 770px;
+          }
+        }
+
+        .password-code {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 250px;
+          width: 1080px;
+          text-align: center;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 16;
+
+          &.not-entering-password {
+            display: none;
+          }
+        }
+
+        .user-id-and-password-buttons {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          width: 1080px;
+          height: 640px;
+          z-index: 16;
+
+
+          .zero-button, .one-button, .two-button, .three-button, .four-button,
+          .five-button, .six-button, .seven-button, .eight-button, .nine-button,
+          .a-button, .b-button, .c-button, .d-button, .e-button, .f-button {
+            position: absolute;
+            margin: auto;
+            z-index: 17;
+          }
+
+          .zero-text, .one-text, .two-text, .three-text, .four-text, .five-text,
+          .six-text, .seven-text, .eight-text, .nine-text, .a-text, .b-text,
+          .c-text, .d-text, .e-text, .f-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 60px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 18;
+
+            &.zero-button-pressed, &.one-button-pressed, &.two-button-pressed,
+            &.three-button-pressed, &.four-button-pressed, &.five-button-pressed,
+            &.six-button-pressed, &.seven-button-pressed, &.eight-button-pressed,
+            &.nine-button-pressed, &.a-button-pressed, &.b-button-pressed,
+            &.c-button-pressed, &.d-button-pressed, &.e-button-pressed, &.f-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .zero-button {
+            top: 350px;
+            left: 210px;
+          }
+
+          .zero-text {
+            top: 356px;
+            left: 216px;
+          }
+
+          .one-button {
+            top: 350px;
+            left: 294px;
+          }
+
+          .one-text {
+            top: 356px;
+            left: 300px;
+          }
+
+          .two-button {
+            top: 350px;
+            left: 378px;
+          }
+
+          .two-text {
+            top: 356px;
+            left: 384px;
+          }
+
+          .three-button {
+            top: 350px;
+            left: 462px;
+          }
+
+          .three-text {
+            top: 356px;
+            left: 468px;
+          }
+
+          .four-button {
+            top: 350px;
+            left: 546px;
+          }
+
+          .four-text {
+            top: 356px;
+            left: 552px;
+          }
+
+          .five-button {
+            top: 350px;
+            left: 630px;
+          }
+
+          .five-text {
+            top: 356px;
+            left: 636px;
+          }
+
+          .six-button {
+            top: 350px;
+            left: 714px;
+          }
+
+          .six-text {
+            top: 356px;
+            left: 720px;
+          }
+
+          .seven-button {
+            top: 350px;
+            left: 798px;
+          }
+
+          .seven-text {
+            top: 356px;
+            left: 804px;
+          }
+
+          .eight-button {
+            top: 434px;
+            left: 210px;
+          }
+
+          .eight-text {
+            top: 440px;
+            left: 216px;
+          }
+
+          .nine-button {
+            top: 434px;
+            left: 294px;
+          }
+
+          .nine-text {
+            top: 440px;
+            left: 300px;
+          }
+
+          .a-button {
+            top: 434px;
+            left: 378px;
+          }
+
+          .a-text {
+            top: 440px;
+            left: 384px;
+          }
+
+          .b-button {
+            top: 434px;
+            left: 462px;
+          }
+
+          .b-text {
+            top: 440px;
+            left: 468px;
+          }
+
+          .c-button {
+            top: 434px;
+            left: 546px;
+          }
+
+          .c-text {
+            top: 440px;
+            left: 552px;
+          }
+
+          .d-button {
+            top: 434px;
+            left: 630px;
+          }
+
+          .d-text {
+            top: 440px;
+            left: 636px;
+          }
+
+          .e-button {
+            top: 434px;
+            left: 714px;
+          }
+
+          .e-text {
+            top: 440px;
+            left: 720px;
+          }
+
+          .f-button {
+            top: 434px;
+            left: 798px;
+          }
+
+          .f-text {
+            top: 440px;
+            left: 804px;
+          }
+
+          .delete-button {
+            position: absolute;
+            margin: auto;
+            left: 210px;
+            top: 518px;
+            z-index: 17;
+          }
+
+          .delete-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 312px;
+            top: 524px;
+            left: 216px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 18;
+
+            &.delete-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .enter-button {
+            position: absolute;
+            margin: auto;
+            left: 546px;
+            top: 518px;
+            z-index: 17;
+          }
+
+
+          .enter-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 312px;
+            top: 524px;
+            left: 552px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 18;
+
+            &.enter-button-pressed {
+              color: #DDDDDD;
+            }
+
+          }
+
+          .back-button {
+            position:absolute;
+            margin: auto;
+            left: 20px;
+            top: 20px;
+            z-index: 17;
+          }
+
+          .back-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 175px;
+            top: 26px;
+            left: 26px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 18;
+
+            &.back-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .past-info-button {
+            position:absolute;
+            margin: auto;
+            right: 20px;
+            top: 20px;
+            z-index: 17;
+
+            &.user-id-entered {
+              display: none;
+            }
+          }
+
+          .past-info-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 225px;
+            top: 26px;
+            right: 26px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 18;
+
+            &.past-info-button-pressed {
+              color: #DDDDDD;
+            }
+
+            &.user-id-entered {
+              display: none;
+            }
+          }
+
+          .viewing-past-info {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 1080px;
+            height: 640px;
+            z-index: 19;
+
+            &.not-viewing-past-info {
+              display: none;
+            }
+
+            /* Positioning for the screen shading */
+            .screen-shading {
+              position: fixed;
+              left: 0px;
+              top: 0px;
+              z-index: 20;
+            }
+
+            /* Screen Shading Animations */
+            .screen-shading-animations {
+              &.out {
+                display: none;
+                opacity: 0;
+              }
+
+              &.transitionIn {
+                display: block;
+                transform: scale(1);
+                opacity: 1;
+                animation: screen-shading-animations-transitionIn 1s ease-in-out;
+              }
+
+              &.in {
+                display: block;
+                opacity: 1;
+              }
+
+              &.transitionOut {
+                display: block;
+                transform: scale(1);
+                opacity: 0;
+                animation: screen-shading-animations-transitionOut 2s ease-in-out;
+              }
+            }
+
+            /* Screen Shading transitionIn Animation */
+            @keyframes screen-shading-animations-transitionIn {
+              0% {
+                display: none;
+                opacity: 0;
+              }
+              1% {
+                display: block;
+                opacity: 0;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
+
+            /* Screen Shading transitionOut Animation */
+            @keyframes screen-shading-animations-transitionOut {
+              0% {
+                opacity: 1;
+                display: block;
+              }
+
+              99% {
+                opacity: 0;
+                display: block;
+              }
+
+              100% {
+                display: none;
+              }
+            }
+
+            .past-info {
+              position: fixed;
+              left: 0px;
+              top: 0px;
+              height: 640px;
+              width: 1080px;
+              z-index: 21;
+
+              .past-info-password-sum {
+                position: absolute;
+                margin: auto;
+                color: white;
+                left: 0px;
+                top: 250px;
+                width: 1080px;
+                text-align: center;
+                font-size: 3em;
+                font-family: Lalezar;
+                z-index: 22;
+              }
+
+              .past-info-password-check {
+                position: absolute;
+                margin: auto;
+                color: white;
+                left: 0px;
+                top: 350px;
+                width: 1080px;
+                text-align: center;
+                font-size: 3em;
+                font-family: Lalezar;
+                z-index: 22;
+              }
+
+              .back-button-2 {
+                position: absolute;
+                margin-left: auto;
+                margin-right: auto;
+                top: 445px;
+                left: 0px;
+                right: 0px;
+                z-index: 22;
+              }
+
+              .back-text-2 {
+                position: absolute;
+                margin: auto;
+                color: white;
+                top: 450px;
+                left: 0px;
+                width: 1080px;
+                font-size: 3em;
+                text-align: center;
+                font-family: Lalezar;
+                z-index: 23;
+
+                &.back-button-2-pressed {
+                  color: #DDDDDD;
+                }
+              }
+            }
+
+            /* Screen Shading Animations */
+            .past-info-animations {
+              &.out {
+                display: none;
+                opacity: 0;
+              }
+
+              &.transitionIn {
+                display: block;
+                transform: scale(1);
+                opacity: 1;
+                animation: past-info-animations-transitionIn 1.5s ease-in-out;
+              }
+
+              &.in {
+                display: block;
+                opacity: 1;
+              }
+
+              &.transitionOut {
+                display: block;
+                transform: scale(1);
+                opacity: 0;
+                animation: past-info-animations-transitionOut 1.5s ease-in-out;
+              }
+            }
+
+            /* Screen Shading transitionIn Animation */
+            @keyframes past-info-animations-transitionIn {
+              0% {
+                display: none;
+                opacity: 0;
+              }
+              1% {
+                display: block;
+                opacity: 0;
+              }
+              100% {
+                opacity: 1;
+              }
+            }
+
+            /* Screen Shading transitionOut Animation */
+            @keyframes past-info-animations-transitionOut {
+              0% {
+                opacity: 1;
+                display: block;
+              }
+
+              99% {
+                opacity: 0;
+                display: block;
+              }
+
+              100% {
+                display: none;
+              }
+            }
+          }
+        }
+
+        .password-check {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          z-index: 19;
+
+          &.not-checking-password {
+            display: none;
+          }
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            z-index: 20;
+          }
+
+          /* Screen Shading Animations */
+          .screen-shading-animations {
+            &.out {
+              display: none;
+              opacity: 0;
+            }
+
+            &.transitionIn {
+              display: block;
+              transform: scale(1);
+              opacity: 1;
+              animation: screen-shading-animations-transitionIn 1s ease-in-out;
+            }
+
+            &.in {
+              display: block;
+              opacity: 1;
+            }
+
+            &.transitionOut {
+              display: block;
+              transform: scale(1);
+              opacity: 0;
+              animation: screen-shading-animations-transitionOut 2s ease-in-out;
+            }
+          }
+
+          /* Screen Shading transitionIn Animation */
+          @keyframes screen-shading-animations-transitionIn {
+            0% {
+              display: none;
+              opacity: 0;
+            }
+            1% {
+              display: block;
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+          /* Screen Shading transitionOut Animation */
+          @keyframes screen-shading-animations-transitionOut {
+            0% {
+              opacity: 1;
+              display: block;
+            }
+
+            99% {
+              opacity: 0;
+              display: block;
+            }
+
+            100% {
+              display: none;
+            }
+          }
+
+          .password-check-info {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            height: 640px;
+            width: 1080px;
+            z-index: 20;
+
+            .password-check-code {
+              position: absolute;
+              margin: auto;
+              color: white;
+              left: 0px;
+              top: 250px;
+              width: 1080px;
+              text-align: center;
+              font-size: 3em;
+              font-family: Lalezar;
+              z-index: 21;
+            }
+
+            .continue-button {
+              position: absolute;
+              margin: auto;
+              top: 445px;
+              left: 0px;
+              right: 0px;
+              z-index: 21;
+            }
+
+            .continue-text {
+              position: absolute;
+              margin: auto;
+              color: white;
+              top: 450px;
+              left: 0px;
+              width: 1080px;
+              font-size: 3em;
+              text-align: center;
+              font-family: Lalezar;
+              z-index: 22;
+
+              &.continue-button-pressed {
+                color: #DDDDDD;
+              }
+            }
+          }
+
+          .password-check-info-animations {
+            &.out {
+              display: none;
+              opacity: 0;
+            }
+
+            &.transitionIn {
+              display: block;
+              transform: scale(1);
+              opacity: 1;
+              animation: password-check-info-animations-transitionIn 1.5s ease-in-out;
+            }
+
+            &.in {
+              display: block;
+              opacity: 1;
+            }
+
+            &.transitionOut {
+              display: block;
+              transform: scale(1);
+              opacity: 0;
+              animation: password-check-info-animations-transitionOut 1.5s ease-in-out;
+            }
+          }
+
+          /* Screen Shading transitionIn Animation */
+          @keyframes password-check-info-animations-transitionIn {
+            0% {
+              display: none;
+              opacity: 0;
+            }
+            1% {
+              display: block;
+              opacity: 0;
+            }
+            100% {
+              opacity: 1;
+            }
+          }
+
+          /* Screen Shading transitionOut Animation */
+          @keyframes password-check-info-animations-transitionOut {
+            0% {
+              opacity: 1;
+              display: block;
+            }
+
+            99% {
+              opacity: 0;
+              display: block;
+            }
+
+            100% {
+              display: none;
+            }
+          }
+        }
+      }
+
+      /* User ID and Password Entry Animations */
+      .user-id-and-password-entry-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: user-id-and-password-entry-animation-transitionIn 1.5s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: user-id-and-password-entry-animation-transitionOut 1s ease-in-out;
+        }
+      }
+
+      /* Selected Product Information transitionIn Animation */
+      @keyframes user-id-and-password-entry-animation-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+
+        50% {
+          display: block;
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Selected Product Information transitionOut Animation */
+      @keyframes user-id-and-password-entry-animation-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+    }
+  }
 }
