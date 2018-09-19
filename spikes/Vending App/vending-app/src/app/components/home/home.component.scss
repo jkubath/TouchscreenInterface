@@ -14,32 +14,34 @@
       position: fixed;
       left: 0em;
       top: 0em;
-      z-index: -1;
+      z-index: 1;
       pointer-events: none;
     }
 
     /* Products on top shelf of the vending machine */
     .top-product-carousel {
       left: 195px;
-      bottom: 370px;
+      top: 90px;
       overflow: hidden;
       white-space: nowrap;
       display: block;
       width: 690px;
       height: 180px;
       position: fixed;
+      z-index: 2;
     }
 
     /* Products on bottom shelf of the vending machine */
     .bottom-product-carousel {
       left: 195px;
-      bottom: 130px;
+      top: 330px;
       overflow: hidden;
       white-space: nowrap;
       display: block;
       width: 690px;
       height: 180px;
       position: fixed;
+      z-index: 2;
     }
 
     /* General class for both carousels */
@@ -52,10 +54,10 @@
       display: block;
       height: calc(100% + 15px);
       width: calc(100% + 15px);
+      z-index: 2;
 
       /* Individual products */
       .product {
-        z-index: 3;
         height: 180px;
         pointer-events: auto;
         vertical-align: bottom;
@@ -75,7 +77,7 @@
       position: fixed;
       left: 0em;
       top: 0em;
-      z-index: 1;
+      z-index: 3;
       pointer-events: none;
     }
 
@@ -84,7 +86,7 @@
       position: fixed;
       left: 0em;
       top: 0em;
-      z-index: 2;
+      z-index: 4;
       pointer-events: none;
     }
 
@@ -93,7 +95,7 @@
       position: absolute;
       top: 130px;
       left: 90px;
-      z-index: 4;
+      z-index: 5;
     }
 
     /* Positioning of the top right nav button */
@@ -101,7 +103,7 @@
       position: absolute;
       top: 130px;
       left: 910px;
-      z-index: 4;
+      z-index: 5;
     }
 
     /* Positioning of the bottom left nav button */
@@ -109,7 +111,7 @@
       position: absolute;
       top: 370px;
       left: 90px;
-      z-index: 4;
+      z-index: 5;
     }
 
     /* Positioning of the bottom right nav button */
@@ -117,26 +119,34 @@
       position: absolute;
       top: 370px;
       left: 910px;
-      z-index: 4;
+      z-index: 5;
     }
 
     /* Positioning for the product selection */
-    .product-selection {
+    .product-selecting {
       position: absolute;
-      left: 0px;
-      top: 0px;
-      z-index: 5;
+      z-index: 6;
 
-      /* Positioning for the screen shading */
-      .screen-shading {
-        position: absolute;
+      .product-selecting-screen-shading {
+        position: fixed;
         left: 0px;
         top: 0px;
-        z-index: 6;
+        height: 640px;
+        width: 1080px;
+        z-index: 1;
+
+        /* Positioning for the screen shading */
+        .screen-shading {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
       }
 
+
+
       /* Screen Shading Animations */
-      .screen-shading-animations {
+      .product-selecting-screen-shading-animations {
         &.out {
           display: none;
           opacity: 0;
@@ -146,7 +156,7 @@
           display: block;
           transform: scale(1);
           opacity: 1;
-          animation: screen-shading-animations-transitionIn 1s ease-in-out;
+          animation: product-selecting-screen-shading-animations-transitionIn 1s ease-in-out;
         }
 
         &.in {
@@ -158,12 +168,12 @@
           display: block;
           transform: scale(1);
           opacity: 0;
-          animation: screen-shading-animations-transitionOut 2s ease-in-out;
+          animation: product-selecting-screen-shading-animations-transitionOut 2s ease-in-out;
         }
       }
 
       /* Screen Shading transitionIn Animation */
-      @keyframes screen-shading-animations-transitionIn {
+      @keyframes product-selecting-screen-shading-animations-transitionIn {
         0% {
           display: none;
           opacity: 0;
@@ -178,7 +188,7 @@
       }
 
       /* Screen Shading transitionOut Animation */
-      @keyframes screen-shading-animations-transitionOut {
+      @keyframes product-selecting-screen-shading-animations-transitionOut {
         0% {
           opacity: 1;
           display: block;
@@ -194,16 +204,26 @@
         }
       }
 
-      /* Positioning for the screen lighting */
-      .screen-lighting {
-        position: absolute;
+      .product-selecting-screen-lighting {
+        position: fixed;
         left: 0px;
         top: 0px;
-        z-index: 7;
+        height: 640px;
+        width: 1080px;
+        z-index: 2;
+
+        /* Positioning for the screen lighting */
+        .screen-lighting {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
       }
 
+
+
       /* Screen Lighting Animations */
-      .screen-lighting-animations {
+      .product-selecting-screen-lighting-animations {
         &.out {
           display: none;
           opacity: 0;
@@ -213,7 +233,7 @@
           display: block;
           transform: scale(1);
           opacity: 1;
-          animation: screen-lighting-animations-transitionIn 1.25s ease-in-out;
+          animation: product-selecting-screen-lighting-animations-transitionIn 0.875s ease-in-out;
         }
 
         &.in {
@@ -225,18 +245,18 @@
           display: block;
           transform: scale(1);
           opacity: 0;
-          animation: screen-lighting-animations-transitionOut 1.75s ease-in-out;
+          animation: product-selecting-screen-lighting-animations-transitionOut 1.75s ease-in-out;
         }
       }
 
       /* Screen Lighting transitionIn Animation */
-      @keyframes screen-lighting-animations-transitionIn {
+      @keyframes product-selecting-screen-lighting-animations-transitionIn {
         0% {
           display: none;
           opacity: 0;
         }
 
-        30% {
+        1% {
           display: block;
           opacity: 0;
         }
@@ -247,7 +267,7 @@
       }
 
       /* Screen Lighting transitionOut Animation */
-      @keyframes screen-lighting-animations-transitionOut {
+      @keyframes product-selecting-screen-lighting-animations-transitionOut {
         0% {
           opacity: 1;
           display: block;
@@ -270,7 +290,7 @@
         top: 0px;
         height: 640px;
         width: 480px;
-        z-index: 8;
+        z-index: 3;
 
         .selected-product-image-largeImg {
           position: absolute;
@@ -278,7 +298,6 @@
           bottom: 0px;
           margin: auto;
           right: 80px;
-          z-index: 8;
         }
       }
 
@@ -295,7 +314,7 @@
           opacity: 1;
           top: 0px;
           bottom: 0px;
-          animation: selected-product-image-animations-transitionIn 2s ease-in-out;
+          animation: selected-product-image-animations-transitionIn 1s ease-in-out;
         }
 
         &.in {
@@ -320,7 +339,7 @@
           top: 10%;
         }
 
-        50% {
+        1% {
           display: block;
           opacity: 0;
           top: 10%;
@@ -360,7 +379,7 @@
         height: 640px;
         width: 600px;
         left: 480px;
-        z-index: 9;
+        z-index: 4;
 
         .selected-product-name {
           position: absolute;
@@ -370,7 +389,7 @@
           top: 100px;
           font-family: Lalezar;
           font-size: 3em;
-          z-index: 9;
+          z-index: 1;
         }
 
         .selected-product-description {
@@ -384,7 +403,7 @@
           line-height: 1em;
           text-align: justify;
           font-family: Lalezar;
-          z-index: 9;
+          z-index: 1;
         }
 
         .selected-product-price {
@@ -396,7 +415,7 @@
           width: 450px;
           font-size: 2.75em;
           font-family: Lalezar;
-          z-index: 9;
+          z-index: 1;
         }
 
         .information-separator {
@@ -404,7 +423,7 @@
           margin: auto;
           top: 350px;
           left: -10px;
-          z-index: 9;
+          z-index: 1;
         }
 
         .minus-button {
@@ -412,7 +431,7 @@
           margin: auto;
           top: 375px;
           left: 0px;
-          z-index: 9;
+          z-index: 1;
 
           &.atMin {
             pointer-events: none;
@@ -430,7 +449,7 @@
           font-size: 2.5em;
           text-align: center;
           font-family: Lalezar;
-          z-index: 9;
+          z-index: 1;
 
           &.outOfStock {
             opacity: 0.6;
@@ -442,7 +461,7 @@
           margin: auto;
           top: 375px;
           left: 125px;
-          z-index: 9;
+          z-index: 1;
 
           &.atMax {
             pointer-events: none;
@@ -459,7 +478,7 @@
           width: 300px;
           font-size: 2.5em;
           font-family: Lalezar;
-          z-index: 9;
+          z-index: 1;
 
           &.outOfStock {
             opacity: 0;
@@ -475,8 +494,8 @@
           width: 300px;
           font-size: 2.5em;
           font-family: Lalezar;
-          z-index: 9;
           opacity: 0;
+          z-index: 1;
 
           &.outOfStock {
             opacity: 1;
@@ -488,7 +507,7 @@
           margin: auto;
           top: 445px;
           left: -7px;
-          z-index: 9;
+          z-index: 1;
         }
 
         .cancel-text {
@@ -500,7 +519,7 @@
           width: 200px;
           font-size: 3em;
           font-family: Lalezar;
-          z-index: 10;
+          z-index: 2;
 
           &.cancel-button-pressed {
             color: #DDDDDD;
@@ -512,7 +531,7 @@
           margin: auto;
           top: 445px;
           left: 215px;
-          z-index: 9;
+          z-index: 1;
 
           &.outOfStock {
             pointer-events: none;
@@ -529,7 +548,7 @@
           width: 200px;
           font-size: 3em;
           font-family: Lalezar;
-          z-index: 10;
+          z-index: 2;
 
           &.purchase-button-pressed {
             color: #DDDDDD;
@@ -555,7 +574,7 @@
           opacity: 1;
           top: 0px;
           bottom: 0px;
-          animation: selected-product-information-animations-transitionIn 2.5s ease-in-out;
+          animation: selected-product-information-animations-transitionIn 1.25s ease-in-out;
         }
 
         &.in {
@@ -580,7 +599,7 @@
           top: 10%;
         }
 
-        50% {
+        1% {
           display: block;
           opacity: 0;
           top: 10%;
@@ -620,22 +639,31 @@
 
 
 
-    .information-entry-and-product-editing {
+    .system-config {
       position: fixed;
       left: 0px;
       top: 0px;
-      z-index: 11;
+      z-index: 6;
 
-      /* Positioning for the screen shading */
-      .screen-shading {
+      .system-config-screen-shading {
         position: fixed;
         left: 0px;
         top: 0px;
-        z-index: 12;
+        height: 640px;
+        width: 1080px;
+        z-index: 1;
+
+        /* Positioning for the screen shading */
+        .screen-shading {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
       }
 
+
       /* Screen Shading Animations */
-      .screen-shading-animations {
+      .system-config-screen-shading-animations {
         &.out {
           display: none;
           opacity: 0;
@@ -645,7 +673,7 @@
           display: block;
           transform: scale(1);
           opacity: 1;
-          animation: screen-shading-animations-transitionIn 1s ease-in-out;
+          animation: system-config-screen-shading-animations-transitionIn 1s ease-in-out;
         }
 
         &.in {
@@ -657,12 +685,12 @@
           display: block;
           transform: scale(1);
           opacity: 0;
-          animation: screen-shading-animations-transitionOut 2s ease-in-out;
+          animation: system-config-screen-shading-animations-transitionOut 2s ease-in-out;
         }
       }
 
       /* Screen Shading transitionIn Animation */
-      @keyframes screen-shading-animations-transitionIn {
+      @keyframes system-config-screen-shading-animations-transitionIn {
         0% {
           display: none;
           opacity: 0;
@@ -677,7 +705,7 @@
       }
 
       /* Screen Shading transitionOut Animation */
-      @keyframes screen-shading-animations-transitionOut {
+      @keyframes system-config-screen-shading-animations-transitionOut {
         0% {
           opacity: 1;
           display: block;
@@ -693,16 +721,16 @@
         }
       }
 
-      .user-id-and-password-entry {
-        z-index: 14;
+      .system-config-login {
+        z-index: 2;
         position: fixed;
         left: 0px;
         top: 0px;
         height: 640px;
         width: 1080px;
 
-        .user-id-and-password-entry-area {
-          z-index: 15;
+        .system-config-login-text-box {
+          z-index: 1;
           position: absolute;
           margin-left: auto;
           margin-right: auto;
@@ -711,7 +739,7 @@
           top: 125px;
         }
 
-        .user-id-and-password-chars {
+        .system-config-login-chars {
           position: absolute;
           margin-left: auto;
           margin-right: auto;
@@ -720,16 +748,16 @@
           top: 135px;
           width: 810px;
           height: 65px;
-          z-index: 16;
+          z-index: 2;
 
-          .user-id-and-password-char-1, .user-id-and-password-char-2, .user-id-and-password-char-3,
-          .user-id-and-password-char-4, .user-id-and-password-char-5, .user-id-and-password-char-6,
-          .user-id-and-password-char-7, .user-id-and-password-char-8, .user-id-and-password-char-9,
-          .user-id-and-password-char-10, .user-id-and-password-char-11, .user-id-and-password-char-12,
-          .user-id-and-password-char-13, .user-id-and-password-char-14, .user-id-and-password-char-15,
-          .user-id-and-password-char-16, .user-id-and-password-char-17, .user-id-and-password-char-18,
-          .user-id-and-password-char-19, .user-id-and-password-char-20, .user-id-and-password-char-21,
-          .user-id-and-password-char-22, .user-id-and-password-char-23 {
+          .system-config-login-char-1, .system-config-login-char-2, .system-config-login-char-3,
+          .system-config-login-char-4, .system-config-login-char-5, .system-config-login-char-6,
+          .system-config-login-char-7, .system-config-login-char-8, .system-config-login-char-9,
+          .system-config-login-char-10, .system-config-login-char-11, .system-config-login-char-12,
+          .system-config-login-char-13, .system-config-login-char-14, .system-config-login-char-15,
+          .system-config-login-char-16, .system-config-login-char-17, .system-config-login-char-18,
+          .system-config-login-char-19, .system-config-login-char-20, .system-config-login-char-21,
+          .system-config-login-char-22, .system-config-login-char-23 {
             position: absolute;
             margin: auto;
             color: white;
@@ -739,107 +767,106 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 17;
 
-            &.password-incorrect {
+            &.invalid-password {
               color: #FF6666;
             }
           }
 
-          .user-id-and-password-char-1 {
+          .system-config-login-char-1 {
             left: 0px;
           }
 
-          .user-id-and-password-char-2 {
+          .system-config-login-char-2 {
             left: 35px;
           }
 
-          .user-id-and-password-char-3 {
+          .system-config-login-char-3 {
             left: 70px;
           }
 
-          .user-id-and-password-char-4 {
+          .system-config-login-char-4 {
             left: 105px;
           }
 
-          .user-id-and-password-char-5 {
+          .system-config-login-char-5 {
             left: 140px;
           }
 
-          .user-id-and-password-char-6 {
+          .system-config-login-char-6 {
             left: 175px;
           }
 
-          .user-id-and-password-char-7 {
+          .system-config-login-char-7 {
             left: 210px;
           }
 
-          .user-id-and-password-char-8 {
+          .system-config-login-char-8 {
             left: 245px;
           }
 
-          .user-id-and-password-char-9 {
+          .system-config-login-char-9 {
             left: 280px;
           }
 
-          .user-id-and-password-char-10 {
+          .system-config-login-char-10 {
             left: 315px;
           }
 
-          .user-id-and-password-char-11 {
+          .system-config-login-char-11 {
             left: 350px;
           }
 
-          .user-id-and-password-char-12 {
+          .system-config-login-char-12 {
             left: 385px;
           }
 
-          .user-id-and-password-char-13 {
+          .system-config-login-char-13 {
             left: 420px;
           }
 
-          .user-id-and-password-char-14 {
+          .system-config-login-char-14 {
             left: 455px;
           }
 
-          .user-id-and-password-char-15 {
+          .system-config-login-char-15 {
             left: 490px;
           }
 
-          .user-id-and-password-char-16 {
+          .system-config-login-char-16 {
             left: 525px;
           }
 
-          .user-id-and-password-char-17 {
+          .system-config-login-char-17 {
             left: 560px;
           }
 
-          .user-id-and-password-char-18 {
+          .system-config-login-char-18 {
             left: 595px;
           }
 
-          .user-id-and-password-char-19 {
+          .system-config-login-char-19 {
             left: 630px;
           }
 
-          .user-id-and-password-char-20 {
+          .system-config-login-char-20 {
             left: 665px;
           }
 
-          .user-id-and-password-char-21 {
+          .system-config-login-char-21 {
             left: 700px;
           }
 
-          .user-id-and-password-char-22 {
+          .system-config-login-char-22 {
             left: 735px;
           }
 
-          .user-id-and-password-char-23 {
+          .system-config-login-char-23 {
             left: 770px;
           }
         }
 
-        .password-code {
+        .system-config-password-code {
           position: absolute;
           margin: auto;
           color: white;
@@ -849,20 +876,20 @@
           text-align: center;
           font-size: 3em;
           font-family: Lalezar;
-          z-index: 16;
+          z-index: 2;
 
           &.not-entering-password {
             display: none;
           }
         }
 
-        .user-id-and-password-buttons {
+        .system-config-login-buttons {
           position: absolute;
           left: 0px;
           top: 0px;
           width: 1080px;
           height: 640px;
-          z-index: 16;
+          z-index: 2;
 
 
           .zero-button, .one-button, .two-button, .three-button, .four-button,
@@ -870,7 +897,7 @@
           .a-button, .b-button, .c-button, .d-button, .e-button, .f-button {
             position: absolute;
             margin: auto;
-            z-index: 17;
+            z-index: 1;
           }
 
           .zero-text, .one-text, .two-text, .three-text, .four-text, .five-text,
@@ -883,7 +910,7 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 18;
+            z-index: 2;
 
             &.zero-button-pressed, &.one-button-pressed, &.two-button-pressed,
             &.three-button-pressed, &.four-button-pressed, &.five-button-pressed,
@@ -1059,7 +1086,7 @@
             margin: auto;
             left: 210px;
             top: 518px;
-            z-index: 17;
+            z-index: 1;
           }
 
           .delete-text {
@@ -1072,7 +1099,7 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 18;
+            z-index: 2;
 
             &.delete-button-pressed {
               color: #DDDDDD;
@@ -1084,7 +1111,7 @@
             margin: auto;
             left: 546px;
             top: 518px;
-            z-index: 17;
+            z-index: 1;
           }
 
 
@@ -1098,7 +1125,7 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 18;
+            z-index: 2;
 
             &.enter-button-pressed {
               color: #DDDDDD;
@@ -1106,15 +1133,15 @@
 
           }
 
-          .back-button {
+          .login-back-button {
             position:absolute;
             margin: auto;
             left: 20px;
             top: 20px;
-            z-index: 17;
+            z-index: 1;
           }
 
-          .back-text {
+          .login-back-text {
             position: absolute;
             margin: auto;
             color: white;
@@ -1124,9 +1151,9 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 18;
+            z-index: 2;
 
-            &.back-button-pressed {
+            &.login-back-button-pressed {
               color: #DDDDDD;
             }
           }
@@ -1136,10 +1163,11 @@
             margin: auto;
             right: 20px;
             top: 20px;
-            z-index: 17;
+            display: none;
+            z-index: 1;
 
-            &.user-id-entered {
-              display: none;
+            &.entering-password {
+              display: inline-block;
             }
           }
 
@@ -1153,406 +1181,22 @@
             text-align: center;
             font-size: 3em;
             font-family: Lalezar;
-            z-index: 18;
+            display: none;
+            z-index: 2;
 
             &.past-info-button-pressed {
               color: #DDDDDD;
             }
 
-            &.user-id-entered {
-              display: none;
-            }
-          }
-
-          .viewing-past-info {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            width: 1080px;
-            height: 640px;
-            z-index: 19;
-
-            &.not-viewing-past-info {
-              display: none;
-            }
-
-            /* Positioning for the screen shading */
-            .screen-shading {
-              position: fixed;
-              left: 0px;
-              top: 0px;
-              z-index: 20;
-            }
-
-            /* Screen Shading Animations */
-            .screen-shading-animations {
-              &.out {
-                display: none;
-                opacity: 0;
-              }
-
-              &.transitionIn {
-                display: block;
-                transform: scale(1);
-                opacity: 1;
-                animation: screen-shading-animations-transitionIn 1s ease-in-out;
-              }
-
-              &.in {
-                display: block;
-                opacity: 1;
-              }
-
-              &.transitionOut {
-                display: block;
-                transform: scale(1);
-                opacity: 0;
-                animation: screen-shading-animations-transitionOut 2s ease-in-out;
-              }
-            }
-
-            /* Screen Shading transitionIn Animation */
-            @keyframes screen-shading-animations-transitionIn {
-              0% {
-                display: none;
-                opacity: 0;
-              }
-              1% {
-                display: block;
-                opacity: 0;
-              }
-              100% {
-                opacity: 1;
-              }
-            }
-
-            /* Screen Shading transitionOut Animation */
-            @keyframes screen-shading-animations-transitionOut {
-              0% {
-                opacity: 1;
-                display: block;
-              }
-
-              99% {
-                opacity: 0;
-                display: block;
-              }
-
-              100% {
-                display: none;
-              }
-            }
-
-            .past-info {
-              position: fixed;
-              left: 0px;
-              top: 0px;
-              height: 640px;
-              width: 1080px;
-              z-index: 21;
-
-              .past-info-password-sum {
-                position: absolute;
-                margin: auto;
-                color: white;
-                left: 0px;
-                top: 250px;
-                width: 1080px;
-                text-align: center;
-                font-size: 3em;
-                font-family: Lalezar;
-                z-index: 22;
-              }
-
-              .past-info-password-check {
-                position: absolute;
-                margin: auto;
-                color: white;
-                left: 0px;
-                top: 350px;
-                width: 1080px;
-                text-align: center;
-                font-size: 3em;
-                font-family: Lalezar;
-                z-index: 22;
-              }
-
-              .back-button-2 {
-                position: absolute;
-                margin-left: auto;
-                margin-right: auto;
-                top: 445px;
-                left: 0px;
-                right: 0px;
-                z-index: 22;
-              }
-
-              .back-text-2 {
-                position: absolute;
-                margin: auto;
-                color: white;
-                top: 450px;
-                left: 0px;
-                width: 1080px;
-                font-size: 3em;
-                text-align: center;
-                font-family: Lalezar;
-                z-index: 23;
-
-                &.back-button-2-pressed {
-                  color: #DDDDDD;
-                }
-              }
-            }
-
-            /* Screen Shading Animations */
-            .past-info-animations {
-              &.out {
-                display: none;
-                opacity: 0;
-              }
-
-              &.transitionIn {
-                display: block;
-                transform: scale(1);
-                opacity: 1;
-                animation: past-info-animations-transitionIn 1.5s ease-in-out;
-              }
-
-              &.in {
-                display: block;
-                opacity: 1;
-              }
-
-              &.transitionOut {
-                display: block;
-                transform: scale(1);
-                opacity: 0;
-                animation: past-info-animations-transitionOut 1.5s ease-in-out;
-              }
-            }
-
-            /* Screen Shading transitionIn Animation */
-            @keyframes past-info-animations-transitionIn {
-              0% {
-                display: none;
-                opacity: 0;
-              }
-              1% {
-                display: block;
-                opacity: 0;
-              }
-              100% {
-                opacity: 1;
-              }
-            }
-
-            /* Screen Shading transitionOut Animation */
-            @keyframes past-info-animations-transitionOut {
-              0% {
-                opacity: 1;
-                display: block;
-              }
-
-              99% {
-                opacity: 0;
-                display: block;
-              }
-
-              100% {
-                display: none;
-              }
-            }
-          }
-        }
-
-        .password-check {
-          position: fixed;
-          left: 0px;
-          top: 0px;
-          z-index: 19;
-
-          &.not-checking-password {
-            display: none;
-          }
-
-          /* Positioning for the screen shading */
-          .screen-shading {
-            position: fixed;
-            left: 0px;
-            top: 0px;
-            z-index: 20;
-          }
-
-          /* Screen Shading Animations */
-          .screen-shading-animations {
-            &.out {
-              display: none;
-              opacity: 0;
-            }
-
-            &.transitionIn {
+            &.entering-password {
               display: block;
-              transform: scale(1);
-              opacity: 1;
-              animation: screen-shading-animations-transitionIn 1s ease-in-out;
-            }
-
-            &.in {
-              display: block;
-              opacity: 1;
-            }
-
-            &.transitionOut {
-              display: block;
-              transform: scale(1);
-              opacity: 0;
-              animation: screen-shading-animations-transitionOut 2s ease-in-out;
-            }
-          }
-
-          /* Screen Shading transitionIn Animation */
-          @keyframes screen-shading-animations-transitionIn {
-            0% {
-              display: none;
-              opacity: 0;
-            }
-            1% {
-              display: block;
-              opacity: 0;
-            }
-            100% {
-              opacity: 1;
-            }
-          }
-
-          /* Screen Shading transitionOut Animation */
-          @keyframes screen-shading-animations-transitionOut {
-            0% {
-              opacity: 1;
-              display: block;
-            }
-
-            99% {
-              opacity: 0;
-              display: block;
-            }
-
-            100% {
-              display: none;
-            }
-          }
-
-          .password-check-info {
-            position: fixed;
-            top: 0px;
-            left: 0px;
-            height: 640px;
-            width: 1080px;
-            z-index: 20;
-
-            .password-check-code {
-              position: absolute;
-              margin: auto;
-              color: white;
-              left: 0px;
-              top: 250px;
-              width: 1080px;
-              text-align: center;
-              font-size: 3em;
-              font-family: Lalezar;
-              z-index: 21;
-            }
-
-            .continue-button {
-              position: absolute;
-              margin: auto;
-              top: 445px;
-              left: 0px;
-              right: 0px;
-              z-index: 21;
-            }
-
-            .continue-text {
-              position: absolute;
-              margin: auto;
-              color: white;
-              top: 450px;
-              left: 0px;
-              width: 1080px;
-              font-size: 3em;
-              text-align: center;
-              font-family: Lalezar;
-              z-index: 22;
-
-              &.continue-button-pressed {
-                color: #DDDDDD;
-              }
-            }
-          }
-
-          .password-check-info-animations {
-            &.out {
-              display: none;
-              opacity: 0;
-            }
-
-            &.transitionIn {
-              display: block;
-              transform: scale(1);
-              opacity: 1;
-              animation: password-check-info-animations-transitionIn 1.5s ease-in-out;
-            }
-
-            &.in {
-              display: block;
-              opacity: 1;
-            }
-
-            &.transitionOut {
-              display: block;
-              transform: scale(1);
-              opacity: 0;
-              animation: password-check-info-animations-transitionOut 1.5s ease-in-out;
-            }
-          }
-
-          /* Screen Shading transitionIn Animation */
-          @keyframes password-check-info-animations-transitionIn {
-            0% {
-              display: none;
-              opacity: 0;
-            }
-            1% {
-              display: block;
-              opacity: 0;
-            }
-            100% {
-              opacity: 1;
-            }
-          }
-
-          /* Screen Shading transitionOut Animation */
-          @keyframes password-check-info-animations-transitionOut {
-            0% {
-              opacity: 1;
-              display: block;
-            }
-
-            99% {
-              opacity: 0;
-              display: block;
-            }
-
-            100% {
-              display: none;
             }
           }
         }
       }
 
       /* User ID and Password Entry Animations */
-      .user-id-and-password-entry-animations {
+      .system-config-login-animations {
         &.out {
           display: none;
           opacity: 0;
@@ -1562,7 +1206,7 @@
           display: block;
           transform: scale(1);
           opacity: 1;
-          animation: user-id-and-password-entry-animation-transitionIn 1.5s ease-in-out;
+          animation: system-config-login-animation-transitionIn 0.75s ease-in-out;
         }
 
         &.in {
@@ -1574,18 +1218,18 @@
           display: block;
           transform: scale(1);
           opacity: 0;
-          animation: user-id-and-password-entry-animation-transitionOut 1s ease-in-out;
+          animation: system-config-login-animation-transitionOut 1s ease-in-out;
         }
       }
 
       /* Selected Product Information transitionIn Animation */
-      @keyframes user-id-and-password-entry-animation-transitionIn {
+      @keyframes system-config-login-animation-transitionIn {
         0% {
           display: none;
           opacity: 0;
         }
 
-        50% {
+        1% {
           display: block;
           opacity: 0;
         }
@@ -1596,7 +1240,7 @@
       }
 
       /* Selected Product Information transitionOut Animation */
-      @keyframes user-id-and-password-entry-animation-transitionOut {
+      @keyframes system-config-login-animation-transitionOut {
         0% {
           opacity: 1;
           display: block;
@@ -1609,6 +1253,409 @@
 
         100% {
           display: none;
+        }
+      }
+
+      .system-config-past-info {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 1080px;
+        height: 640px;
+        display: none;
+        z-index: 3;
+
+        &.viewing-past-info {
+          display: block;
+        }
+
+        .system-config-past-info-screen-shading {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 1;
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-past-info-screen-shading-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-past-info-screen-shading-animations-transitionIn 1s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-past-info-screen-shading-animations-transitionOut 2s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-past-info-screen-shading-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-past-info-screen-shading-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        .system-config-past-info-content {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 2;
+
+          .past-info-password-sum {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 200px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .past-info-password-check {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 300px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .past-info-back-button {
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            top: 445px;
+            left: 0px;
+            right: 0px;
+            z-index: 1;
+          }
+
+          .past-info-back-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 450px;
+            left: 0px;
+            width: 1080px;
+            font-size: 3em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.past-info-back-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-past-info-content-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-past-info-content-animations-transitionIn 0.75s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-past-info-content-animations-transitionOut 1s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-past-info-content-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-past-info-content-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+      }
+
+      .system-config-password-check {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        display: none;
+        z-index: 3;
+
+        &.checking-password {
+          display: block;
+        }
+
+        .system-config-password-check-screen-shading {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 1;
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-password-check-screen-shading-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-password-check-screen-shading-animations-transitionIn 1s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-password-check-screen-shading-animations-transitionOut 2s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-password-check-screen-shading-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-password-check-screen-shading-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        .system-config-password-check-content {
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 2;
+
+          .system-config-password-check-code {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 250px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .continue-button {
+            position: absolute;
+            margin: auto;
+            top: 445px;
+            left: 0px;
+            right: 0px;
+            z-index: 1;
+          }
+
+          .continue-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 450px;
+            left: 0px;
+            width: 1080px;
+            font-size: 3em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.continue-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+
+        .system-config-password-check-content-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-password-check-content-animations-transitionIn 1.5s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-password-check-content-animations-transitionOut 1.5s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-password-check-content-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-password-check-content-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
         }
       }
     }
