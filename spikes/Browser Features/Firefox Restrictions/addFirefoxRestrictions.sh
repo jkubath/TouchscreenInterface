@@ -41,6 +41,7 @@ touch user.js
 # browser.urlbar.suggest.bookmark       Address bar doesn't suggest bookmarks
 # browser.urlbar.suggest.history        Address bar doesn't suggest browsing history
 # browser.urlbar.suggest.searches       Address bar doesn't show search suggestions
+# browser.urlbar.autocomplete.enabled   Address bar drop-down with suggestions doesn't appear
 # privacy.history.custom        Use custom settings for history
 # places.history.enabled        Browser won't remember browsing and download history
 # browser.formfill.enable       Browser won't remember search and form history
@@ -60,6 +61,7 @@ echo "user_pref(\"network.cookie.cookieBehavior\", 2);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.bookmark\", false);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.history\", false);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.searches\", false);" >> user.js
+echo "user_pref(\"browser.urlbar.autocomplete.enabled\", false);" >> user.js
 echo "user_pref(\"privacy.history.custom\", true);" >> user.js
 echo "user_pref(\"places.history.enabled\", false);" >> user.js
 echo "user_pref(\"browser.formfill.enable\", false);" >> user.js
@@ -85,7 +87,11 @@ echo "@namespace xul url(http://www.mozilla.org/keymaster/gatekeeper/there.is.on
 echo "#PanelUI-menu-button { display: none !important; }" >> userChrome.css
 echo "#star-button {display: none !important; }" >> userChrome.css
 echo "#pageActionButton {display: none !important; }" >> userChrome.css
-
+# Hide the context menu on toolbar, tabs, content area, and url bar
+echo "#toolbar-context-menu { display: none !important; }" >> userChrome.css
+echo "#tabContextMenu { display: none !important; }" >> userChrome.css
+echo "#contentAreaContextMenu { display: none !important; }" >> userChrome.css
+echo "#urlbar .textbox-contextmenu { display: none !important; }" >> userChrome.css
 
 
 echo "Mozilla Firefox browser set up"

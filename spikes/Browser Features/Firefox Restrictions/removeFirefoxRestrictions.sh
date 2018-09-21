@@ -24,6 +24,7 @@ echo "user_pref(\"network.cookie.cookieBehavior\", 0);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.bookmark\", true);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.history\", true);" >> user.js
 echo "user_pref(\"browser.urlbar.suggest.searches\", true);" >> user.js
+echo "user_pref(\"browser.urlbar.autocomplete.enabled\", true);" >> user.js
 echo "user_pref(\"privacy.history.custom\", false);" >> user.js
 echo "user_pref(\"places.history.enabled\", true);" >> user.js
 echo "user_pref(\"browser.formfill.enable\", true);" >> user.js
