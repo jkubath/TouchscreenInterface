@@ -45,6 +45,8 @@ touch user.js
 # privacy.history.custom        Use custom settings for history
 # places.history.enabled        Browser won't remember browsing and download history
 # browser.formfill.enable       Browser won't remember search and form history
+# browser.startup.homepage	Sets the browser home page
+# browser.sessionstore.resume_from_crash	Previous browser session can't be reloaded
 echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", false);" >> user.js 
 echo "user_pref(\"full-screen-api.enabled\", false);" >> user.js 
 echo "user_pref(\"extensions.pocket.enabled\", false);" >> user.js
@@ -65,6 +67,8 @@ echo "user_pref(\"browser.urlbar.autocomplete.enabled\", false);" >> user.js
 echo "user_pref(\"privacy.history.custom\", true);" >> user.js
 echo "user_pref(\"places.history.enabled\", false);" >> user.js
 echo "user_pref(\"browser.formfill.enable\", false);" >> user.js
+echo "user_pref(\"browser.startup.homepage\", \"https://gowmu.wmich.edu\");" >> user.js
+echo "user_pref(\"browser.sessionstore.resume_from_crash\", false);" >> user.js
 
 
 # Check if the chrome directory exists, them remove it
@@ -92,6 +96,7 @@ echo "#toolbar-context-menu { display: none !important; }" >> userChrome.css
 echo "#tabContextMenu { display: none !important; }" >> userChrome.css
 echo "#contentAreaContextMenu { display: none !important; }" >> userChrome.css
 echo "#urlbar .textbox-contextmenu { display: none !important; }" >> userChrome.css
+
 
 
 echo "Mozilla Firefox browser set up"

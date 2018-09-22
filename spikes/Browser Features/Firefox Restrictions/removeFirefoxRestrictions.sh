@@ -28,6 +28,8 @@ echo "user_pref(\"browser.urlbar.autocomplete.enabled\", true);" >> user.js
 echo "user_pref(\"privacy.history.custom\", false);" >> user.js
 echo "user_pref(\"places.history.enabled\", true);" >> user.js
 echo "user_pref(\"browser.formfill.enable\", true);" >> user.js
+echo "user_pref(\"browser.startup.homepage\", \"about:home\");" >> user.js
+echo "user_pref(\"browser.sessionstore.resume_from_crash\", true);" >> user.js
 
 [ -d chrome ] && rm -r chrome
 mkdir chrome
