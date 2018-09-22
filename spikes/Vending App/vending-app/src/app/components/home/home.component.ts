@@ -11,6 +11,7 @@ import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
+import { rm } from 'shelljs';
 
 
 
