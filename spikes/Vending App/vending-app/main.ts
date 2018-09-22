@@ -33,7 +33,8 @@ function createWindow() {
     }));
   }
 
-  win.webContents.openDevTools();
+  win.setMenu(null);
+  // win.webContents.openDevTools();
 
   // Emitted when the window is closed.
   win.on('closed', () => {
