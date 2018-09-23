@@ -1661,11 +1661,22 @@
     }
   }
 
-}
+  .advertisements {
+    background-color: #101010;
+    position: fixed;
+    z-index: 1;
+    left: 0px;
+    top: 640px;
+    height: 640px;
+    width: 1080px;
 
-app-advertisement-board {
-  position: fixed;
-  left: 0em;
-  top: 750px;
-  z-index: 1;
+    app-advertisement-board {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      left: 0px;
+      right: 0px;
+    }
+  }
 }
