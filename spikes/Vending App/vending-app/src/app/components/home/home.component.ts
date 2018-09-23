@@ -11,7 +11,8 @@ import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
-import { rm } from 'shelljs';
+import { cd } from 'shelljs';
+import { exec } from 'shelljs';
 
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 // import { AdvertisememntBoard } from '../../advertisement-board/advertisement-board.component';
@@ -665,6 +666,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
             // Past Info Animation
             this.playInAnimation(this.systemConfigPastInfoContentAnimation, 750, 750);
+
+            cd('~/ScreenManager/src/setup/end');
+            exec('make run', {async:true});
         }
     }
 

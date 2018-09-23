@@ -6,4 +6,11 @@ clean:
 
 
 run:
-	./*.sh
+	./endWindowManager.sh
+	./removeCompizRestrictions.sh
+	./disableFirefoxAddons.sh
+	./removeFirefoxRestrictions.sh
+	./endEmptyTrash.sh
+	
+	
+	
