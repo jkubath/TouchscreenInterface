@@ -13,10 +13,15 @@ function createWindow() {
     win = new electron_1.BrowserWindow({
         x: 0,
         y: 0,
+        // Default values
         // width: size.width,
         // height: size.height
-        width: 1500,
-        height: 640
+        // Height/Width when developing console and application toolbar is wanted
+        // width: 1500,
+        // height: 1280
+        // Height/Width when developing console and application toolbar is NOT wanted
+        width: 1080,
+        height: 1280
     });
     if (serve) {
         require('electron-reload')(__dirname, {
@@ -31,8 +36,12 @@ function createWindow() {
             slashes: true
         }));
     }
+    // Commenting win.webContents.openDevTools(); and uncommenting
+    //   win.setMenu(null); removes the developing console and application
+    //   toolbar.  Flipping them displays the developing console and application
+    //   toolbar.
+    win.webContents.openDevTools();
     // win.setMenu(null);
-    // win.webContents.openDevTools();
     // Emitted when the window is closed.
     win.on('closed', function () {
         // Dereference the window object, usually you would store window

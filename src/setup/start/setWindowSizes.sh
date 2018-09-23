@@ -17,11 +17,6 @@ y=$(cut -d 'x' -f2 <<<$dims)
 
 # Make the y value take 1/3 of the screen
 let y=y/3
-let yTimes2=y*2
 
 # Set the size and location of FireFox
-wmctrl -r "Mozilla Firefox" -e 0,0,0,$x,$y
-wmctrl -r "Firefox" -e 0,0,0,$x,$y
-
-# Set the size and location of the Vending Machine/Advertisements
-wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
+wmctrl -r "FireFox" -e 0,0,0,$x,$y
