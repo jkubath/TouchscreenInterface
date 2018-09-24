@@ -1,0 +1,21 @@
+Testing Plan
+
+
+Program to simulate mouse input
+	Enter mouse events
+
+Unit testing
+	Test function calls
+
+Usability testing
+	Have real users test the application
+
+Security testing
+	What is the risk if someone breaks in
+	What can be done mitigate the risk
+
+Accessibility Testing
+	Blind, hearing, deaf, color blind
+
+
+

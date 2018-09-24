@@ -1,0 +1,91 @@
+unit testing
+performance testing
+usability testing
+
+How we will test it and what the results will be
+
+Security audit
+
+install instructions
+	administrators
+
+
+5 pages
+
+2 practice presentations
+	Audience, what you're trying to say
+
+	Slides pretty much final
+
+	Enough technical information and basic information
+
+	Introduction
+		briefly introduce yourself
+		talk about the sections to come
+	Background
+		introduce the client, history of the company, how many workers
+		The problem
+		current workflow
+	Design decisions
+		web hosting, frameworks, database
+	Design
+	Implementation
+		Demo
+	Maintenance
+	Security
+	Current testing / status
+	Summary
+
+Electron App running Node on the back end
+
+
+
+
+
+22 - 24 Minutes
+
+Deliver 1 week before presentation
+
+Maintenance Document
+
+Updates:
+	scroll through the items
+		when a user touches, pause
+	Keep the screen active
+
+	Manage from backend - server
+
+	Set homepage for browser
+		revert back after a time period
+
+	work with emoney
+		money through the telephone company
+
+		get money from the machine
+		transfer money
+
+	Add GoWMU as start page
+
+	Installation shell scripts needed
+		Run one file to run all the restrictions
+
+	Keyboard is exiting from the screen when using the browser
+
+	Demonstration is enough / Everything should be for visible capabilities
+
+	Make advertisements the biggest
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
