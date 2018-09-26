@@ -29,11 +29,13 @@ export class AdvertisementBoardComponent implements OnInit {
             this.currentAdvert = this.adverts[(this.adverts.indexOf(this.currentAdvert)+1) % this.adverts.length];
             console.log(this.currentAdvert);
         });
+
     }
 
 
     // Load the advertisements
     async loadAdverts(): Promise<string[]> {
+
         let adverts = [];
 
         // get list of all files in adverts directory
@@ -67,11 +69,12 @@ export class AdvertisementBoardComponent implements OnInit {
                 adverts.push(this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/${imageType};base64, ${bitmap.toString('BASE64')}`));
             }
         }
-    
+
         return adverts;
+        
     }
 
-    
+
     ngOnInit() {
     }
 

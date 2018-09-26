@@ -327,9 +327,6 @@ int main(int argc, char *argv[]) {
 
   strncpy(passwordCheck, setLengthOfHex(modHex(multiplyHex(multiplyHex(multiplyHex(modHex(passwordA, passwordB), modHex(passwordB, passwordA)), modHex(passwordC, passwordA)), modHex(passwordC, passwordB)), "100000000000000000000"), 20), 20);
 
-  int c;
-  while ((c = getchar()) != '\n' && c != EOF);
-
   printf("Please enter verification: ");
   fgets(userEnteredPasswordCheck, 21, stdin);
   userEnteredPasswordCheck[20] = '\0';

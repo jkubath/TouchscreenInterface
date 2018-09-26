@@ -62,6 +62,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public systemConfigPasswordCheckContentAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public systemConfigPastInfoScreenShadingAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public systemConfigPastInfoContentAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public systemConfigProductEditingContentAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public systemConfigProductEditingPageChangeLeftAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public systemConfigProductEditingPageChangeRightAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
 
     // Selected Product Information
     public selectedProduct: Product;
@@ -78,12 +81,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public buttons: Button[] = ButtonsSet;
 
     // Information Entry
-    public userID: Login = { valid: false, entering: false, chars: [...Array(23).fill('')], length: 0, string: "" } as Login;
-    public password: Login = { valid: true, entering: false, chars: [...Array(20).fill('')], length: 0, string: "" } as Login;
+    public userID: Login = { valid: false, chars: [...Array(23).fill('')], length: 0, string: "" } as Login;
+    public password: Login = { valid: true, chars: [...Array(20).fill('')], length: 0, string: "" } as Login;
 
-    public userIDAndPasswordChars = [...Array(23).fill('')];
-    public checkingPassword = false;
+    public userIDAndPasswordChars = [...Array(23).fill('')];      // Current characters in the User ID/Password entry area
+    public enteringUserID = false;
+    public enteringPassword = false;
     public viewingPastInfo = false;
+    public checkingPassword = false;
     public editingProduct = false;
 
     // Hexadecimal Calculations
@@ -95,6 +100,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public passwordCheck = "";
     public pastInfoPasswordSum = "";
     public pastInfoPasswordCheck = "";
+
+    // Product Editing
+    public productEditingProductIDs: string[];
+    public productEditingProductNames: string[];
+    public productEditingProductQuantitiesAvailable: number[];
+    public productEditingProductQuantitiesAvailableAtMin: boolean[];
+    public productEditingProductQuantitiesAvailableAtMax: boolean[];
+    public productEditingCurrentPageProductIDs = [...Array(5).fill("")];
+    public productEditingCurrentPageProductNames = [...Array(5).fill("")];
+    public productEditingCurrentPageProductQuantitiesAvailable = [...Array(5).fill(0)];
+    public productEditingCurrentPageProductQuantitiesAvailableAtMin = [...Array(5).fill(false)];
+    public productEditingCurrentPageProductQuantitiesAvailableAtMax = [...Array(5).fill(false)];
+    public productEditingProductDisplay = [...Array(5).fill("")];
+    public pageChangerAtMin = false;
+    public pageChangerAtMax = false;
+    public productEditingNavCurrentPageNumber = 1;
+    public productEditingNavTotalPageNumbers = 1;
 
 
     constructor() {
@@ -182,15 +204,140 @@ export class HomeComponent implements OnInit, AfterViewInit {
         fs.writeFileSync(`./src/product-data/${this.selectedProduct.id}.json`, JSON.stringify(jsonContent, null, 2));
     }
 
+    // Get the quantities available for all products
+    getProductEditingProductQuantitiesAvailable(): void {
+      let productNum = 0;
+      let i = 0;
+
+      // Create arrays for all of the product editing information
+      this.productEditingProductIDs = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
+      this.productEditingProductNames = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
+      this.productEditingProductQuantitiesAvailable = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(0);
+      this.productEditingProductQuantitiesAvailableAtMin = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
+      this.productEditingProductQuantitiesAvailableAtMax = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
+
+      // Loop through the top row, reading in the product IDs, names, and quantities, and setting the atMax/atMin values depending on the quantity
+      while (i < this.productsTopRow.length) {
+        this.productEditingProductIDs[productNum] = this.productsTopRow[i].id;
+        this.productEditingProductNames[productNum] = this.productsTopRow[i].name;
+        let fileContent = fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
+        let jsonContent = JSON.parse(fileContent.toString());
+        this.productEditingProductQuantitiesAvailable[productNum] = jsonContent.quantity;
+
+        if (this.productEditingProductQuantitiesAvailable[productNum] === 0) {
+          this.productEditingProductQuantitiesAvailableAtMin[productNum] = true;
+        } else {
+          this.productEditingProductQuantitiesAvailableAtMin[productNum] = false;
+        }
+
+        if (this.productEditingProductQuantitiesAvailable[productNum] === 100) {
+          this.productEditingProductQuantitiesAvailableAtMax[productNum] = true;
+        } else {
+          this.productEditingProductQuantitiesAvailableAtMax[productNum] = false;
+        }
+
+        productNum++;
+        i++;
+      }
+
+      i = 0;
+
+      // Loop through the bottom row, reading in the product IDs, names, and quantities, and setting the atMax/atMin values depending on the quantity
+      while (i < this.productsBottomRow.length) {
+        this.productEditingProductIDs[productNum] = this.productsBottomRow[i].id;
+        this.productEditingProductNames[productNum] = this.productsBottomRow[i].name;
+
+        let fileContent = fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
+        let jsonContent = JSON.parse(fileContent.toString());
+        this.productEditingProductQuantitiesAvailable[productNum] = jsonContent.quantity;
+
+        if (this.productEditingProductQuantitiesAvailable[productNum] === 0) {
+          this.productEditingProductQuantitiesAvailableAtMin[productNum] = true;
+        } else {
+          this.productEditingProductQuantitiesAvailableAtMin[productNum] = false;
+        }
+
+        if (this.productEditingProductQuantitiesAvailable[productNum] === 100) {
+          this.productEditingProductQuantitiesAvailableAtMax[productNum] = true;
+        } else {
+          this.productEditingProductQuantitiesAvailableAtMax[productNum] = false;
+        }
+
+        productNum++;
+        i++;
+      }
+
+      // Set up the page navigation
+      // Set the product editing to start with the first page
+      this.pageChangerAtMin = true;
+      this.productEditingNavCurrentPageNumber = 1;
+
+      // Calculate how many pages there will be
+      if (productNum % 5 === 0) {
+        this.productEditingNavTotalPageNumbers = productNum / 5;
+      } else {
+        this.productEditingNavTotalPageNumbers = ((productNum - (productNum % 5)) / 5) + 1;
+      }
+
+      // Set pageChangerAtMax depending on whether there is 1 page or more than 1 page
+      if (this.productEditingNavTotalPageNumbers === 1) {
+        this.pageChangerAtMax = true;
+      } else {
+        this.pageChangerAtMax = false;
+      }
+
+      i = 0;
+      // Assign the information for the products shown on the first page of the product editor
+      while (i < 5 && i < productNum) {
+        this.productEditingCurrentPageProductIDs[i] = this.productEditingProductIDs[i];
+        this.productEditingCurrentPageProductNames[i] = this.productEditingProductNames[i];
+        this.productEditingCurrentPageProductQuantitiesAvailable[i] = this.productEditingProductQuantitiesAvailable[i];
+        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = this.productEditingProductQuantitiesAvailableAtMin[i];
+        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = this.productEditingProductQuantitiesAvailableAtMax[i];
+        this.productEditingProductDisplay[i] = "block";
+        i++;
+      }
+
+      // If there are fewer than 5 products, set the unused spaces in the arrays to ""/0/false/"none"
+      while (i < 5) {
+        this.productEditingCurrentPageProductIDs[i] = "";
+        this.productEditingCurrentPageProductNames[i] = "";
+        this.productEditingCurrentPageProductQuantitiesAvailable[i] = 0;
+        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = false;
+        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = false;
+        this.productEditingProductDisplay[i] = "none";
+        i++;
+      }
+    }
+
+    // Update the quantities available for all products
+    updateProductEditingProductQuantitiesAvailable(): void {
+      let i = 0;
+      while (i < this.productEditingProductIDs.length) {
+        let fileContent = fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
+        let jsonContent = JSON.parse(fileContent.toString());
+
+        jsonContent.quantity = this.productEditingProductQuantitiesAvailable[i];
+        fs.writeFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, JSON.stringify(jsonContent, null, 2));
+        i++;
+      }
+    }
+
     // Handle events of the navigation buttons
     navEvent(event: string, location: string, imageSource: string, reachesBound: boolean): void {
         if (event === "password") {
             if (this.navPasswordSequence[this.navPasswordPosition] === location) {
                 this.navPasswordPosition++;
                 if (this.navPasswordPosition === this.navPasswordSequence.length) {
-                    this.enterUserIDAndPassword();
+                  this.enteringUserID = true;
 
-                    this.navPasswordPosition = 0;
+                  // Screen Shading Animation
+                  this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
+
+                  // System Config Login Animation
+                  this.playInAnimation(this.systemConfigLoginAnimation, 750, 750);
+
+                  this.navPasswordPosition = 0;
                 } else {
                     let previousPasswordPosition = this.navPasswordPosition - 1;
                     setTimeout(() => {
@@ -220,6 +367,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
     }
 
+    // Play the animation used to transition from the "out" state to the "in" state
     playInAnimation(animation: Animation, before: number, duration: number): void {
         setTimeout(() => {
             animation["out"] = false;
@@ -231,6 +379,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }, before);
     }
 
+    // Play the animation used to transition from the "in" state to the "out" state
     playOutAnimation(animation: Animation, before: number, duration: number): void {
         setTimeout(() => {
             animation["in"] = false;
@@ -282,18 +431,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         // Selected Product Information Animation
         this.playInAnimation(this.selectedProductInformationAnimation, 1250, 1250);
-    }
-
-
-    // Runs when the user presses the correct combination of nav buttons
-    enterUserIDAndPassword(): void {
-        this.userID.entering = true;
-
-        // Screen Shading Animation
-        this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
-
-        // User ID and Password Entry Animations
-        this.playInAnimation(this.systemConfigLoginAnimation, 750, 750);
     }
 
     // Decrements selectedProductQuantityWanted if it's greater than 1 and enables/disables
@@ -381,11 +518,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Adds the passed character to the userID or password entry
     hexButtonClick(character: string): void {
         if (this.systemConfigLoginAnimation.in === true) {
-            if (this.userID.entering === true && this.userID.length < this.userID.chars.length) {
+            if (this.enteringUserID === true && this.userID.length < this.userID.chars.length) {
                 this.userID.chars[this.userID.length] = character;
                 this.userIDAndPasswordChars[this.userID.length] = "*";
                 this.userID.length++;
-            } else if (this.password.entering === true && this.password.length < this.password.chars.length) {
+            } else if (this.enteringPassword === true && this.password.length < this.password.chars.length) {
                 this.password.valid = true;
                 this.password.chars[this.password.length] = character;
                 if (this.password.length >= 15) {
@@ -405,11 +542,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Removes a character from the User ID or Password entr
     deleteButtonClick(): void {
         if (this.systemConfigLoginAnimation.in === true) {
-            if (this.userID.entering === true && this.userID.length > 0) {
+            if (this.enteringUserID === true && this.userID.length > 0) {
                 this.userID.length--;
                 this.userID.chars[this.userID.length] = "";
                 this.userIDAndPasswordChars[this.userID.length] = "";
-            } else if (this.password.entering === true && this.password.length > 0) {
+            } else if (this.enteringPassword === true && this.password.length > 0) {
                 this.password.valid = true;
                 this.password.length--;
                 this.password.chars[this.password.length] = "";
@@ -429,9 +566,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Submits the user ID or password
     enterButtonClick(): void {
         if (this.systemConfigLoginAnimation.in === true) {
-            if (this.userID.entering === true) {
-                this.userID.entering = false;
-                this.password.entering = true;
+            if (this.enteringUserID === true) {
+                this.enteringUserID = false;
+                this.enteringPassword = true;
 
                 let i = 0;
                 while (i < this.userIDAndPasswordChars.length) {
@@ -525,7 +662,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.passwordSum.substr(10, 5) + "-" + this.passwordSum.substr(15);
                 this.passwordProduct = this.modHex(this.multiplyHex(this.passwordA, this.passwordB), this.passwordC);
                 this.passwordProduct = this.setLengthOfHex(this.passwordProduct, 20);
-            } else if (this.password.entering === true) {
+            } else if (this.enteringPassword === true) {
                 this.password.string = "";
 
                 let i = 0;
@@ -552,7 +689,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.passwordCheck = this.setLengthOfHex(this.modHex(this.multiplyHex(this.multiplyHex(this.multiplyHex(this.modHex(this.passwordA, this.passwordB), this.modHex(this.passwordB, this.passwordA)), this.modHex(this.passwordC, this.passwordA)), this.modHex(this.passwordC, this.passwordB)), "100000000000000000000"), 20);
                     this.pastInfoPasswordCheck = this.passwordCheck;
                     this.passwordCheck = this.passwordCheck.substr(0, 5) + "-" + this.passwordCheck.substr(5, 5) + "-" + this.passwordCheck.substr(10, 5) + "-" + this.passwordCheck.substr(15);
-                    this.displayPasswordCheck();
+                    this.enteringPassword = false;
+                    this.checkingPassword = true;
+
+                    // Screen Shading Animation
+                    this.playInAnimation(this.systemConfigPasswordCheckScreenShadingAnimation, 0, 1000);
+
+                    // Password Check Content Animation
+                    this.playInAnimation(this.systemConfigPasswordCheckContentAnimation, 500, 1500);
 
                     let fileContent = fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
@@ -594,23 +738,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
     }
 
-    displayPasswordCheck(): void {
-        this.checkingPassword = true;
-
-        // Screen Shading Animation
-        this.playInAnimation(this.systemConfigPasswordCheckScreenShadingAnimation, 0, 1000);
-
-        // Password Check Info Animation
-        this.playInAnimation(this.systemConfigPasswordCheckContentAnimation, 0, 1500);
-    }
-
     // Goes back to the previous page
     loginBackButtonClick(): void {
         if (this.systemConfigLoginAnimation.in === true) {
-            if (this.password.entering === true) {
-                this.password.entering = false;
+            if (this.enteringPassword === true) {
+                this.enteringPassword = false;
                 this.password.valid = true;
-                this.userID.entering = true;
+                this.enteringUserID = true;
                 this.userID.valid = false;
                 this.passwordA = "";
                 this.passwordB = "";
@@ -629,7 +763,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     i++;
                 }
                 this.password.length = 0;
-            } else if (this.userID.entering === true) {
+            } else if (this.enteringUserID === true) {
 
                 // User ID and Password Entry Animations
                 this.playOutAnimation(this.systemConfigLoginAnimation, 0, 1000);
@@ -640,7 +774,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 setTimeout(() => {
                     let i = 0;
                     while (i < this.userIDAndPasswordChars.length) {
-                        this.userID.entering = false;
+                        this.enteringUserID = false;
 
                         this.userIDAndPasswordChars[i] = "";
                         i++;
@@ -667,13 +801,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
             // Past Info Animation
             this.playInAnimation(this.systemConfigPastInfoContentAnimation, 750, 750);
 
-            cd('~/ScreenManager/src/setup/end');
-            exec('make run', {async:true});
+            // cd('~/ScreenManager/src/setup/end');
+            // exec('make run', {async:true});
         }
     }
 
     pastInfoBackButtonClick(): void {
         if (this.systemConfigPastInfoContentAnimation.in === true) {
+
             // Past Info Animation
             this.playOutAnimation(this.systemConfigPastInfoContentAnimation, 0, 1000);
 
@@ -688,19 +823,201 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     continueButtonClick(): void {
         if (this.systemConfigPasswordCheckContentAnimation.in === true) {
-            // User ID and Password Entry Animations
+            this.editingProduct = true;
+            this.getProductEditingProductQuantitiesAvailable();
+
+            // System Config Login Animation
             this.playOutAnimation(this.systemConfigLoginAnimation, 0, 1000);
 
-            // Password Check Info Animation
+            // Password Check Content Animation
             this.playOutAnimation(this.systemConfigPasswordCheckContentAnimation, 0, 1500);
 
-            // Screen Shading Animation
+            // Password Check Screen Shading Animation
             this.playOutAnimation(this.systemConfigPasswordCheckScreenShadingAnimation, 0, 2000);
+
+            // System Config Product Editing Animation
+            this.playInAnimation(this.systemConfigProductEditingContentAnimation, 1000, 1000);
 
             setTimeout(() => {
                 this.checkingPassword = false;
             }, 2000);
         }
+    }
+
+    decreaseQuantityAvailable(productPosition: number): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true) {
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
+          this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] -= 1;
+        }
+
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 0) {
+          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = true;
+        }
+
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
+          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = false;
+        }
+
+        let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+        while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+          this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+          this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+          this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+          i++;
+        }
+      }
+    }
+
+    increaseQuantityAvailable(productPosition: number): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true) {
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
+          this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] += 1;
+        }
+
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 100) {
+          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = true;
+        }
+
+        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
+          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = false;
+        }
+
+        let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+        while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+          this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+          this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+          this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+          i++;
+        }
+      }
+    }
+
+    cancelChanges(): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+        this.editingProduct = false;
+
+        // System Config Product Editing Animation
+        this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
+
+        // Screen Shading Animation
+        this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+      }
+    }
+
+    decreasePageNumber(): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+        if (this.productEditingNavCurrentPageNumber > 1) {
+          this.productEditingNavCurrentPageNumber -= 1;
+        }
+
+        if (this.productEditingNavCurrentPageNumber === 1) {
+          this.pageChangerAtMin = true;
+        }
+
+        if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
+          this.pageChangerAtMax = false;
+        }
+
+        this.playInAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 0, 400);
+
+        setTimeout(() => {
+          let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+          while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+            this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
+            this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
+            this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
+            this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+            this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
+            this.productEditingProductDisplay[i % 5] = "block";
+            i++;
+          }
+
+          while (i < (this.productEditingNavCurrentPageNumber * 5)) {
+            this.productEditingCurrentPageProductIDs[i % 5] = "";
+            this.productEditingCurrentPageProductNames[i % 5] = "";
+            this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
+            this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
+            this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
+            this.productEditingProductDisplay[i % 5] = "none";
+            i++;
+          }
+
+          this.playOutAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 100, 400);
+        }, 400);
+      }
+    }
+
+    increasePageNumber(): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+        if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
+          this.productEditingNavCurrentPageNumber += 1;
+        }
+
+        if (this.productEditingNavCurrentPageNumber === this.productEditingNavTotalPageNumbers) {
+          this.pageChangerAtMax = true;
+        }
+
+        if (this.productEditingNavCurrentPageNumber > 1) {
+          this.pageChangerAtMin = false;
+        }
+
+        this.playInAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 0, 400);
+
+        setTimeout(() => {
+          let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+          while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+            this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
+            this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
+            this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
+            this.productEditingProductQuantitiesAvailableAtMin[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+            this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
+            this.productEditingProductDisplay[i % 5] = "block";
+            i++;
+          }
+
+          while (i < (this.productEditingNavCurrentPageNumber * 5)) {
+            this.productEditingCurrentPageProductIDs[i % 5] = "";
+            this.productEditingCurrentPageProductNames[i % 5] = "";
+            this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
+            this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+            this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
+            this.productEditingProductDisplay[i % 5] = "none";
+            i++;
+          }
+
+          this.playOutAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 100, 400);
+        }, 400);
+      }
+    }
+
+    submitChanges(): void {
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+        this.editingProduct = false;
+
+        this.updateProductEditingProductQuantitiesAvailable();
+
+        // System Config Product Editing Animation
+        this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
+
+        // Screen Shading Animation
+        this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+      }
     }
 
     buttonEvent(event: string, name: string, source: string): void {
@@ -712,7 +1029,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 case "plusButton":
                     this.increaseQuantityWanted();
                     break;
-                case "cancelButton":
+                case "selectedProductCancelButton":
                     this.cancelProduct();
                     break;
                 case "purchaseButton":
@@ -783,6 +1100,48 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     break;
                 case "continueButton":
                     this.continueButtonClick();
+                    break;
+                case "productEditingMinusButton1":
+                    this.decreaseQuantityAvailable(0);
+                    break;
+                case "productEditingPlusButton1":
+                    this.increaseQuantityAvailable(0);
+                    break;
+                case "productEditingMinusButton2":
+                    this.decreaseQuantityAvailable(1);
+                    break;
+                case "productEditingPlusButton2":
+                    this.increaseQuantityAvailable(1);
+                    break;
+                case "productEditingMinusButton3":
+                    this.decreaseQuantityAvailable(2);
+                    break;
+                case "productEditingPlusButton3":
+                    this.increaseQuantityAvailable(2);
+                    break;
+                case "productEditingMinusButton4":
+                    this.decreaseQuantityAvailable(3);
+                    break;
+                case "productEditingPlusButton4":
+                    this.increaseQuantityAvailable(3);
+                    break;
+                case "productEditingMinusButton5":
+                    this.decreaseQuantityAvailable(4);
+                    break;
+                case "productEditingPlusButton5":
+                    this.increaseQuantityAvailable(4);
+                    break;
+                case "productEditingCancelButton":
+                    this.cancelChanges();
+                    break;
+                case "pageLeftButton":
+                    this.decreasePageNumber();
+                    break;
+                case "pageRightButton":
+                    this.increasePageNumber();
+                    break;
+                case "submitButton":
+                    this.submitChanges();
                     break;
             }
         } else if (event === "mousedown") {
