@@ -131,11 +131,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Load the products on the top row of the vending machine
     async loadProductsTopRow(): Promise<Product[]> {
         let productsTopRow = new Array<Product>();
-        let i = 0;
         const readdir = promisify(fs.readdir);
         const contents = await readdir('./src/products');
-        for (let content of contents) {
-            if (i % 2 === 0) {
+        fs.readFile('./src/product-setup.json', (err, fileContent) => {
+          if (err) throw err;
+          let jsonContent = JSON.parse(fileContent.toString());
+          let i = 0;
+          while (i < jsonContent.topRow.length) {
+            for (let content of contents) {
+              if (jsonContent.topRow[i] === content) {
                 let product = require(`products/${content}/data.json`) as Product;
 
                 // Create Money (Dinero) object from product data 'price' object
@@ -148,21 +152,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 product.smallImg = `products/${content}/${product.smallImg}`;
                 product.largeImg = `products/${content}/${product.largeImg}`;
                 productsTopRow.push(product);
+              }
             }
             i++;
+          }
+        });
 
-        }
         return productsTopRow;
     }
 
     // Load the products on the bottom row of the vending machine
     async loadProductsBottomRow(): Promise<Product[]> {
         let productsBottomRow = new Array<Product>();
-        let i = 0;
         const readdir = promisify(fs.readdir);
         const contents = await readdir('./src/products');
-        for (let content of contents) {
-            if (i % 2 === 1) {
+        fs.readFile('./src/product-setup.json', (err, fileContent) => {
+          if (err) throw err;
+          let jsonContent = JSON.parse(fileContent.toString());
+          let i = 0;
+          while (i < jsonContent.bottomRow.length) {
+            for (let content of contents) {
+              if (jsonContent.bottomRow[i] === content) {
                 let product = require(`products/${content}/data.json`) as Product;
 
                 // Create Money (Dinero) object from product data 'price' object
@@ -175,10 +185,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 product.smallImg = `products/${content}/${product.smallImg}`;
                 product.largeImg = `products/${content}/${product.largeImg}`;
                 productsBottomRow.push(product);
+              }
             }
             i++;
+          }
+        });
 
-        }
         return productsBottomRow;
     }
 
