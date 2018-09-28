@@ -46,6 +46,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public navPasswordSequence = ["topLeft", "topRight", "bottomLeft", "bottomRight", "topLeft", "topRight", "bottomLeft", "bottomRight"];
     public navPasswordPosition = 0;
 
+    // Product Rotation
+    public productRotationCounter = 0;
+    public productRotationDirectionTopRow = "right";
+    public productRotationDirectionBottomRow = "right";
+
     // Snap Enabled
     public snapDisabled = "false";   // Note: This is a string due to the type being required by ngx-drag-scroll
 
@@ -343,6 +348,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 if (this.navPasswordPosition === this.navPasswordSequence.length) {
                   this.enteringUserID = true;
 
+                  this.productRotationCounter++;
+
                   // Screen Shading Animation
                   this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
 
@@ -372,11 +379,59 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.bottomds.moveRight();
             }
             this.snapDisabled = "false";
+            this.resetProductRotationCounter();
         } else if (event === "reachesBound") {
             this.navButtonEnabled[location] = !reachesBound;
+        } else if (event === "mousedown") {
+            this.productRotationCounter++;
+        } else if (event === "mouseup") {
+            this.productRotationCounter--;
+            this.resetProductRotationCounter();
         } else {
             this.navButtonSource[location] = imageSource;
         }
+    }
+
+    resetProductRotationCounter(): void {
+      this.productRotationCounter++;
+      setTimeout(() => {
+        this.productRotationCounter--;
+        if (this.productRotationCounter === 0) {
+          this.rotateProducts();
+        }
+      }, 10000);
+    }
+
+    rotateProducts(): void {
+      if (this.navButtonEnabled["topLeft"] === false) {
+        this.productRotationDirectionTopRow = "right";
+      } else if (this.navButtonEnabled["topRight"] === false) {
+        this.productRotationDirectionTopRow = "left";
+      }
+
+      if (this.navButtonEnabled["bottomLeft"] === false) {
+        this.productRotationDirectionBottomRow = "right";
+      } else if (this.navButtonEnabled["bottomRight"] === false) {
+        this.productRotationDirectionBottomRow = "left";
+      }
+
+      if (this.productRotationDirectionTopRow === "right") {
+        this.topds.moveRight();
+      } else if (this.productRotationDirectionTopRow === "left") {
+        this.topds.moveLeft();
+      }
+
+      if (this.productRotationDirectionBottomRow === "right") {
+        this.bottomds.moveRight();
+      } else if (this.productRotationDirectionBottomRow === "left") {
+        this.bottomds.moveLeft();
+      }
+
+      setTimeout(() => {
+        if (this.productRotationCounter === 0) {
+          this.rotateProducts();
+        }
+      }, 5000);
     }
 
     // Play the animation used to transition from the "out" state to the "in" state
@@ -407,6 +462,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     selectProduct(product: Product): void {
         this.snapDisabled = "true";
         this.selectedProduct = product;
+        this.productRotationCounter++;
 
         // Get the quantity for the selected product and do the following:
         //   - Set the starting quantity
@@ -499,6 +555,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
             // Indicate that there is no longer a selected product
             setTimeout(() => {
                 this.selectedProduct = null;
+
+                this.productRotationCounter--;
+                this.resetProductRotationCounter();
             }, 2000);
         }
     }
@@ -798,6 +857,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                         i++;
                     }
                     this.userID.length = 0;
+
+                    this.productRotationCounter--;
+                    this.resetProductRotationCounter();
                 }, 2000);
             }
         }
@@ -914,6 +976,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         // Screen Shading Animation
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+
+        this.productRotationCounter++;
       }
     }
 
@@ -1029,6 +1093,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
         // Screen Shading Animation
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+
+        this.productRotationCounter--;
+        this.resetProductRotationCounter();
       }
     }
 
