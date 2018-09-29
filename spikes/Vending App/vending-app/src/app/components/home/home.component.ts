@@ -13,9 +13,7 @@ import { DragScrollComponent } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
 import { cd } from 'shelljs';
 import { exec } from 'shelljs';
-
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
-// import { AdvertisememntBoard } from '../../advertisement-board/advertisement-board.component';
 
 
 
@@ -47,7 +45,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public navPasswordPosition = 0;
 
     // Product Rotation
-    public productRotationCounter = 0;
+    public productRotationCounterTopRow = 0;
+    public productRotationCounterBottomRow = 0;
     public productRotationDirectionTopRow = "right";
     public productRotationDirectionBottomRow = "right";
 
@@ -124,20 +123,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productEditingNavTotalPageNumbers = 1;
 
 
-    constructor() {
-        this.loadProductsTopRow().then(result => {
-            this.productsTopRow = result;
-        });
-        this.loadProductsBottomRow().then(result => {
-            this.productsBottomRow = result;
-        });
-    }
-
     // Load the products on the top row of the vending machine
-    async loadProductsTopRow(): Promise<Product[]> {
+    loadProductsTopRow(): Product[] {
         let productsTopRow = new Array<Product>();
-        const readdir = promisify(fs.readdir);
-        const contents = await readdir('./src/products');
+        let contents = fs.readdirSync('./src/products');
         fs.readFile('./src/product-setup.json', (err, fileContent) => {
           if (err) throw err;
           let jsonContent = JSON.parse(fileContent.toString());
@@ -167,10 +156,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     // Load the products on the bottom row of the vending machine
-    async loadProductsBottomRow(): Promise<Product[]> {
+    loadProductsBottomRow(): Product[] {
         let productsBottomRow = new Array<Product>();
-        const readdir = promisify(fs.readdir);
-        const contents = await readdir('./src/products');
+        let contents = fs.readdirSync('./src/products');
         fs.readFile('./src/product-setup.json', (err, fileContent) => {
           if (err) throw err;
           let jsonContent = JSON.parse(fileContent.toString());
@@ -348,7 +336,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 if (this.navPasswordPosition === this.navPasswordSequence.length) {
                   this.enteringUserID = true;
 
-                  this.productRotationCounter++;
+                  this.productRotationCounterTopRow++;
+                  this.productRotationCounterBottomRow++;
 
                   // Screen Shading Animation
                   this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
@@ -379,46 +368,65 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.bottomds.moveRight();
             }
             this.snapDisabled = "false";
-            this.resetProductRotationCounter();
+            this.resetProductRotationCounters();
         } else if (event === "reachesBound") {
             this.navButtonEnabled[location] = !reachesBound;
         } else if (event === "mousedown") {
-            this.productRotationCounter++;
+            this.productRotationCounterTopRow++;
+            this.productRotationCounterBottomRow++;
         } else if (event === "mouseup") {
-            this.productRotationCounter--;
-            this.resetProductRotationCounter();
+            this.productRotationCounterTopRow--;
+            this.productRotationCounterBottomRow--;
+            this.resetProductRotationCounters();
         } else {
             this.navButtonSource[location] = imageSource;
         }
     }
 
-    resetProductRotationCounter(): void {
-      this.productRotationCounter++;
+    resetProductRotationCounters(): void {
+      this.productRotationCounterTopRow++;
+      this.productRotationCounterBottomRow++;
+
       setTimeout(() => {
-        this.productRotationCounter--;
-        if (this.productRotationCounter === 0) {
-          this.rotateProducts();
+        this.productRotationCounterTopRow--;
+        if (this.productRotationCounterTopRow === 0) {
+          this.rotateProductsTopRow();
         }
       }, 10000);
+
+      setTimeout(() => {
+        this.productRotationCounterBottomRow--;
+        if (this.productRotationCounterBottomRow === 0) {
+          this.rotateProductsBottomRow();
+        }
+      }, 12500);
     }
 
-    rotateProducts(): void {
+    rotateProductsTopRow(): void {
       if (this.navButtonEnabled["topLeft"] === false) {
         this.productRotationDirectionTopRow = "right";
       } else if (this.navButtonEnabled["topRight"] === false) {
         this.productRotationDirectionTopRow = "left";
       }
 
-      if (this.navButtonEnabled["bottomLeft"] === false) {
-        this.productRotationDirectionBottomRow = "right";
-      } else if (this.navButtonEnabled["bottomRight"] === false) {
-        this.productRotationDirectionBottomRow = "left";
-      }
-
       if (this.productRotationDirectionTopRow === "right") {
         this.topds.moveRight();
       } else if (this.productRotationDirectionTopRow === "left") {
         this.topds.moveLeft();
+      }
+
+      setTimeout(() => {
+        if (this.productRotationCounterTopRow === 0) {
+          this.rotateProductsTopRow();
+        }
+      }, 5000);
+    }
+
+    rotateProductsBottomRow(): void {
+      if (this.navButtonEnabled["bottomLeft"] === false) {
+        this.productRotationDirectionBottomRow = "right";
+      } else if (this.navButtonEnabled["bottomRight"] === false) {
+        this.productRotationDirectionBottomRow = "left";
       }
 
       if (this.productRotationDirectionBottomRow === "right") {
@@ -428,8 +436,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       }
 
       setTimeout(() => {
-        if (this.productRotationCounter === 0) {
-          this.rotateProducts();
+        if (this.productRotationCounterBottomRow === 0) {
+          this.rotateProductsBottomRow();
         }
       }, 5000);
     }
@@ -462,7 +470,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     selectProduct(product: Product): void {
         this.snapDisabled = "true";
         this.selectedProduct = product;
-        this.productRotationCounter++;
+        this.productRotationCounterTopRow++;
+        this.productRotationCounterBottomRow++;
 
         // Get the quantity for the selected product and do the following:
         //   - Set the starting quantity
@@ -556,8 +565,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
                 this.selectedProduct = null;
 
-                this.productRotationCounter--;
-                this.resetProductRotationCounter();
+                this.productRotationCounterTopRow--;
+                this.productRotationCounterBottomRow--;
+                this.resetProductRotationCounters();
             }, 2000);
         }
     }
@@ -858,8 +868,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     }
                     this.userID.length = 0;
 
-                    this.productRotationCounter--;
-                    this.resetProductRotationCounter();
+                    this.productRotationCounterTopRow--;
+                    this.productRotationCounterBottomRow--;
+                    this.resetProductRotationCounters();
                 }, 2000);
             }
         }
@@ -977,7 +988,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // Screen Shading Animation
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-        this.productRotationCounter++;
+        this.productRotationCounterTopRow++;
+        this.productRotationCounterBottomRow++;
       }
     }
 
@@ -1094,8 +1106,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
         // Screen Shading Animation
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-        this.productRotationCounter--;
-        this.resetProductRotationCounter();
+        this.productRotationCounterTopRow--;
+        this.productRotationCounterBottomRow--;
+        this.resetProductRotationCounters();
       }
     }
 
@@ -1467,8 +1480,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
+      this.productsTopRow = this.loadProductsTopRow();
+      this.productsBottomRow = this.loadProductsBottomRow();
+      this.navEvent("click", "topLeft", "", false);
+      this.navEvent("click", "bottomLeft", "", false);
     }
 
     ngAfterViewInit() {
+
     }
 }
