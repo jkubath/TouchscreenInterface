@@ -1,0 +1,2112 @@
+.container {
+  /* Change color of selection to transparent (instead of the common default blue) */
+  ::-moz-selection {
+    background-color: Transparent;
+  }
+
+  ::selection {
+    background-color: Transparent;
+  }
+
+  .page-content {
+    /* Image the goes behind the products (back of vending machine) */
+    .behind-product {
+      position: fixed;
+      left: 0em;
+      top: 0em;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Products on top shelf of the vending machine */
+    .top-product-carousel {
+      left: 195px;
+      top: 90px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+      width: 690px;
+      height: 180px;
+      position: fixed;
+      z-index: 2;
+    }
+
+    /* Products on bottom shelf of the vending machine */
+    .bottom-product-carousel {
+      left: 195px;
+      top: 330px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+      width: 690px;
+      height: 180px;
+      position: fixed;
+      z-index: 2;
+    }
+
+    /* General class for both carousels */
+    .product-carousel {
+      width: 690px;
+      height: 180px;
+      text-align: center;  // Centers the products
+      overflow: auto hidden;
+      white-space: nowrap;
+      display: block;
+      height: calc(100% + 15px);
+      width: calc(100% + 15px);
+      z-index: 2;
+
+      /* Individual products */
+      .product {
+        height: 180px;
+        pointer-events: auto;
+        vertical-align: bottom;
+        display: table-cell;
+
+        /* Product's image */
+        .product-image {
+          padding-left: 40px;
+          padding-right: 40px;
+        }
+      }
+    }
+
+    /* Image of tracks that prices are put on (without shading so that shading will go on top
+         of images when they're put there) */
+    .price-tracks-without-shading {
+      position: fixed;
+      left: 0em;
+      top: 0em;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* IMage that goes in front of products (includes both shading and front of vending machine) */
+    .product-area-shading-and-front-panel {
+      position: fixed;
+      left: 0em;
+      top: 0em;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* Positioning of top left nav button */
+    .top-left-nav-button-off, .top-left-nav-button-on {
+      position: absolute;
+      top: 130px;
+      left: 90px;
+      z-index: 5;
+    }
+
+    /* Positioning of the top right nav button */
+    .top-right-nav-button-off, .top-right-nav-button-on {
+      position: absolute;
+      top: 130px;
+      left: 910px;
+      z-index: 5;
+    }
+
+    /* Positioning of the bottom left nav button */
+    .bottom-left-nav-button-off, .bottom-left-nav-button-on {
+      position: absolute;
+      top: 370px;
+      left: 90px;
+      z-index: 5;
+    }
+
+    /* Positioning of the bottom right nav button */
+    .bottom-right-nav-button-off, .bottom-right-nav-button-on {
+      position: absolute;
+      top: 370px;
+      left: 910px;
+      z-index: 5;
+    }
+
+    /* Positioning for the product selection */
+    .product-selecting {
+      position: absolute;
+      z-index: 6;
+
+      .product-selecting-screen-shading {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 1080px;
+        z-index: 1;
+
+        /* Positioning for the screen shading */
+        .screen-shading {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
+      }
+
+
+
+      /* Screen Shading Animations */
+      .product-selecting-screen-shading-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: product-selecting-screen-shading-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: product-selecting-screen-shading-animations-transitionOut 2s ease-in-out;
+        }
+      }
+
+      /* Screen Shading transitionIn Animation */
+      @keyframes product-selecting-screen-shading-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+        1% {
+          display: block;
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Shading transitionOut Animation */
+      @keyframes product-selecting-screen-shading-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      .product-selecting-screen-lighting {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 1080px;
+        z-index: 2;
+
+        /* Positioning for the screen lighting */
+        .screen-lighting {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
+      }
+
+
+
+      /* Screen Lighting Animations */
+      .product-selecting-screen-lighting-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: product-selecting-screen-lighting-animations-transitionIn 0.875s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: product-selecting-screen-lighting-animations-transitionOut 1.75s ease-in-out;
+        }
+      }
+
+      /* Screen Lighting transitionIn Animation */
+      @keyframes product-selecting-screen-lighting-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+
+        1% {
+          display: block;
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Lighting transitionOut Animation */
+      @keyframes product-selecting-screen-lighting-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      /* Positioning/Sizing for the selected product image */
+      .selected-product-image {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 480px;
+        z-index: 3;
+
+        .selected-product-image-largeImg {
+          position: absolute;
+          top: 0px;
+          bottom: 0px;
+          margin: auto;
+          right: 80px;
+        }
+      }
+
+      /* Selected Product Image Animations */
+      .selected-product-image-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+          animation: selected-product-image-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          top: 10%;
+          animation: selected-product-image-animations-transitionOut 1s ease-in-out;
+        }
+      }
+
+      /* Selected Product Image transitionIn Animation */
+      @keyframes selected-product-image-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+          top: 10%;
+        }
+
+        1% {
+          display: block;
+          opacity: 0;
+          top: 10%;
+        }
+
+        100% {
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+        }
+      }
+
+      /* Selected Product Image transitionOut Animation */
+      @keyframes selected-product-image-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+          top: 0px;
+          bottom: 0px;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+          top: 10%;
+        }
+
+        100% {
+          display: none;
+          top: 10%;
+        }
+      }
+
+      /* Positioning/Sizing for the selected product information and buttons */
+      .selected-product-information {
+        position: fixed;
+        height: 640px;
+        width: 600px;
+        left: 480px;
+        z-index: 4;
+
+        .selected-product-name {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 100px;
+          font-family: Lalezar;
+          font-size: 3em;
+          z-index: 1;
+        }
+
+        .selected-product-description {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 175px;
+          width: 450px;
+          font-size: 1.8em;
+          line-height: 1em;
+          text-align: justify;
+          font-family: Lalezar;
+          z-index: 1;
+        }
+
+        .selected-product-price {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 290px;
+          width: 450px;
+          font-size: 2.75em;
+          font-family: Lalezar;
+          z-index: 1;
+        }
+
+        .information-separator {
+          position: absolute;
+          margin: auto;
+          top: 350px;
+          left: -10px;
+          z-index: 1;
+        }
+
+        .minus-button {
+          position: absolute;
+          margin: auto;
+          top: 375px;
+          left: 0px;
+          z-index: 1;
+
+          &.atMin {
+            pointer-events: none;
+            opacity: 0.2;
+          }
+        }
+
+        .selected-product-quantity-wanted {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 50px;
+          top: 375px;
+          width: 75px;
+          font-size: 2.5em;
+          text-align: center;
+          font-family: Lalezar;
+          z-index: 1;
+
+          &.outOfStock {
+            opacity: 0.6;
+          }
+        }
+
+        .plus-button {
+          position: absolute;
+          margin: auto;
+          top: 375px;
+          left: 125px;
+          z-index: 1;
+
+          &.atMax {
+            pointer-events: none;
+            opacity: 0.2;
+          }
+        }
+
+        .selected-product-total-price {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 225px;
+          top: 375px;
+          width: 300px;
+          font-size: 2.5em;
+          font-family: Lalezar;
+          z-index: 1;
+
+          &.outOfStock {
+            opacity: 0;
+          }
+        }
+
+        .selected-product-out-of-stock {
+          position: absolute;
+          margin: auto;
+          color: #FF6666;
+          left: 225px;
+          top: 375px;
+          width: 300px;
+          font-size: 2.5em;
+          font-family: Lalezar;
+          opacity: 0;
+          z-index: 1;
+
+          &.outOfStock {
+            opacity: 1;
+          }
+        }
+
+        .selected-product-cancel-button {
+          position: absolute;
+          margin: auto;
+          top: 445px;
+          left: -7px;
+          z-index: 1;
+        }
+
+        .selected-product-cancel-text {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 20px;
+          top: 450px;
+          width: 200px;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 2;
+
+          &.selected-product-cancel-button-pressed {
+            color: #DDDDDD;
+          }
+        }
+
+        .purchase-button {
+          position: absolute;
+          margin: auto;
+          top: 445px;
+          left: 215px;
+          z-index: 1;
+
+          &.outOfStock {
+            pointer-events: none;
+            opacity: 0.2;
+          }
+        }
+
+        .purchase-text {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 240px;
+          top: 450px;
+          width: 200px;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 2;
+
+          &.purchase-button-pressed {
+            color: #DDDDDD;
+          }
+
+          &.outOfStock {
+            pointer-events: none;
+            opacity: 0.2;
+          }
+        }
+      }
+
+      /* Selected Product Information Animations */
+      .selected-product-information-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+          animation: selected-product-information-animations-transitionIn 1.25s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          top: 10%;
+          animation: selected-product-information-animations-transitionOut 0.75s ease-in-out;
+        }
+      }
+
+      /* Selected Product Information transitionIn Animation */
+      @keyframes selected-product-information-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+          top: 10%;
+        }
+
+        1% {
+          display: block;
+          opacity: 0;
+          top: 10%;
+        }
+
+        100% {
+          opacity: 1;
+          top: 0px;
+          bottom: 0px;
+        }
+      }
+
+      /* Selected Product Information transitionOut Animation */
+      @keyframes selected-product-information-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+          top: 0px;
+          bottom: 0px;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+          top: 10%;
+        }
+
+        100% {
+          display: none;
+          top: 10%;
+        }
+      }
+    }
+
+
+/********************************************************************************/
+
+
+
+    .system-config {
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      z-index: 6;
+
+      .system-config-screen-shading {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 1080px;
+        z-index: 1;
+
+        /* Positioning for the screen shading */
+        .screen-shading {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+        }
+      }
+
+
+      /* Screen Shading Animations */
+      .system-config-screen-shading-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: system-config-screen-shading-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: system-config-screen-shading-animations-transitionOut 2s ease-in-out;
+        }
+      }
+
+      /* Screen Shading transitionIn Animation */
+      @keyframes system-config-screen-shading-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+        1% {
+          display: block;
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Shading transitionOut Animation */
+      @keyframes system-config-screen-shading-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      .system-config-login {
+        z-index: 2;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        height: 640px;
+        width: 1080px;
+
+        .system-config-login-text-box {
+          z-index: 1;
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 0px;
+          right: 0px;
+          top: 125px;
+        }
+
+        .system-config-login-chars {
+          position: absolute;
+          margin-left: auto;
+          margin-right: auto;
+          left: 5px;
+          right: 0px;
+          top: 135px;
+          width: 810px;
+          height: 65px;
+          z-index: 2;
+
+          .system-config-login-char-1, .system-config-login-char-2, .system-config-login-char-3,
+          .system-config-login-char-4, .system-config-login-char-5, .system-config-login-char-6,
+          .system-config-login-char-7, .system-config-login-char-8, .system-config-login-char-9,
+          .system-config-login-char-10, .system-config-login-char-11, .system-config-login-char-12,
+          .system-config-login-char-13, .system-config-login-char-14, .system-config-login-char-15,
+          .system-config-login-char-16, .system-config-login-char-17, .system-config-login-char-18,
+          .system-config-login-char-19, .system-config-login-char-20, .system-config-login-char-21,
+          .system-config-login-char-22, .system-config-login-char-23 {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 0px;
+            width: 35px;
+            height: 65px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+
+            &.invalid-password {
+              color: #FF6666;
+            }
+          }
+
+          .system-config-login-char-1 {
+            left: 0px;
+          }
+
+          .system-config-login-char-2 {
+            left: 35px;
+          }
+
+          .system-config-login-char-3 {
+            left: 70px;
+          }
+
+          .system-config-login-char-4 {
+            left: 105px;
+          }
+
+          .system-config-login-char-5 {
+            left: 140px;
+          }
+
+          .system-config-login-char-6 {
+            left: 175px;
+          }
+
+          .system-config-login-char-7 {
+            left: 210px;
+          }
+
+          .system-config-login-char-8 {
+            left: 245px;
+          }
+
+          .system-config-login-char-9 {
+            left: 280px;
+          }
+
+          .system-config-login-char-10 {
+            left: 315px;
+          }
+
+          .system-config-login-char-11 {
+            left: 350px;
+          }
+
+          .system-config-login-char-12 {
+            left: 385px;
+          }
+
+          .system-config-login-char-13 {
+            left: 420px;
+          }
+
+          .system-config-login-char-14 {
+            left: 455px;
+          }
+
+          .system-config-login-char-15 {
+            left: 490px;
+          }
+
+          .system-config-login-char-16 {
+            left: 525px;
+          }
+
+          .system-config-login-char-17 {
+            left: 560px;
+          }
+
+          .system-config-login-char-18 {
+            left: 595px;
+          }
+
+          .system-config-login-char-19 {
+            left: 630px;
+          }
+
+          .system-config-login-char-20 {
+            left: 665px;
+          }
+
+          .system-config-login-char-21 {
+            left: 700px;
+          }
+
+          .system-config-login-char-22 {
+            left: 735px;
+          }
+
+          .system-config-login-char-23 {
+            left: 770px;
+          }
+        }
+
+        .system-config-password-code {
+          position: absolute;
+          margin: auto;
+          color: white;
+          left: 0px;
+          top: 250px;
+          width: 1080px;
+          text-align: center;
+          font-size: 3em;
+          font-family: Lalezar;
+          z-index: 2;
+
+          &.not-entering-password {
+            display: none;
+          }
+        }
+
+        .system-config-login-buttons {
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          width: 1080px;
+          height: 640px;
+          z-index: 2;
+
+
+          .zero-button, .one-button, .two-button, .three-button, .four-button,
+          .five-button, .six-button, .seven-button, .eight-button, .nine-button,
+          .a-button, .b-button, .c-button, .d-button, .e-button, .f-button {
+            position: absolute;
+            margin: auto;
+            z-index: 1;
+          }
+
+          .zero-text, .one-text, .two-text, .three-text, .four-text, .five-text,
+          .six-text, .seven-text, .eight-text, .nine-text, .a-text, .b-text,
+          .c-text, .d-text, .e-text, .f-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 60px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.zero-button-pressed, &.one-button-pressed, &.two-button-pressed,
+            &.three-button-pressed, &.four-button-pressed, &.five-button-pressed,
+            &.six-button-pressed, &.seven-button-pressed, &.eight-button-pressed,
+            &.nine-button-pressed, &.a-button-pressed, &.b-button-pressed,
+            &.c-button-pressed, &.d-button-pressed, &.e-button-pressed, &.f-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .zero-button {
+            top: 350px;
+            left: 210px;
+          }
+
+          .zero-text {
+            top: 356px;
+            left: 216px;
+          }
+
+          .one-button {
+            top: 350px;
+            left: 294px;
+          }
+
+          .one-text {
+            top: 356px;
+            left: 300px;
+          }
+
+          .two-button {
+            top: 350px;
+            left: 378px;
+          }
+
+          .two-text {
+            top: 356px;
+            left: 384px;
+          }
+
+          .three-button {
+            top: 350px;
+            left: 462px;
+          }
+
+          .three-text {
+            top: 356px;
+            left: 468px;
+          }
+
+          .four-button {
+            top: 350px;
+            left: 546px;
+          }
+
+          .four-text {
+            top: 356px;
+            left: 552px;
+          }
+
+          .five-button {
+            top: 350px;
+            left: 630px;
+          }
+
+          .five-text {
+            top: 356px;
+            left: 636px;
+          }
+
+          .six-button {
+            top: 350px;
+            left: 714px;
+          }
+
+          .six-text {
+            top: 356px;
+            left: 720px;
+          }
+
+          .seven-button {
+            top: 350px;
+            left: 798px;
+          }
+
+          .seven-text {
+            top: 356px;
+            left: 804px;
+          }
+
+          .eight-button {
+            top: 434px;
+            left: 210px;
+          }
+
+          .eight-text {
+            top: 440px;
+            left: 216px;
+          }
+
+          .nine-button {
+            top: 434px;
+            left: 294px;
+          }
+
+          .nine-text {
+            top: 440px;
+            left: 300px;
+          }
+
+          .a-button {
+            top: 434px;
+            left: 378px;
+          }
+
+          .a-text {
+            top: 440px;
+            left: 384px;
+          }
+
+          .b-button {
+            top: 434px;
+            left: 462px;
+          }
+
+          .b-text {
+            top: 440px;
+            left: 468px;
+          }
+
+          .c-button {
+            top: 434px;
+            left: 546px;
+          }
+
+          .c-text {
+            top: 440px;
+            left: 552px;
+          }
+
+          .d-button {
+            top: 434px;
+            left: 630px;
+          }
+
+          .d-text {
+            top: 440px;
+            left: 636px;
+          }
+
+          .e-button {
+            top: 434px;
+            left: 714px;
+          }
+
+          .e-text {
+            top: 440px;
+            left: 720px;
+          }
+
+          .f-button {
+            top: 434px;
+            left: 798px;
+          }
+
+          .f-text {
+            top: 440px;
+            left: 804px;
+          }
+
+          .delete-button {
+            position: absolute;
+            margin: auto;
+            left: 210px;
+            top: 518px;
+            z-index: 1;
+          }
+
+          .delete-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 312px;
+            top: 524px;
+            left: 216px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.delete-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .enter-button {
+            position: absolute;
+            margin: auto;
+            left: 546px;
+            top: 518px;
+            z-index: 1;
+          }
+
+
+          .enter-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 312px;
+            top: 524px;
+            left: 552px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.enter-button-pressed {
+              color: #DDDDDD;
+            }
+
+          }
+
+          .login-back-button {
+            position:absolute;
+            margin: auto;
+            left: 20px;
+            top: 20px;
+            z-index: 1;
+          }
+
+          .login-back-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 175px;
+            top: 26px;
+            left: 26px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.login-back-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .past-info-button {
+            position:absolute;
+            margin: auto;
+            right: 20px;
+            top: 20px;
+            display: none;
+            z-index: 1;
+
+            &.entering-password {
+              display: inline-block;
+            }
+          }
+
+          .past-info-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            width: 225px;
+            top: 26px;
+            right: 26px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            display: none;
+            z-index: 2;
+
+            &.past-info-button-pressed {
+              color: #DDDDDD;
+            }
+
+            &.entering-password {
+              display: block;
+            }
+          }
+        }
+      }
+
+      /* User ID and Password Entry Animations */
+      .system-config-login-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: system-config-login-animation-transitionIn 0.75s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: system-config-login-animation-transitionOut 1s ease-in-out;
+        }
+      }
+
+      /* Selected Product Information transitionIn Animation */
+      @keyframes system-config-login-animation-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+
+        1% {
+          display: block;
+          opacity: 0;
+        }
+
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Selected Product Information transitionOut Animation */
+      @keyframes system-config-login-animation-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+
+      .system-config-past-info {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 1080px;
+        height: 640px;
+        display: none;
+        z-index: 3;
+
+        &.viewing-past-info {
+          display: block;
+        }
+
+        .system-config-past-info-screen-shading {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 1;
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-past-info-screen-shading-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-past-info-screen-shading-animations-transitionIn 1s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-past-info-screen-shading-animations-transitionOut 2s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-past-info-screen-shading-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-past-info-screen-shading-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        .system-config-past-info-content {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 2;
+
+          .past-info-password-sum {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 200px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .past-info-password-check {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 300px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .past-info-back-button {
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            top: 445px;
+            left: 0px;
+            right: 0px;
+            z-index: 1;
+          }
+
+          .past-info-back-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 450px;
+            left: 0px;
+            width: 1080px;
+            font-size: 3em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.past-info-back-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-past-info-content-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-past-info-content-animations-transitionIn 0.75s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-past-info-content-animations-transitionOut 1s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-past-info-content-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-past-info-content-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+      }
+
+      .system-config-password-check {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        display: none;
+        z-index: 3;
+
+        &.checking-password {
+          display: block;
+        }
+
+        .system-config-password-check-screen-shading {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 1;
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+        }
+
+        /* Screen Shading Animations */
+        .system-config-password-check-screen-shading-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-password-check-screen-shading-animations-transitionIn 1s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-password-check-screen-shading-animations-transitionOut 2s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-password-check-screen-shading-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-password-check-screen-shading-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        .system-config-password-check-content {
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 2;
+
+          .system-config-password-check-code {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 250px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .continue-button {
+            position: absolute;
+            margin: auto;
+            top: 445px;
+            left: 0px;
+            right: 0px;
+            z-index: 1;
+          }
+
+          .continue-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 450px;
+            left: 0px;
+            width: 1080px;
+            font-size: 3em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.continue-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+
+        .system-config-password-check-content-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: system-config-password-check-content-animations-transitionIn 1.5s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: system-config-password-check-content-animations-transitionOut 1.5s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-password-check-content-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-password-check-content-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+      }
+
+      .product-editing {
+        position: fixed;
+        height: 640px;
+        width: 1080px;
+        top: 0px;
+        left: 0px;
+        z-index: 3;
+
+        .product-info {
+          position: fixed;
+          height: 540px;
+          width: 1080px;
+          top: 0px;
+          left: 0px;
+          z-index: 1;
+
+          .product-editing-product-name-1, .product-editing-product-name-2,
+          .product-editing-product-name-3, .product-editing-product-name-4,
+          .product-editing-product-name-5 {
+            position: absolute;
+            color: white;
+            left: 100px;
+            width: 500px;
+            font-size: 2.5em;
+            text-align: right;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .product-editing-minus-button-1, .product-editing-minus-button-2,
+          .product-editing-minus-button-3, .product-editing-minus-button-4,
+          .product-editing-minus-button-5 {
+            position: absolute;
+            left: 700px;
+            z-index: 1;
+
+            &.atMin {
+              pointer-events: none;
+              opacity: 0.2;
+            }
+          }
+
+          .product-editing-product-quantity-available-1,
+          .product-editing-product-quantity-available-2,
+          .product-editing-product-quantity-available-3,
+          .product-editing-product-quantity-available-4,
+          .product-editing-product-quantity-available-5 {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 750px;
+            width: 75px;
+            font-size: 2.5em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 1;
+
+            &.outOfStock {
+              opacity: 0.6;
+            }
+          }
+
+          .product-editing-plus-button-1, .product-editing-plus-button-2,
+          .product-editing-plus-button-3, .product-editing-plus-button-4,
+          .product-editing-plus-button-5 {
+            position: absolute;
+            left: 825px;
+            z-index: 1;
+
+            &.atMax {
+              pointer-events: none;
+              opacity: 0.2;
+            }
+          }
+
+          .product-editing-product-name-1, .product-editing-minus-button-1,
+          .product-editing-product-quantity-available-1, .product-editing-plus-button-1 {
+            top: 100px;
+          }
+
+          .product-editing-product-name-2, .product-editing-minus-button-2,
+          .product-editing-product-quantity-available-2, .product-editing-plus-button-2 {
+            top: 175px;
+          }
+
+          .product-editing-product-name-3, .product-editing-minus-button-3,
+          .product-editing-product-quantity-available-3, .product-editing-plus-button-3 {
+            top: 250px;
+          }
+
+          .product-editing-product-name-4, .product-editing-minus-button-4,
+          .product-editing-product-quantity-available-4, .product-editing-plus-button-4 {
+            top: 325px;
+          }
+
+          .product-editing-product-name-5, .product-editing-minus-button-5,
+          .product-editing-product-quantity-available-5, .product-editing-plus-button-5 {
+            top: 400px;
+          }
+        }
+
+        .product-info-left-animations {
+          &.left-out {
+            display: block;
+            opacity: 1;
+          }
+
+          &.left-transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            left: 100px;
+            animation: system-config-product-editing-page-change-left-animations-transitionIn 0.4s ease-in-out;
+          }
+
+          &.left-in {
+            display: none;
+            opacity: 0;
+          }
+
+          &.left-transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            left: 0px;
+            animation: system-config-product-editing-page-change-left-animations-transitionOut 0.4s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-product-editing-page-change-left-animations-transitionIn {
+          0% {
+            display: block;
+            opacity: 1;
+            left: 0px;
+          }
+
+          1% {
+            display: block;
+            opacity: 1;
+            left: 0px;
+          }
+
+          99% {
+            display: block;
+            opacity: 0;
+            left: 100px;
+          }
+
+          100% {
+            display: none;
+            opacity: 0;
+            left: 100px;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-product-editing-page-change-left-animations-transitionOut {
+          0% {
+            opacity: 0;
+            display: none;
+            left: -100px;
+          }
+
+          1% {
+            opacity: 0;
+            display: block;
+            left: -100px;
+          }
+
+          99% {
+            opacity: 1;
+            display: block;
+            left: 0px;
+          }
+
+          100% {
+            opacity: 1;
+            display: block;
+            left: 0px;
+          }
+        }
+
+        .product-info-right-animations {
+          &.right-out {
+            display: block;
+            opacity: 1;
+          }
+
+          &.right-transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            left: -100px;
+            animation: system-config-product-editing-page-change-right-animations-transitionIn 0.4s ease-in-out;
+          }
+
+          &.right-in {
+            display: none;
+            opacity: 0;
+          }
+
+          &.right-transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            left: 0px;
+            animation: system-config-product-editing-page-change-right-animations-transitionOut 0.4s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes system-config-product-editing-page-change-right-animations-transitionIn {
+          0% {
+            display: block;
+            opacity: 1;
+            left: 0px;
+          }
+
+          1% {
+            display: block;
+            opacity: 1;
+            left: 0px;
+          }
+
+          99% {
+            display: block;
+            opacity: 0;
+            left: -100px;
+          }
+
+          100% {
+            display: none;
+            opacity: 0;
+            left: -100px;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes system-config-product-editing-page-change-right-animations-transitionOut {
+          0% {
+            opacity: 0;
+            display: none;
+            left: 100px;
+          }
+
+          1% {
+            opacity: 0;
+            display: block;
+            left: 100px;
+          }
+
+          99% {
+            opacity: 1;
+            display: block;
+            left: 0px;
+          }
+
+          100% {
+            opacity: 1;
+            display: block;
+            left: 0px;
+          }
+        }
+
+        .product-editing-navigation {
+          position: fixed;
+          height: 120px;
+          width: 1080px;
+          top: 520px;
+          left: 0px;
+          z-index: 1;
+
+          .product-editing-cancel-button {
+            position: absolute;
+            margin: auto;
+            top: 20px;
+            left: 20px;
+            z-index: 1;
+          }
+
+          .product-editing-cancel-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 47px;
+            top: 25px;
+            width: 175px;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.product-editing-cancel-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+
+          .page-changer {
+            position: absolute;
+            margin: auto;
+            top: 30px;
+            left: 0px;
+            z-index: 1;
+
+            .page-left-button {
+              position: absolute;
+              margin: auto;
+              top: 0px;
+              left: 415px;
+              z-index: 2;
+
+              &.atMin {
+                pointer-events: none;
+                opacity: 0.2;
+              }
+            }
+
+            .page-number {
+              position: absolute;
+              margin: auto;
+              color: white;
+              left: 0px;
+              top: 0px;
+              width: 1080px;
+              font-size: 2.5em;
+              text-align: center;
+              font-family: Lalezar;
+              z-index: 1;
+            }
+
+            .page-right-button {
+              position: absolute;
+              margin: auto;
+              top: 0px;
+              left: 615px;
+              z-index: 2;
+
+              &.atMax {
+                pointer-events: none;
+                opacity: 0.2;
+              }
+            }
+          }
+
+          .submit-button {
+            position: absolute;
+            margin: auto;
+            top: 20px;
+            right: 20px;
+            z-index: 1;
+          }
+
+          .submit-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            right: 12px;
+            top: 25px;
+            width: 175px;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.submit-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+      }
+
+      .product-editing-animations {
+        &.out {
+          display: none;
+          opacity: 0;
+        }
+
+        &.transitionIn {
+          display: block;
+          transform: scale(1);
+          opacity: 1;
+          animation: system-config-product-editing-content-animations-transitionIn 1s ease-in-out;
+        }
+
+        &.in {
+          display: block;
+          opacity: 1;
+        }
+
+        &.transitionOut {
+          display: block;
+          transform: scale(1);
+          opacity: 0;
+          animation: system-config-product-editing-content-animations-transitionOut 1s ease-in-out;
+        }
+      }
+
+      /* Screen Shading transitionIn Animation */
+      @keyframes system-config-product-editing-content-animations-transitionIn {
+        0% {
+          display: none;
+          opacity: 0;
+        }
+        1% {
+          display: block;
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      /* Screen Shading transitionOut Animation */
+      @keyframes system-config-product-editing-content-animations-transitionOut {
+        0% {
+          opacity: 1;
+          display: block;
+        }
+
+        99% {
+          opacity: 0;
+          display: block;
+        }
+
+        100% {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .advertisements {
+    background-color: #101010;
+    position: fixed;
+    z-index: 1;
+    left: 0px;
+    top: 640px;
+    height: 640px;
+    width: 1080px;
+
+    app-advertisement-board {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      max-height: 100%;
+      width: 100%;
+      text-align: center;
+      left: 0px;
+      right: 0px;
+    }
+  }
+}

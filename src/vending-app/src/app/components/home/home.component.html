@@ -1,0 +1,439 @@
+<div class="container">
+    <div class="page-content">
+        <!-- Background behind products -->
+        <img class="behind-product" src="assets/img/Behind-Product.png">
+
+        <!-- Top product carousel -->
+        <div class="top-product-carousel" drag-scroll-y-disabled="true">
+            <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
+                (reachesLeftBound)="navEvent('reachesBound', 'topLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'topRight', '', $event)"
+                (mousedown)="navEvent('mousedown', '', '', false)" (mouseup)="navEvent('mouseup', '', '', false)"
+                #topScroller>
+                <div drag-scroll-item *ngFor="let product of productsTopRow; let i = index">
+                    <div class="product" (click)="selectProduct(product)">
+                        <img class="product-image" [src]="product.smallImg">
+                    </div>
+                </div>
+            </drag-scroll>
+        </div>
+
+        <!-- Bottom product carousel -->
+        <div class="bottom-product-carousel" drag-scroll-y-disabled="true">
+            <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
+                (reachesLeftBound)="navEvent('reachesBound', 'bottomLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'bottomRight', '', $event)"
+                (mousedown)="navEvent('mousedown', '', '', false)" (mouseup)="navEvent('mouseup', '', '', false)"
+                #bottomScroller>
+                <div drag-scroll-item *ngFor="let product of productsBottomRow; let i = index">
+                    <div class="product" (click)="selectProduct(product)">
+                        <img class="product-image" [src]="product.smallImg">
+                    </div>
+                </div>
+            </drag-scroll>
+        </div>
+
+        <!-- Price tracks (no shading), product area shading, and front panel-->
+        <img class="price-tracks-without-shading" src="assets/img/Price-Tracks-Without-Shading.png">
+        <img class="product-area-shading-and-front-panel" src="assets/img/Product-Area-Shading-and-Front-Panel.png">
+
+        <!-- Navigation buttons -->
+        <img class="top-left-nav-button-off" src="assets/img/Button-Off-Left.png" *ngIf="!navButtonEnabled['topLeft']"
+            (click)="navEvent('password', 'topLeft', '', '')">
+        <img class="top-left-nav-button-on" [src]="navButtonSource['topLeft']" *ngIf="navButtonEnabled['topLeft']"
+            (click)="navEvent('click', 'topLeft', '', ''); navEvent('password', 'topLeft', '', '')" (mousedown)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
+            (mouseup)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'topLeft', 'assets/img/Button-On-Left.png', '')">
+        <img class="top-right-nav-button-off" src="assets/img/Button-Off-Right.png" *ngIf="!navButtonEnabled['topRight']"
+            (click)="navEvent('password', 'topRight', '', '')">
+        <img class="top-right-nav-button-on" [src]="navButtonSource['topRight']" *ngIf="navButtonEnabled['topRight']"
+            (click)="navEvent('click', 'topRight', '', ''); navEvent('password', 'topRight', '', '')" (mousedown)="navEvent('mousedown', 'topRight', 'assets/img/Button-On-Right-Pressed.png', '')"
+            (mouseup)="navEvent('mouseup', 'topRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'topRight', 'assets/img/Button-On-Right.png', '')">
+        <img class="bottom-left-nav-button-off" src="assets/img/Button-Off-Left.png" *ngIf="!navButtonEnabled['bottomLeft']"
+            (click)="navEvent('password', 'bottomLeft', '', '')">
+        <img class="bottom-left-nav-button-on" [src]="navButtonSource['bottomLeft']" *ngIf="navButtonEnabled['bottomLeft']"
+            (click)="navEvent('click', 'bottomLeft', '', ''); navEvent('password', 'bottomLeft', '', '')" (mousedown)="navEvent('mousedown', 'bottomLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
+            (mouseup)="navEvent('mouseup', 'bottomLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomLeft', 'assets/img/Button-On-Left.png', '')">
+        <img class="bottom-right-nav-button-off" src="assets/img/Button-Off-Right.png" *ngIf="!navButtonEnabled['bottomRight']"
+            (click)="navEvent('password', 'bottomRight', '', '')">
+        <img class="bottom-right-nav-button-on" [src]="navButtonSource['bottomRight']" *ngIf="navButtonEnabled['bottomRight']"
+            (click)="navEvent('click', 'bottomRight', '', ''); navEvent('password', 'bottomRight', '', '')" (mousedown)="navEvent('mousedown', 'bottomRight', 'assets/img/Button-On-Right-Pressed.png', '')"
+            (mouseup)="navEvent('mouseup', 'bottomRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomRight', 'assets/img/Button-On-Right.png', '')">
+
+        <!-- Product Selecting -->
+        <!-- ngif directive used to only render following code if product was selected. Required to prevent errors caused by accesses to null data-->
+        <div class="product-selecting" *ngIf="selectedProduct">
+            <div class="product-selecting-screen-shading-animations product-selecting-screen-shading" [class.out]="productSelectingScreenShadingAnimation.out"
+                [class.transitionIn]="productSelectingScreenShadingAnimation.transitionIn" [class.in]="productSelectingScreenShadingAnimation.in"
+                [class.transitionOut]="productSelectingScreenShadingAnimation.transitionOut">
+                <img class="screen-shading" src="assets/img/Screen-Shading.png">
+            </div>
+
+            <div class="product-selecting-screen-lighting-animations product-selecting-screen-lighting" [class.out]="productSelectingScreenLightingAnimation.out"
+                [class.transitionIn]="productSelectingScreenLightingAnimation.transitionIn" [class.in]="productSelectingScreenLightingAnimation.in"
+                [class.transitionOut]="productSelectingScreenLightingAnimation.transitionOut">
+                <img class="screen-lighting" src="assets/img/Screen-Circular-Highlight.png">
+            </div>
+
+            <div class="selected-product-image-animations selected-product-image" [class.out]="selectedProductImageAnimation.out"
+                [class.transitionIn]="selectedProductImageAnimation.transitionIn" [class.in]="selectedProductImageAnimation.in"
+                [class.transitionOut]="selectedProductImageAnimation.transitionOut">
+                <img class="selected-product-image-largeImg" [src]="selectedProduct.largeImg">
+            </div>
+
+            <div class="selected-product-information-animations selected-product-information" [class.out]="selectedProductInformationAnimation.out"
+                [class.transitionIn]="selectedProductInformationAnimation.transitionIn" [class.in]="selectedProductInformationAnimation.in"
+                [class.transitionOut]="selectedProductInformationAnimation.transitionOut">
+                <p class="selected-product-name">{{ selectedProduct.name }}</p>
+                <p class="selected-product-description" [style.font-size]="selectedProductDescriptionFontSize">{{
+                    selectedProduct.description }}</p>
+                <p class="selected-product-price">Price: {{ selectedProduct.price.toFormat('$0,0.00') }}</p>
+
+                <img class="information-separator" src="assets/img/Information-Separator.png">
+                <img class="minus-button" [class.atMin]="selectedProductQuantityWantedAtMin" [src]="buttons[findButtonPosition('minusButton')].source"
+                    (click)="buttonEvent('click', 'minusButton', '')" (mousedown)="buttonEvent('mousedown', 'minusButton', 'assets/img/Minus-Button-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'minusButton', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'minusButton', 'assets/img/Minus-Button.png')">
+                <p class="selected-product-quantity-wanted" [class.outOfStock]="selectedProductOutOfStock">{{
+                    selectedProductQuantityWanted }}</p>
+                <img class="plus-button" [class.atMax]="selectedProductQuantityWantedAtMax" [src]="buttons[findButtonPosition('plusButton')].source"
+                    (click)="buttonEvent('click', 'plusButton', '')" (mousedown)="buttonEvent('mousedown', 'plusButton', 'assets/img/Plus-Button-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'plusButton', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'plusButton', 'assets/img/Plus-Button.png')">
+
+                <p class="selected-product-total-price" [class.outOfStock]="selectedProductOutOfStock">Total: {{
+                    (selectedProduct.price.multiply(selectedProductQuantityWanted)).toFormat('$0,0.00') }}</p>
+                <p class="selected-product-out-of-stock" [class.outOfStock]="selectedProductOutOfStock">Out of Stock</p>
+                <img class="selected-product-cancel-button" [src]="buttons[findButtonPosition('selectedProductCancelButton')].source" (click)="buttonEvent('click', 'selectedProductCancelButton', '')"
+                    (mousedown)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')">
+                <p class="selected-product-cancel-text" [class.selected-product-cancel-button-pressed]="buttons[findButtonPosition('selectedProductCancelButton')].pressed"
+                    (click)="buttonEvent('click', 'selectedProductCancelButton', '')" (mousedown)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')">Cancel</p>
+                <img class="purchase-button" [class.outOfStock]="selectedProductOutOfStock" [src]="buttons[findButtonPosition('purchaseButton')].source"
+                    (click)="buttonEvent('click', 'purchaseButton', '')" (mousedown)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')">
+                <p class="purchase-text" [class.purchase-button-pressed]="buttons[findButtonPosition('purchaseButton')].pressed"
+                    [class.outOfStock]="selectedProductOutOfStock" (click)="buttonEvent('click', 'purchaseButton', '')"
+                    (mousedown)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')"
+                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')">Purchase</p>
+            </div>
+        </div>
+
+        <!-- System Configuration -->
+        <div class="system-config" *ngIf="enteringUserID || enteringPassword || checkingPassword || editingProduct">
+            <div class="system-config-screen-shading-animations system-config-screen-shading" [class.out]="systemConfigScreenShadingAnimation.out"
+                [class.transitionIn]="systemConfigScreenShadingAnimation.transitionIn" [class.in]="systemConfigScreenShadingAnimation.in"
+                [class.transitionOut]="systemConfigScreenShadingAnimation.transitionOut">
+                <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                <img class="screen-shading" src="assets/img/Screen-Shading.png">
+            </div>
+            <!-- This is where user will enter user ID (which allows us to know the specific user
+             and know which password to look for) -->
+            <div class="system-config-login-animations system-config-login" [class.out]="systemConfigLoginAnimation.out"
+                [class.transitionIn]="systemConfigLoginAnimation.transitionIn" [class.in]="systemConfigLoginAnimation.in"
+                [class.transitionOut]="systemConfigLoginAnimation.transitionOut">
+                <img class="system-config-login-text-box" src="assets/img/Information-Entry-820.png">
+
+                <div class="system-config-login-chars">
+                    <p class="system-config-login-char-1" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[0] }}</p>
+                    <p class="system-config-login-char-2" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[1] }}</p>
+                    <p class="system-config-login-char-3" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[2] }}</p>
+                    <p class="system-config-login-char-4" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[3] }}</p>
+                    <p class="system-config-login-char-5" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[4] }}</p>
+                    <p class="system-config-login-char-6" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[5] }}</p>
+                    <p class="system-config-login-char-7" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[6] }}</p>
+                    <p class="system-config-login-char-8" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[7] }}</p>
+                    <p class="system-config-login-char-9" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[8] }}</p>
+                    <p class="system-config-login-char-10" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[9] }}</p>
+                    <p class="system-config-login-char-11" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[10] }}</p>
+                    <p class="system-config-login-char-12" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[11] }}</p>
+                    <p class="system-config-login-char-13" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[12] }}</p>
+                    <p class="system-config-login-char-14" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[13] }}</p>
+                    <p class="system-config-login-char-15" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[14] }}</p>
+                    <p class="system-config-login-char-16" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[15] }}</p>
+                    <p class="system-config-login-char-17" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[16] }}</p>
+                    <p class="system-config-login-char-18" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[17] }}</p>
+                    <p class="system-config-login-char-19" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[18] }}</p>
+                    <p class="system-config-login-char-20" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[19] }}</p>
+                    <p class="system-config-login-char-21" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[20] }}</p>
+                    <p class="system-config-login-char-22" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[21] }}</p>
+                    <p class="system-config-login-char-23" [class.invalid-password]="!password.valid">{{
+                        userIDAndPasswordChars[22] }}</p>
+                </div>
+
+                <p class="system-config-password-code" [class.not-entering-password]="!enteringPassword">{{
+                    passwordSum }}</p>
+                <div class="system-config-login-buttons">
+                    <img class="zero-button" [src]="buttons[findButtonPosition('zeroButton')].source" (click)="buttonEvent('click', 'zeroButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')">
+                    <p class="zero-text" [class.zero-button-pressed]="buttons[findButtonPosition('zeroButton')].pressed"
+                        (click)="buttonEvent('click', 'zeroButton', '')" (mousedown)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')">0</p>
+                    <img class="one-button" [src]="buttons[findButtonPosition('oneButton')].source" (click)="buttonEvent('click', 'oneButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')">
+                    <p class="one-text" [class.one-button-pressed]="buttons[findButtonPosition('oneButton')].pressed"
+                        (click)="buttonEvent('click', 'oneButton', '')" (mousedown)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')">1</p>
+                    <img class="two-button" [src]="buttons[findButtonPosition('twoButton')].source" (click)="buttonEvent('click', 'twoButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')">
+                    <p class="two-text" [class.two-button-pressed]="buttons[findButtonPosition('twoButton')].pressed"
+                        (click)="buttonEvent('click', 'twoButton', '')" (mousedown)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')">2</p>
+                    <img class="three-button" [src]="buttons[findButtonPosition('threeButton')].source" (click)="buttonEvent('click', 'threeButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')">
+                    <p class="three-text" [class.three-button-pressed]="buttons[findButtonPosition('threeButton')].pressed"
+                        (click)="buttonEvent('click', 'threeButton', '')" (mousedown)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')">3</p>
+                    <img class="four-button" [src]="buttons[findButtonPosition('fourButton')].source" (click)="buttonEvent('click', 'fourButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')">
+                    <p class="four-text" [class.four-button-pressed]="buttons[findButtonPosition('fourButton')].pressed"
+                        (click)="buttonEvent('click', 'fourButton', '')" (mousedown)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')">4</p>
+                    <img class="five-button" [src]="buttons[findButtonPosition('fiveButton')].source" (click)="buttonEvent('click', 'fiveButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')">
+                    <p class="five-text" [class.five-button-pressed]="buttons[findButtonPosition('fiveButton')].pressed"
+                        (click)="buttonEvent('click', 'fiveButton', '')" (mousedown)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')">5</p>
+                    <img class="six-button" [src]="buttons[findButtonPosition('sixButton')].source" (click)="buttonEvent('click', 'sixButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')">
+                    <p class="six-text" [class.six-button-pressed]="buttons[findButtonPosition('sixButton')].pressed"
+                        (click)="buttonEvent('click', 'sixButton', '')" (mousedown)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')">6</p>
+                    <img class="seven-button" [src]="buttons[findButtonPosition('sevenButton')].source" (click)="buttonEvent('click', 'sevenButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')">
+                    <p class="seven-text" [class.seven-button-pressed]="buttons[findButtonPosition('sevenButton')].pressed"
+                        (click)="buttonEvent('click', 'sevenButton', '')" (mousedown)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')">7</p>
+                    <img class="eight-button" [src]="buttons[findButtonPosition('eightButton')].source" (click)="buttonEvent('click', 'eightButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')">
+                    <p class="eight-text" [class.eight-button-pressed]="buttons[findButtonPosition('eightButton')].pressed"
+                        (click)="buttonEvent('click', 'eightButton', '')" (mousedown)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')">8</p>
+                    <img class="nine-button" [src]="buttons[findButtonPosition('nineButton')].source" (click)="buttonEvent('click', 'nineButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')">
+                    <p class="nine-text" [class.nine-button-pressed]="buttons[findButtonPosition('nineButton')].pressed"
+                        (click)="buttonEvent('click', 'nineButton', '')" (mousedown)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')">9</p>
+                    <img class="a-button" [src]="buttons[findButtonPosition('aButton')].source" (click)="buttonEvent('click', 'aButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')">
+                    <p class="a-text" [class.a-button-pressed]="buttons[findButtonPosition('aButton')].pressed" (click)="buttonEvent('click', 'aButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')">A</p>
+                    <img class="b-button" [src]="buttons[findButtonPosition('bButton')].source" (click)="buttonEvent('click', 'bButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')">
+                    <p class="b-text" [class.b-button-pressed]="buttons[findButtonPosition('bButton')].pressed" (click)="buttonEvent('click', 'bButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')">B</p>
+                    <img class="c-button" [src]="buttons[findButtonPosition('cButton')].source" (click)="buttonEvent('click', 'cButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')">
+                    <p class="c-text" [class.c-button-pressed]="buttons[findButtonPosition('cButton')].pressed" (click)="buttonEvent('click', 'cButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')">C</p>
+                    <img class="d-button" [src]="buttons[findButtonPosition('dButton')].source" (click)="buttonEvent('click', 'dButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')">
+                    <p class="d-text" [class.d-button-pressed]="buttons[findButtonPosition('dButton')].pressed" (click)="buttonEvent('click', 'dButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')">D</p>
+                    <img class="e-button" [src]="buttons[findButtonPosition('eButton')].source" (click)="buttonEvent('click', 'eButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')">
+                    <p class="e-text" [class.e-button-pressed]="buttons[findButtonPosition('eButton')].pressed" (click)="buttonEvent('click', 'eButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')">E</p>
+                    <img class="f-button" [src]="buttons[findButtonPosition('fButton')].source" (click)="buttonEvent('click', 'fButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')">
+                    <p class="f-text" [class.f-button-pressed]="buttons[findButtonPosition('fButton')].pressed" (click)="buttonEvent('click', 'fButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')"
+                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')">F</p>
+
+                    <img class="delete-button" [src]="buttons[findButtonPosition('deleteButton')].source" (click)="buttonEvent('click', 'deleteButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">
+                    <p class="delete-text" [class.delete-button-pressed]="buttons[findButtonPosition('deleteButton')].pressed"
+                        (click)="buttonEvent('click', 'deleteButton', '')" (mousedown)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">Delete</p>
+                    <img class="enter-button" [src]="buttons[findButtonPosition('enterButton')].source" (click)="buttonEvent('click', 'enterButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">
+                    <p class="enter-text" [class.enter-button-pressed]="buttons[findButtonPosition('enterButton')].pressed"
+                        (click)="buttonEvent('click', 'enterButton', '')" (mousedown)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">Enter</p>
+                    <img class="login-back-button" [src]="buttons[findButtonPosition('loginBackButton')].source"
+                        (click)="buttonEvent('click', 'loginBackButton', '')" (mousedown)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">
+                    <p class="login-back-text" [class.login-back-button-pressed]="buttons[findButtonPosition('loginBackButton')].pressed"
+                        (click)="buttonEvent('click', 'loginBackButton', '')" (mousedown)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">Back</p>
+                    <img class="past-info-button" [src]="buttons[findButtonPosition('pastInfoButton')].source"
+                        [class.entering-password]="enteringPassword" (click)="buttonEvent('click', 'pastInfoButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">
+                    <p class="past-info-text" [class.past-info-button-pressed]="buttons[findButtonPosition('pastInfoButton')].pressed"
+                        [class.entering-password]="enteringPassword" (click)="buttonEvent('click', 'pastInfoButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">Past
+                        Info</p>
+                </div>
+            </div>
+
+            <div class="system-config-past-info" [class.viewing-past-info]="viewingPastInfo">
+                <div class="system-config-past-info-screen-shading-animations system-config-past-info-screen-shading"
+                    [class.out]="systemConfigPastInfoScreenShadingAnimation.out" [class.transitionIn]="systemConfigPastInfoScreenShadingAnimation.transitionIn"
+                    [class.in]="systemConfigPastInfoScreenShadingAnimation.in" [class.transitionOut]="systemConfigPastInfoScreenShadingAnimation.transitionOut">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                </div>
+
+                <div class="system-config-past-info-content-animations system-config-past-info-content" [class.out]="systemConfigPastInfoContentAnimation.out"
+                    [class.transitionIn]="systemConfigPastInfoContentAnimation.transitionIn" [class.in]="systemConfigPastInfoContentAnimation.in"
+                    [class.transitionOut]="systemConfigPastInfoContentAnimation.transitionOut">
+                    <p class="past-info-password-sum">{{ pastInfoPasswordSum }}</p>
+                    <p class="past-info-password-check">{{ pastInfoPasswordCheck }}</p>
+                    <img class="past-info-back-button" [src]="buttons[findButtonPosition('pastInfoBackButton')].source"
+                        (click)="buttonEvent('click', 'pastInfoBackButton', '')" (mousedown)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
+                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">
+                    <p class="past-info-back-text" [class.past-info-back-button-pressed]="buttons[findButtonPosition('pastInfoBackButton')].pressed"
+                        (click)="buttonEvent('click', 'pastInfoBackButton', '')" (mousedown)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
+                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">Back</p>
+                </div>
+            </div>
+
+            <div class="system-config-password-check" [class.checking-password]="checkingPassword">
+                <div class="system-config-password-check-screen-shading-animations system-config-password-check-screen-shading"
+                    [class.out]="systemConfigPasswordCheckScreenShadingAnimation.out" [class.transitionIn]="systemConfigPasswordCheckScreenShadingAnimation.transitionIn"
+                    [class.in]="systemConfigPasswordCheckScreenShadingAnimation.in" [class.transitionOut]="systemConfigPasswordCheckScreenShadingAnimation.transitionOut">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                </div>
+                <div class="system-config-password-check-content-animations system-config-password-check-content"
+                    [class.out]="systemConfigPasswordCheckContentAnimation.out" [class.transitionIn]="systemConfigPasswordCheckContentAnimation.transitionIn"
+                    [class.in]="systemConfigPasswordCheckContentAnimation.in" [class.transitionOut]="systemConfigPasswordCheckContentAnimation.transitionOut">
+                    <p class="system-config-password-check-code">{{ passwordCheck }}</p>
+                    <img class="continue-button" [src]="buttons[findButtonPosition('continueButton')].source" (click)="buttonEvent('click', 'continueButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">
+                    <p class="continue-text" [class.continue-button-pressed]="buttons[findButtonPosition('continueButton')].pressed"
+                        (click)="buttonEvent('click', 'continueButton', '')" (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">Continue</p>
+                </div>
+            </div>
+
+            <div class="product-editing-animations product-editing" *ngIf=editingProduct [class.out]="systemConfigProductEditingContentAnimation.out"
+                [class.transitionIn]="systemConfigProductEditingContentAnimation.transitionIn" [class.in]="systemConfigProductEditingContentAnimation.in"
+                [class.transitionOut]="systemConfigProductEditingContentAnimation.transitionOut">
+                <div class="product-info-left-animations product-info-right-animations product-info" [class.left-out]="systemConfigProductEditingPageChangeLeftAnimation.out && systemConfigProductEditingPageChangeRightAnimation.out"
+                    [class.left-transitionIn]="systemConfigProductEditingPageChangeLeftAnimation.transitionIn" [class.left-in]="systemConfigProductEditingPageChangeLeftAnimation.in"
+                    [class.left-transitionOut]="systemConfigProductEditingPageChangeLeftAnimation.transitionOut" [class.right-out]="systemConfigProductEditingPageChangeLeftAnimation.out && systemConfigProductEditingPageChangeRightAnimation.out"
+                        [class.right-transitionIn]="systemConfigProductEditingPageChangeRightAnimation.transitionIn" [class.right-in]="systemConfigProductEditingPageChangeRightAnimation.in"
+                        [class.right-transitionOut]="systemConfigProductEditingPageChangeRightAnimation.transitionOut">
+                  <p class="product-editing-product-name-1" [style.display]="productEditingProductDisplay[0]">{{ productEditingCurrentPageProductNames[0] }}</p>
+                  <img class="product-editing-minus-button-1" [style.display]="productEditingProductDisplay[0]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[0]" [src]="buttons[findButtonPosition('productEditingMinusButton1')].source"
+                      (click)="buttonEvent('click', 'productEditingMinusButton1', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton1', 'assets/img/Minus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')">
+                  <p class="product-editing-product-quantity-available-1" [style.display]="productEditingProductDisplay[0]">{{ productEditingCurrentPageProductQuantitiesAvailable[0] }}</p>
+                  <img class="product-editing-plus-button-1" [style.display]="productEditingProductDisplay[0]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[0]" [src]="buttons[findButtonPosition('productEditingPlusButton1')].source"
+                      (click)="buttonEvent('click', 'productEditingPlusButton1', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton1', 'assets/img/Plus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')">
+                  <p class="product-editing-product-name-2" [style.display]="productEditingProductDisplay[1]">{{ productEditingCurrentPageProductNames[1] }}</p>
+                  <img class="product-editing-minus-button-2" [style.display]="productEditingProductDisplay[1]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[1]" [src]="buttons[findButtonPosition('productEditingMinusButton2')].source"
+                      (click)="buttonEvent('click', 'productEditingMinusButton2', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton2', 'assets/img/Minus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')">
+                  <p class="product-editing-product-quantity-available-2" [style.display]="productEditingProductDisplay[1]">{{ productEditingCurrentPageProductQuantitiesAvailable[1] }}</p>
+                  <img class="product-editing-plus-button-2" [style.display]="productEditingProductDisplay[1]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[1]" [src]="buttons[findButtonPosition('productEditingPlusButton2')].source"
+                      (click)="buttonEvent('click', 'productEditingPlusButton2', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton2', 'assets/img/Plus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')">
+                  <p class="product-editing-product-name-3" [style.display]="productEditingProductDisplay[2]">{{ productEditingCurrentPageProductNames[2] }}</p>
+                  <img class="product-editing-minus-button-3" [style.display]="productEditingProductDisplay[2]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[2]" [src]="buttons[findButtonPosition('productEditingMinusButton3')].source"
+                      (click)="buttonEvent('click', 'productEditingMinusButton3', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton3', 'assets/img/Minus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')">
+                  <p class="product-editing-product-quantity-available-3" [style.display]="productEditingProductDisplay[2]">{{ productEditingCurrentPageProductQuantitiesAvailable[2] }}</p>
+                  <img class="product-editing-plus-button-3" [style.display]="productEditingProductDisplay[2]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[2]" [src]="buttons[findButtonPosition('productEditingPlusButton3')].source"
+                      (click)="buttonEvent('click', 'productEditingPlusButton3', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton3', 'assets/img/Plus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')">
+                  <p class="product-editing-product-name-4" [style.display]="productEditingProductDisplay[3]">{{ productEditingCurrentPageProductNames[3] }}</p>
+                  <img class="product-editing-minus-button-4" [style.display]="productEditingProductDisplay[3]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[3]" [src]="buttons[findButtonPosition('productEditingMinusButton4')].source"
+                      (click)="buttonEvent('click', 'productEditingMinusButton4', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton4', 'assets/img/Minus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')">
+                  <p class="product-editing-product-quantity-available-4" [style.display]="productEditingProductDisplay[3]">{{ productEditingCurrentPageProductQuantitiesAvailable[3] }}</p>
+                  <img class="product-editing-plus-button-4" [style.display]="productEditingProductDisplay[3]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[3]" [src]="buttons[findButtonPosition('productEditingPlusButton4')].source"
+                      (click)="buttonEvent('click', 'productEditingPlusButton4', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton4', 'assets/img/Plus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')">
+                  <p class="product-editing-product-name-5" [style.display]="productEditingProductDisplay[4]">{{ productEditingCurrentPageProductNames[4] }}</p>
+                  <img class="product-editing-minus-button-5" [style.display]="productEditingProductDisplay[4]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[4]" [src]="buttons[findButtonPosition('productEditingMinusButton5')].source"
+                      (click)="buttonEvent('click', 'productEditingMinusButton5', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton5', 'assets/img/Minus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')">
+                  <p class="product-editing-product-quantity-available-5" [style.display]="productEditingProductDisplay[4]">{{ productEditingCurrentPageProductQuantitiesAvailable[4] }}</p>
+                  <img class="product-editing-plus-button-5" [style.display]="productEditingProductDisplay[4]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[4]" [src]="buttons[findButtonPosition('productEditingPlusButton5')].source"
+                      (click)="buttonEvent('click', 'productEditingPlusButton5', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton5', 'assets/img/Plus-Button-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')">
+                </div>
+
+                <div class="product-editing-navigation">
+
+                  <img class="product-editing-cancel-button" [src]="buttons[findButtonPosition('productEditingCancelButton')].source" (click)="buttonEvent('click', 'productEditingCancelButton', '')"
+                      (mousedown)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')">
+                  <p class="product-editing-cancel-text" [class.product-editing-cancel-button-pressed]="buttons[findButtonPosition('productEditingCancelButton')].pressed"
+                      (click)="buttonEvent('click', 'productEditingCancelButton', '')" (mousedown)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')">Cancel</p>
+
+                  <div class="page-changer">
+                    <img class="page-left-button" [class.atMin]="pageChangerAtMin" [src]="buttons[findButtonPosition('pageLeftButton')].source"
+                        (click)="buttonEvent('click', 'pageLeftButton', '')" (mousedown)="buttonEvent('mousedown', 'pageLeftButton', 'assets/img/Page-Left-Button-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pageLeftButton', 'assets/img/Page-Left-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageLeftButton', 'assets/img/Page-Left-Button.png')">
+                    <p class="page-number">{{ productEditingNavCurrentPageNumber }} of {{ productEditingNavTotalPageNumbers }}</p>
+                    <img class="page-right-button" [class.atMax]="pageChangerAtMax" [src]="buttons[findButtonPosition('pageRightButton')].source"
+                        (click)="buttonEvent('click', 'pageRightButton', '')" (mousedown)="buttonEvent('mousedown', 'pageRightButton', 'assets/img/Page-Right-Button-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'pageRightButton', 'assets/img/Page-Right-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageRightButton', 'assets/img/Page-Right-Button.png')">
+                  </div>
+
+                  <img class="submit-button" [src]="buttons[findButtonPosition('submitButton')].source" (click)="buttonEvent('click', 'submitButton', '')"
+                      (mousedown)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')">
+                  <p class="submit-text" [class.submit-button-pressed]="buttons[findButtonPosition('submitButton')].pressed"
+                      (click)="buttonEvent('click', 'submitButton', '')" (mousedown)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')">Submit</p>
+                </div>
+            </div>
+        </div>
+        <div class="advertisements">
+          <app-advertisement-board>
+          </app-advertisement-board>
+        </div>
+    </div>
+</div>

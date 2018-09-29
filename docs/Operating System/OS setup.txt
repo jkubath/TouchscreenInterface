@@ -1,0 +1,36 @@
+Operating System setup
+
+1. Download Ubuntu 16.04 LTS.iso
+	https://www.ubuntu.com/#download
+
+2. Create a bootable USB drive
+	https://tutorials.ubuntu.com/tutorial/tutorial-create-a-usb-stick-on-windows#0
+
+3. Install the operating system on to the computer
+	A. Follow the on screen instructions.
+
+4. Install Unity Screen Manager
+	A. Run command and select lightdm for display manager
+		sudo apt-get install ubuntu-unity-desktop wmctrl
+
+4. Download ScreenManager source from github
+	sudo apt-get install git nodejs npm libgconf-2-4
+
+	cd ~/Desktop
+	git clone https://github.com/jkubath/ScreenManager.git
+	
+	cd ScreenManager/spikes/Vending\ App/vending-app
+	sudo npm install -g @angular/cli
+	npm install
+
+	
+
+5. Set the power settings to never dim the screen
+	Settings > Power > Power Saving
+		Change Blank screen to "Never"
+
+
+
+
+
+

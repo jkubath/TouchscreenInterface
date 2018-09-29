@@ -1,4 +1,4 @@
-Linux (Ubuntu 16.04)
+Linux (Ubuntu 16.04 LTS)
 
 	Pro's
 		Entire screen is usable as "Touch area"
@@ -8,6 +8,12 @@ Linux (Ubuntu 16.04)
 
 	Con's
 		Some setup / initialization is required
+
+	Version Choice:
+		Ubuntu 16.04 was chosen as it uses Unity as a screen manager by default.
+		Ubuntu 18.04 uses a different screen manager.  Some core features that assist
+		in limiting what the user can do from an OS perspective are removed in the
+		new manager.
 
 
 Windows OS
