@@ -18,7 +18,7 @@ Operating System setup
 
 	cd ~/Desktop
 	git clone https://github.com/jkubath/ScreenManager.git
-	
+
 	cd ScreenManager/spikes/Vending\ App/vending-app
 	sudo npm install -g @angular/cli
 	npm install
@@ -26,8 +26,8 @@ Operating System setup
 	
 
 5. Set the power settings to never dim the screen
-	Settings > Power > Power Saving
-		Change Blank screen to "Never"
+	Settings > Power
+		Suspend when inactive for = "Don't suspend"
 
 
 
