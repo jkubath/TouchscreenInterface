@@ -1,0 +1,6 @@
+ECMAScript 6 is the newest version of JavaScript
+
+	http://es6-features.org/#Constants
+
+ECMAScript 6 is used for the backend Node programming along with the front end Angular
+programming.

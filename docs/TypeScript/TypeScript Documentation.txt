@@ -1,0 +1,16 @@
+Here is a link to the TypeScript documentation
+	
+	https://www.typescriptlang.org/docs/home.html
+
+
+
+
+
+
+
+
+
+
+
+
+	

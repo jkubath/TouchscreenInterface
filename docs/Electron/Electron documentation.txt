@@ -1,0 +1,21 @@
+Here is a link to the Electron documentation
+	https://electronjs.org/docs
+
+Checklist: Security Recommendations
+
+	https://electronjs.org/docs/tutorial/security
+
+	1. Only load secure content
+	2. Disable the Node.js integration in all renderers that display remote content
+	3. Enable context isolation in all renderers that display remote content
+	4. Use ses.setPermissionRequestHandler() in all sessions that load remote content
+	5. Do not disable webSecurity
+	6. Define a Content-Security-Policy and use restrictive rules (i.e. script-src 'self')
+	7. Override and disable eval, which allows strings to be executed as code.
+	8. Do not set allowRunningInsecureContent to true
+	9. Do not enable experimental features
+	10. Do not use enableBlinkFeatures
+	11. <webview>: Do not use allowpopups
+	12. <webview>: Verify options and params
+	13. Disable or limit navigation
+	14. Disable or limit creation of new windows
