@@ -25,3 +25,5 @@ wmctrl -r "Firefox" -e 0,0,0,$x,$y
 
 # Set the size and location of the Vending Machine/Advertisements
 wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
+
+sleep 1.0
