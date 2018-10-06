@@ -9,19 +9,20 @@ Operating System setup
 3. Install the operating system on to the computer
 	A. Follow the on screen instructions.
 
-4. Install Unity Screen Manager
-	A. Run command and select lightdm for display manager
-		sudo apt-get install ubuntu-unity-desktop wmctrl
+4. Download TouchscreenInterface source from github
+	sudo apt-get install curl
+	sudo curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 
-4. Download ScreenManager source from github
-	sudo apt-get install git nodejs npm libgconf-2-4
-
+	sudo apt-get install -y nodejs
+	sudo apt-get install -y build-essential
+	sudo apt-get install git
 	cd ~/Desktop
-	git clone https://github.com/jkubath/ScreenManager.git
+	git clone https://github.com/jkubath/TouchscreenInterface
 
-	cd ScreenManager/spikes/Vending\ App/vending-app
-	sudo npm install -g @angular/cli
+	cd ~/Desktop/TouchscreenInterface/spikes/Vending\ App/vending-app
+
 	npm install
+
 
 	
 
