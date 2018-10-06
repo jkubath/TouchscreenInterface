@@ -7,7 +7,7 @@
         <div class="top-product-carousel" drag-scroll-y-disabled="true">
             <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
                 (reachesLeftBound)="navEvent('reachesBound', 'topLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'topRight', '', $event)"
-                (mousedown)="navEvent('mousedown', '', '', false)" (mouseup)="navEvent('mouseup', '', '', false)"
+                (mousedown)="navEvent('productmousedown', '', '', false)" (mouseup)="navEvent('productmouseup', '', '', false)"
                 #topScroller>
                 <div drag-scroll-item *ngFor="let product of productsTopRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
@@ -21,7 +21,7 @@
         <div class="bottom-product-carousel" drag-scroll-y-disabled="true">
             <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
                 (reachesLeftBound)="navEvent('reachesBound', 'bottomLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'bottomRight', '', $event)"
-                (mousedown)="navEvent('mousedown', '', '', false)" (mouseup)="navEvent('mouseup', '', '', false)"
+                (mousedown)="navEvent('productmousedown', '', '', false)" (mouseup)="navEvent('productmouseup', '', '', false)"
                 #bottomScroller>
                 <div drag-scroll-item *ngFor="let product of productsBottomRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
