@@ -125,6 +125,28 @@
                     (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')"
                     (touchstart)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')">Purchase</p>
             </div>
+
+            <div class="selected-product-purchase-payment" [class.entering-payment]="enteringPayment">
+                <div class="selected-product-purchase-payment-screen-shading-animations selected-product-purchase-payment-screen-shading"
+                    [class.out]="selectedProductPurchasePaymentScreenShadingAnimation.out" [class.transitionIn]="selectedProductPurchasePaymentScreenShadingAnimation.transitionIn"
+                    [class.in]="selectedProductPurchasePaymentScreenShadingAnimation.in" [class.transitionOut]="selectedProductPurchasePaymentScreenShadingAnimation.transitionOut">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                </div>
+                <div class="selected-product-purchase-payment-content-animations selected-product-purchase-payment-content"
+                    [class.out]="selectedProductPurchasePaymentContentAnimation.out" [class.transitionIn]="selectedProductPurchasePaymentContentAnimation.transitionIn"
+                    [class.in]="selectedProductPurchasePaymentContentAnimation.in" [class.transitionOut]="selectedProductPurchasePaymentContentAnimation.transitionOut">
+                    <p class="selected-product-purchase-payment-message">Thank you for purchasing a {{ selectedProduct.name }}!</p>
+                    <img class="selected-product-purchase-payment-continue-button" [src]="buttons[findButtonPosition('selectedProductPurchasePaymentContinueButton')].source" (click)="buttonEvent('click', 'selectedProductPurchasePaymentContinueButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')">
+                    <p class="selected-product-purchase-payment-continue-text" [class.selected-product-purchase-payment-continue-button-pressed]="buttons[findButtonPosition('selectedProductPurchasePaymentContinueButton')].pressed"
+                        (click)="buttonEvent('click', 'selectedProductPurchasePaymentContinueButton', '')" (mousedown)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')">Continue</p>
+                </div>
+            </div>
         </div>
 
         <!-- System Configuration -->
@@ -397,14 +419,14 @@
                     [class.out]="systemConfigPasswordCheckContentAnimation.out" [class.transitionIn]="systemConfigPasswordCheckContentAnimation.transitionIn"
                     [class.in]="systemConfigPasswordCheckContentAnimation.in" [class.transitionOut]="systemConfigPasswordCheckContentAnimation.transitionOut">
                     <p class="system-config-password-check-code">{{ passwordCheck }}</p>
-                    <img class="continue-button" [src]="buttons[findButtonPosition('continueButton')].source" (click)="buttonEvent('click', 'continueButton', '')"
-                        (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')"
-                        (touchstart)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">
-                    <p class="continue-text" [class.continue-button-pressed]="buttons[findButtonPosition('continueButton')].pressed"
-                        (click)="buttonEvent('click', 'continueButton', '')" (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')"
-                        (touchstart)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">Continue</p>
+                    <img class="system-config-password-check-continue-button" [src]="buttons[findButtonPosition('systemConfigPasswordCheckContinueButton')].source" (click)="buttonEvent('click', 'systemConfigPasswordCheckContinueButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')">
+                    <p class="system-config-password-check-continue-text" [class.system-config-password-check-continue-button-pressed]="buttons[findButtonPosition('systemConfigPasswordCheckContinueButton')].pressed"
+                        (click)="buttonEvent('click', 'systemConfigPasswordCheckContinueButton', '')" (mousedown)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')">Continue</p>
                 </div>
             </div>
 

@@ -59,6 +59,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productSelectingScreenLightingAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public selectedProductImageAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public selectedProductInformationAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public selectedProductPurchasePaymentScreenShadingAnimation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public selectedProductPurchasePaymentContentAnimation = { out: true, transitionIn: false, in: false, transitionOut: false };
     // System Configuration
     public systemConfigScreenShadingAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public systemConfigLoginAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
@@ -91,6 +93,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public userIDAndPasswordChars = [...Array(23).fill('')];      // Current characters in the User ID/Password entry area
     public enteringUserID = false;
     public enteringPassword = false;
+    public enteringPayment = false;
     public viewingPastInfo = false;
     public checkingPassword = false;
     public editingProduct = false;
@@ -648,7 +651,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.selectedProductQuantityWantedAtMax = false;
                 }
             }
+
+            // Bring up payment entry
+            this.enteringPayment = true;
+
+            // Play animations for screen shading and content
+            this.playInAnimation(this.selectedProductPurchasePaymentScreenShadingAnimation, 0, 1000);
+            this.playInAnimation(this.selectedProductPurchasePaymentContentAnimation, 500, 1500);
         }
+    }
+
+    // Runs when you click the "continue" button after purchasing a product
+    selectedProductPurchasePaymentContinueButtonClick(): void {
+      // Play animations for canceling a product, screen shading, and content
+      this.cancelProduct();
+      this.playOutAnimation(this.selectedProductPurchasePaymentContentAnimation, 0, 1500);
+      this.playOutAnimation(this.selectedProductPurchasePaymentScreenShadingAnimation, 0, 2000);
+
+      // After the animation has finished...
+      setTimeout(() => {
+          // Mark that the user is no longer entering a payment
+          this.enteringPayment = false;
+      }, 2000);
     }
 
     // Adds the passed character to the current entry
@@ -1047,7 +1071,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     // Continues from password check info
-    continueButtonClick(): void {
+    systemConfigPasswordCheckContinueButtonClick(): void {
         // If the systemConfigPasswordCheckContentAnimation is finished...
         if (this.systemConfigPasswordCheckContentAnimation.in === true) {
             // Change to editing products
@@ -1351,6 +1375,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 case "purchaseButton":
                     this.purchaseProduct();
                     break;
+                case "selectedProductPurchasePaymentContinueButton":
+                    this.selectedProductPurchasePaymentContinueButtonClick();
+                    break;
                 case "zeroButton":
                     this.hexButtonClick("0");
                     break;
@@ -1414,8 +1441,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 case "pastInfoBackButton":
                     this.pastInfoBackButtonClick();
                     break;
-                case "continueButton":
-                    this.continueButtonClick();
+                case "systemConfigPasswordCheckContinueButton":
+                    this.systemConfigPasswordCheckContinueButtonClick();
                     break;
                 case "exitButton":
                     this.exitButtonClick();
