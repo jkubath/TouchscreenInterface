@@ -96,6 +96,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public editingProduct = false;
 
     // Hexadecimal Calculations
+    public admin = "none";
     public passwordA = "";
     public passwordB = "";
     public passwordC = "";
@@ -758,10 +759,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                 // If the user id is valid...
                 if (this.userID.valid === true) {
-                    // Open the user's user-data file and copy over the values of passwordB,
+                    // Open the user's user-data file and copy over the values of admin, passwordB,
                     //   passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
                     let fileContent = fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
+                    if (jsonContent.admin === "true") {
+                      this.admin = "block";
+                    } else {
+                      this.admin = "none";
+                    }
                     this.passwordB = jsonContent.passwordB;
                     this.passwordC = jsonContent.passwordC;
                     this.pastInfoPasswordSum = jsonContent.pastInfoPasswordSum;
@@ -954,7 +960,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.password.valid = true;
                 this.userID.valid = false;
 
-                // Clear passwordA, passwordB, passwordC, and userID.string
+                // Clear admin, passwordA, passwordB, passwordC, and userID.string
+                this.admin = "none";
                 this.passwordA = "";
                 this.passwordB = "";
                 this.passwordC = "";
@@ -1019,10 +1026,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
             // Play animations for screen shading and past info
             this.playInAnimation(this.systemConfigPastInfoScreenShadingAnimation, 0, 1000);
             this.playInAnimation(this.systemConfigPastInfoContentAnimation, 750, 750);
-
-            // Execute the script that "ends" the program (disables all restrictions)
-            // cd('~/ScreenManager/src/setup/end');
-            // exec('make run', {async:true});
         }
     }
 
@@ -1065,6 +1068,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.checkingPassword = false;
             }, 2000);
         }
+    }
+
+    // Regain access to Ubuntu
+    exitButtonClick(): void {
+      // Execute the script that "ends" the program (disables all restrictions)
+      cd('~/ScreenManager/src/setup/end');
+      exec('make run', {async:true});
     }
 
     // Runs when the decrement button for one of the products being edited is pressed
@@ -1133,17 +1143,22 @@ export class HomeComponent implements OnInit, AfterViewInit {
       //   and systemConfigProductEditingPageChnageRightAnimation are finished...
       if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
           this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-        // Change to no longer editing products
-        this.editingProduct = false;
 
         // Play animation for product editing content and screen shading
         this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-        // Decrement the product rotation counters and reset the product rotation counters
-        this.productRotationCounterTopRow--;
-        this.productRotationCounterBottomRow--;
-        this.resetProductRotationCounters();
+        // After the animation has finished...
+        setTimeout(() => {
+          // Change to no longer editing products and clear admin status
+          this.editingProduct = false;
+          this.admin = "none";
+
+          // Decrement the product rotation counters and reset the product rotation counters
+          this.productRotationCounterTopRow--;
+          this.productRotationCounterBottomRow--;
+          this.resetProductRotationCounters();
+        }, 2000);
       }
     }
 
@@ -1297,9 +1312,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       //   and systemConfigProductEditingPageChnageRightAnimation are finished...
       if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
           this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-        // Change to no longer editing products
-        this.editingProduct = false;
-
         // Update all the current product quantities
         this.updateProductEditingProductQuantitiesAvailable();
 
@@ -1307,10 +1319,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
         this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-        // Decrement the product rotation counters and reset the product rotation counters
-        this.productRotationCounterTopRow--;
-        this.productRotationCounterBottomRow--;
-        this.resetProductRotationCounters();
+        // After the animation has finished...
+        setTimeout(() => {
+          // Change to no longer editing products and clear admin status
+          this.editingProduct = false;
+          this.admin = "none";
+
+          // Decrement the product rotation counters and reset the product rotation counters
+          this.productRotationCounterTopRow--;
+          this.productRotationCounterBottomRow--;
+          this.resetProductRotationCounters();
+        }, 2000);
       }
     }
 
@@ -1397,6 +1416,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     break;
                 case "continueButton":
                     this.continueButtonClick();
+                    break;
+                case "exitButton":
+                    this.exitButtonClick();
                     break;
                 case "productEditingMinusButton1":
                     this.decreaseQuantityAvailable(0);

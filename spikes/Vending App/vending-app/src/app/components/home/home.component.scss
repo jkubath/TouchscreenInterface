@@ -1736,27 +1736,27 @@
 
           .product-editing-product-name-1, .product-editing-minus-button-1,
           .product-editing-product-quantity-available-1, .product-editing-plus-button-1 {
-            top: 100px;
+            top: 125px;
           }
 
           .product-editing-product-name-2, .product-editing-minus-button-2,
           .product-editing-product-quantity-available-2, .product-editing-plus-button-2 {
-            top: 175px;
+            top: 200px;
           }
 
           .product-editing-product-name-3, .product-editing-minus-button-3,
           .product-editing-product-quantity-available-3, .product-editing-plus-button-3 {
-            top: 250px;
+            top: 275px;
           }
 
           .product-editing-product-name-4, .product-editing-minus-button-4,
           .product-editing-product-quantity-available-4, .product-editing-plus-button-4 {
-            top: 325px;
+            top: 350px;
           }
 
           .product-editing-product-name-5, .product-editing-minus-button-5,
           .product-editing-product-quantity-available-5, .product-editing-plus-button-5 {
-            top: 400px;
+            top: 425px;
           }
         }
 
@@ -1928,14 +1928,38 @@
           position: fixed;
           height: 120px;
           width: 1080px;
-          top: 520px;
+          top: 20px;
           left: 0px;
           z-index: 1;
+
+          .exit-button {
+            position: absolute;
+            margin: auto;
+            top: 0px;
+            left: 20px;
+            z-index: 1;
+          }
+
+          .exit-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 75px;
+            top: 5px;
+            width: 175px;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.exit-button-pressed {
+              color: #DDDDDD;
+            }
+          }
 
           .product-editing-cancel-button {
             position: absolute;
             margin: auto;
-            top: 20px;
+            top: 520px;
             left: 20px;
             z-index: 1;
           }
@@ -1945,7 +1969,7 @@
             margin: auto;
             color: white;
             left: 47px;
-            top: 25px;
+            top: 525px;
             width: 175px;
             font-size: 3em;
             font-family: Lalezar;
@@ -1959,7 +1983,7 @@
           .page-changer {
             position: absolute;
             margin: auto;
-            top: 30px;
+            top: 530px;
             left: 0px;
             z-index: 1;
 
@@ -2006,7 +2030,7 @@
           .submit-button {
             position: absolute;
             margin: auto;
-            top: 20px;
+            top: 520px;
             right: 20px;
             z-index: 1;
           }
@@ -2016,7 +2040,7 @@
             margin: auto;
             color: white;
             right: 12px;
-            top: 25px;
+            top: 525px;
             width: 175px;
             font-size: 3em;
             font-family: Lalezar;

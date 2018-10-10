@@ -469,6 +469,14 @@
                 </div>
 
                 <div class="product-editing-navigation">
+                  <img class="exit-button" [src]="buttons[findButtonPosition('exitButton')].source" [style.display]="admin" (click)="buttonEvent('click', 'exitButton', '')"
+                      (mousedown)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'exitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')">
+                  <p class="exit-text" [style.display]="admin" [class.exit-button-pressed]="buttons[findButtonPosition('exitButton')].pressed"
+                      (click)="buttonEvent('click', 'exitButton', '')" (mousedown)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'exitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')">Exit</p>
 
                   <img class="product-editing-cancel-button" [src]="buttons[findButtonPosition('productEditingCancelButton')].source" (click)="buttonEvent('click', 'productEditingCancelButton', '')"
                       (mousedown)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')"

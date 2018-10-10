@@ -25,6 +25,7 @@ export const Buttons = [
     { name: "pastInfoButton", source: "assets/img/Button-225.png", pressed: false },
     { name: "pastInfoBackButton", source: "assets/img/Button-175.png", pressed: false },
     { name: "continueButton", source: "assets/img/Button-225.png", pressed: false },
+    { name: "exitButton", source: "assets/img/Button-175.png", pressed: false },
     { name: "productEditingMinusButton1", source: "assets/img/Minus-Button.png", pressed: false },
     { name: "productEditingPlusButton1", source: "assets/img/Plus-Button.png", pressed: false },
     { name: "productEditingMinusButton2", source: "assets/img/Minus-Button.png", pressed: false },
