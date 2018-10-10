@@ -15,6 +15,7 @@ Operating System setup
 
 	sudo apt-get install -y nodejs
 	sudo apt-get install -y build-essential
+	sudo apt-get install wmctrl
 	sudo apt-get install git
 	cd ~/Desktop
 	git clone https://github.com/jkubath/TouchscreenInterface
