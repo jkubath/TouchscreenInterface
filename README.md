@@ -1,5 +1,6 @@
-# ScreenManager
-Repository for controlling a touch screen with sections of data.
+# TouchscreenInterface
+Designing a touch screen that is split into three sections: Web Browser, Vending
+Machine, and Advertisements.
 
 ## docs
 This directory contains all the relevant information to the
