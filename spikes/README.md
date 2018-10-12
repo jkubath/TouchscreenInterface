@@ -1,37 +1,38 @@
-# Spikes directory
-
-The spikes directory is to hold all the research done to make decisions
-for the Screen Manager project.  Examples: how to embed a browser or 
-how to control the size of a running application.
+# spikes
+This directory contains all the research and development done in the making
+of the Touchscreen Interface Project, including things like figuring out how
+to embed a browser in a program, choosing the best touchscreen keyboard to
+use, and looking into how to control the window size of a running application. 
 
 ## App Controller
-Allows you to specify where windows are located and what you are allowed
-to do with them.
+Allows you to specify where windows are located on the screen, how big they are,
+and what you are allowed to do with them (Ex. Resize, Minimize, Exit, etc.).
 
 ## Browser Features
-How to limit what you are able to do in the web browser
+Limits what you are able to do in the Firefox web browser.
 
-## Embedded Browser
-How to embed a browser in a Java application.
+## Deprecated
+Previous ideas that are not part of the final product.
 
 ## Keyboard
 Possibilities for a virtual keyboard to be used on the touchscreen.
 
 ## Operating System
-Reasons to develop in Linux vs. Windows.
+Deciding to use an operating system of Linux vs. Windows.
 
 ## Touchscreen Calibration
-All the testing that was done in our attempt to get the touchscreen
-functioning correctly in Ubuntu.
+Changes settings that deal with the horizontal/vertical coordination
+of the touchscreen so that it works correctly in Ubuntu when changed
+to a "vertical" format (short horizontally, long vertically).
 
 ## Vending App
-The Vending Machine application that allows the user to purchase items
-from the vending machine.
+Combination of a Vending Machine application that allows the user to
+purchase items from the vending machine and an advertising section.
 
 ## Web Browser
-Reasons to use a web browser of Firefox vs. Chrome.
+Deciding to use a web browser of Firefox vs. Chrome.
 
 ## Screen Manufacturer
-Contains a possible link to the touch screen manufacturer.
-This is not certain as the screen has no branding and
-we have not been given documentation on the screen.
+Contains a possible link to the touchscreen manufacturer, though it isn't
+certain as the screen has no branding and we weren't given documentation
+on the screen.
