@@ -16,7 +16,7 @@
 
 # Create firefox directory structure
 firefox &
-sleep 1
+sleep 5
 killall firefox
 
 # Change to the extensions directory
@@ -46,6 +46,7 @@ cd ".."
 rm -r "$XPINAME"
 cd ".."
 
+touch user.js
 # Cause the following operations to take effect
 sed -i 's/user_pref(\"extensions.pendingOperations\", true);//' user.js
 
