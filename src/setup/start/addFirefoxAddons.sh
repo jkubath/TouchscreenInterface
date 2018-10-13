@@ -14,6 +14,11 @@
 # Finally, changes are made to the extensions.json file that cause the change
 # of the maximum number of tabs to take effect
 
+# Create firefox directory structure
+firefox &
+sleep 1
+killall firefox
+
 # Change to the extensions directory
 PROFDIR=$(cat ~/.mozilla/firefox/profiles.ini | grep 'Path=' | sed s/^Path=//)
 cd ~/.mozilla/firefox/$PROFDIR

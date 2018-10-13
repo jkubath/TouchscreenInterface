@@ -16,8 +16,8 @@ chmod -R 777 ./vending-app
 
 npm install
 
-cd ~/Desktop/TouchscreenInterface/src/setup/start
-./addFirefoxAddons.sh
+#cd ~/Desktop/TouchscreenInterface/src/setup/start
+#./addFirefoxAddons.sh
 
 
 
