@@ -14,6 +14,7 @@ make deploy
 cd ~/Desktop/TouchscreenInterface/src
 chmod -R 777 ./vending-app
 
+cd vending-app
 npm install
 
 cd ~/Desktop/TouchscreenInterface/src/setup/start
