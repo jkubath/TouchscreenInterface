@@ -1,7 +1,8 @@
 {
   "userID": "123456",
-  "passwordB": "456F19F93A9DDFB06FF7",
-  "passwordC": "F05FAEACB7D06C0249BD",
-  "pastInfoPasswordSum": "220D390E3060CE1F0EE0",
-  "pastInfoPasswordCheck": "1731C83E5DD294451B40"
+  "admin": "false",
+  "passwordB": "63E446AF73BD43A1DD9D",
+  "passwordC": "6F4295F94790580ECF6F",
+  "pastInfoPasswordSum": "820F5FE99C9A4D0E4C74",
+  "pastInfoPasswordCheck": "2C27DD1461F5216D2320"
 }
