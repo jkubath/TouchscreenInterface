@@ -98,6 +98,7 @@ echo "#tabContextMenu { display: none !important; }" >> userChrome.css
 echo "#contentAreaContextMenu { display: none !important; }" >> userChrome.css
 echo "#urlbar .textbox-contextmenu { display: none !important; }" >> userChrome.css
 
-
+#Restart firefox to apply changes
+firefox &
 
 echo "Mozilla Firefox browser set up"
