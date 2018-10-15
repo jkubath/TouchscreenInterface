@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import * as fs from 'fs';
 import { promisify } from 'util';
 import { DomSanitizer } from '@angular/platform-browser';
 import { interval } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ElectronService } from '../providers/electron.service';
 
 @Component({
     selector: 'app-advertisement-board',
@@ -16,7 +16,7 @@ export class AdvertisementBoardComponent implements OnInit {
     adverts: string[];
 
 
-    constructor(private sanitizer: DomSanitizer) {
+    constructor(private sanitizer: DomSanitizer, private electron: ElectronService) {
 
         // load array of all adverts
         this.loadAdverts().then((ads) => {
@@ -27,7 +27,6 @@ export class AdvertisementBoardComponent implements OnInit {
         // update currentAdvert to next in adverts array every 7 seconds
         interval(7000).subscribe(x => {
             this.currentAdvert = this.adverts[(this.adverts.indexOf(this.currentAdvert)+1) % this.adverts.length];
-            console.log(this.currentAdvert);
         });
 
     }
@@ -39,8 +38,7 @@ export class AdvertisementBoardComponent implements OnInit {
         let adverts = [];
 
         // get list of all files in adverts directory
-        const readdir = promisify(fs.readdir);
-        const contents = await readdir('./src/adverts');
+        const contents = this.electron.fs.readdirSync('./src/adverts');
 
         // load all adverts
         for (let content of contents) {
@@ -48,7 +46,7 @@ export class AdvertisementBoardComponent implements OnInit {
             let imageType: string;
 
             // read file in as buffer
-            let bitmap = fs.readFileSync(`./src/adverts/${content}`);
+            let bitmap = this.electron.fs.readFileSync(`./src/adverts/${content}`);
 
             // determine file type so that data url can specify it
             if ((/\.(jpg|jpeg)$/i).test(content)) {

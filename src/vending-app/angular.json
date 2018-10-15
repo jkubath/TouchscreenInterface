@@ -18,7 +18,7 @@
             "polyfills": "src/polyfills.ts",
             "assets": [
               "src/assets",
-              "src/products",
+              "src/test-docs",
               "src/favicon.ico",
               "src/favicon.png",
               "src/favicon.icns",

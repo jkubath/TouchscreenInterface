@@ -5,16 +5,16 @@ import { NavButtonSource } from '../../models/navButtonSource.model';
 import { NavButtonEnabled } from '../../models/navButtonEnabled.model';
 import { Button } from '../../models/button.model';
 import { Login } from '../../models/login.model';
-import * as fs from 'fs';
 import { promisify } from 'util';
 import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
+import { DomSanitizer } from '@angular/platform-browser';
 import { cd } from 'shelljs';
 import { exec } from 'shelljs';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
-
+import { ElectronService } from '../../providers/electron.service';
 
 
 @Component({
@@ -127,80 +127,144 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productEditingNavTotalPageNumbers = 1;
 
 
-    // Load the products on the top row of the vending machine
-    loadProductsTopRow(): Product[] {
-        let productsTopRow = new Array<Product>();
-        let contents = fs.readdirSync('./src/products');
-        fs.readFile('./src/product-setup.json', (err, fileContent) => {
-          if (err) throw err;
-          let jsonContent = JSON.parse(fileContent.toString());
-          let i = 0;
-          while (i < jsonContent.topRow.length) {
-            for (let content of contents) {
-              if (jsonContent.topRow[i] === content) {
-                let product = require(`products/${content}/data.json`) as Product;
+    constructor(private electron: ElectronService, private sanitizer: DomSanitizer) { }
 
-                // Create Money (Dinero) object from product data 'price' object
-                try {
-                    product.price = new Money(product.price);
-                } catch (error) {
-                    console.log(`Error parsing product price: ${error}`);
-                }
 
-                product.smallImg = `products/${content}/${product.smallImg}`;
-                product.largeImg = `products/${content}/${product.largeImg}`;
-                productsTopRow.push(product);
-              }
+    // read and sanitize image file as SafeResourceURL
+    public loadImageSafeResourceURL(path: string): any {
+        try {
+            let imageType: string;
+            let bitmap = this.electron.fs.readFileSync(path);
+            // determine file type so that data url can specify it
+            if (!bitmap) {
+                return false;
             }
-            i++;
-          }
-        });
+            if ((/\.(jpg|jpeg)$/i).test(path)) {
+                imageType = 'jpeg';
+            } else if ((/\.(png)$/i).test(path)) {
+                imageType = 'png';
+            } else if ((/\.(svg)$/i).test(path)) {
+                imageType = 'svg';
+            } else if ((/\.(tiff)$/i).test(path)) {
+                imageType = 'tiff';
+            } else {
+                console.log('UNSUPORTED IMAGE FORMAT!\n');
+            }
+            return this.sanitizer.bypassSecurityTrustResourceUrl(`data:image/${imageType};base64, ${bitmap.toString('BASE64')}`);
+        } catch (error) {
+            console.log(`Error generating sanitized image data url: ${error}`);
+            return false;
+        }
+    }
+
+    // Load the products on the top row of the vending machine
+    public loadProductsTopRow(path: string): Product[] {
+        let productsTopRow = [] as Product[];
+        let contents = this.electron.fs.readdirSync(`${path}/products`);
+        try {
+            let fileContent = this.electron.fs.readFileSync(`${path}/products/product-setup.json`);
+            let jsonContent = JSON.parse(fileContent.toString());
+            let i = 0;
+            while (i < jsonContent.topRow.length) {
+                for (let content of contents) {
+                    let hadNoError = true;
+                    if (jsonContent.topRow[i] === content) {
+                        let product = {} as Product;
+                        try {
+                            product = JSON.parse(this.electron.fs.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
+                        } catch (error) {
+                            console.log(`Error reading product files: ${error}`);
+                            hadNoError = false;
+                        }
+                        // Create Money (Dinero) object from product data 'price' object
+                        try {
+                            product.price = new Money(product.price);
+                        } catch (error) {
+                            console.log(`Error parsing product price: ${error}`);
+                            hadNoError = false;
+                        }
+
+                        product.smallImg = `${path}/products/${content}/${product.smallImg}`;
+                        product.largeImg = `${path}/products/${content}/${product.largeImg}`;
+                        let dataURL = this.loadImageSafeResourceURL(product.smallImg);
+                        hadNoError = (dataURL) ? hadNoError : false;
+                        product.smallImgData = dataURL;
+                        dataURL = this.loadImageSafeResourceURL(product.largeImg);
+                        hadNoError = (dataURL) ? hadNoError : false;
+                        product.largeImgData = dataURL;
+                        if (hadNoError) {
+                            productsTopRow.push(product);
+                        }
+                    }
+                }
+                i++;
+            }
+        } catch (err) {
+            console.log(err);
+        }
 
         return productsTopRow;
     }
 
     // Load the products on the bottom row of the vending machine
-    loadProductsBottomRow(): Product[] {
-        let productsBottomRow = new Array<Product>();
-        let contents = fs.readdirSync('./src/products');
-        fs.readFile('./src/product-setup.json', (err, fileContent) => {
-          if (err) throw err;
-          let jsonContent = JSON.parse(fileContent.toString());
-          let i = 0;
-          while (i < jsonContent.bottomRow.length) {
-            for (let content of contents) {
-              if (jsonContent.bottomRow[i] === content) {
-                let product = require(`products/${content}/data.json`) as Product;
+    public loadProductsBottomRow(path: string): Product[] {
+        let productsTopRow = [] as Product[];
+        let contents = this.electron.fs.readdirSync(`${path}/products`);
+        try {
+            let fileContent = this.electron.fs.readFileSync(`${path}/products/product-setup.json`);
+            let jsonContent = JSON.parse(fileContent.toString());
+            let i = 0;
+            while (i < jsonContent.bottomRow.length) {
+                for (let content of contents) {
+                    let hadNoError = true;
+                    if (jsonContent.bottomRow[i] === content) {
+                        let product = {} as Product;
+                        try {
+                            product = JSON.parse(this.electron.fs.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
+                        } catch (error) {
+                            console.log(`Error reading product files: ${error}`);
+                            hadNoError = false;
+                        }
+                        // Create Money (Dinero) object from product data 'price' object
+                        try {
+                            product.price = new Money(product.price);
+                        } catch (error) {
+                            console.log(`Error parsing product price: ${error}`);
+                            hadNoError = false;
+                        }
 
-                // Create Money (Dinero) object from product data 'price' object
-                try {
-                    product.price = new Money(product.price);
-                } catch (error) {
-                    console.log(`Error parsing product price: ${error}`);
+                        product.smallImg = `${path}/products/${content}/${product.smallImg}`;
+                        product.largeImg = `${path}/products/${content}/${product.largeImg}`;
+                        let dataURL = this.loadImageSafeResourceURL(product.smallImg);
+                        hadNoError = (dataURL) ? hadNoError : false;
+                        product.smallImgData = dataURL;
+                        dataURL = this.loadImageSafeResourceURL(product.largeImg);
+                        hadNoError = (dataURL) ? hadNoError : false;
+                        product.largeImgData = dataURL;
+                        if (hadNoError) {
+                            productsTopRow.push(product);
+                        }
+                    }
                 }
-
-                product.smallImg = `products/${content}/${product.smallImg}`;
-                product.largeImg = `products/${content}/${product.largeImg}`;
-                productsBottomRow.push(product);
-              }
+                i++;
             }
-            i++;
-          }
-        });
+        } catch (err) {
+            console.log(err);
+        }
 
-        return productsBottomRow;
+        return productsTopRow;
     }
 
     // Get the quantity available for the selected product
     getSelectedProductMaxQuantity(): void {
-        let fileContent = fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         this.selectedProductMaxQuantity = jsonContent.quantity;
     }
 
     // Update the quantity available for the selected product
     updateSelectedProductMaxQuantity(): void {
-        let fileContent = fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         jsonContent.quantity -= this.selectedProductQuantityWanted;
         this.selectedProductMaxQuantity = jsonContent.quantity;
@@ -210,110 +274,110 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.selectedProductQuantityWanted = this.selectedProductMaxQuantity;
         }
 
-        fs.writeFileSync(`./src/product-data/${this.selectedProduct.id}.json`, JSON.stringify(jsonContent, null, 2));
+        this.electron.fs.writeFileSync(`./src/product-data/${this.selectedProduct.id}.json`, JSON.stringify(jsonContent, null, 2));
     }
 
     // Get the quantities available for all products
     getProductEditingProductQuantitiesAvailable(): void {
-      let productNum = 0;
-      let i = 0;
+        let productNum = 0;
+        let i = 0;
 
-      // Create arrays for all of the product editing information
-      this.productEditingProductIDs = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
-      this.productEditingProductNames = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
-      this.productEditingProductQuantitiesAvailable = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(0);
-      this.productEditingProductQuantitiesAvailableAtMin = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
-      this.productEditingProductQuantitiesAvailableAtMax = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
+        // Create arrays for all of the product editing information
+        this.productEditingProductIDs = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
+        this.productEditingProductNames = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill("");
+        this.productEditingProductQuantitiesAvailable = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(0);
+        this.productEditingProductQuantitiesAvailableAtMin = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
+        this.productEditingProductQuantitiesAvailableAtMax = new Array(this.productsTopRow.length + this.productsBottomRow.length).fill(false);
 
-      // Loop through the top row, reading in the product IDs, names, and quantities, and setting the atMax/atMin values depending on the quantity
-      while (i < (this.productsTopRow.length + this.productsBottomRow.length)) {
-        // Copy the ID and name from the data that has already been loaded
-        if (i < this.productsTopRow.length) {
-          this.productEditingProductIDs[productNum] = this.productsTopRow[i].id;
-          this.productEditingProductNames[productNum] = this.productsTopRow[i].name;
-        } else {
-          this.productEditingProductIDs[productNum] = this.productsBottomRow[i - this.productsTopRow.length].id;
-          this.productEditingProductNames[productNum] = this.productsBottomRow[i - this.productsTopRow.length].name;
+        // Loop through the top row, reading in the product IDs, names, and quantities, and setting the atMax/atMin values depending on the quantity
+        while (i < (this.productsTopRow.length + this.productsBottomRow.length)) {
+            // Copy the ID and name from the data that has already been loaded
+            if (i < this.productsTopRow.length) {
+                this.productEditingProductIDs[productNum] = this.productsTopRow[i].id;
+                this.productEditingProductNames[productNum] = this.productsTopRow[i].name;
+            } else {
+                this.productEditingProductIDs[productNum] = this.productsBottomRow[i - this.productsTopRow.length].id;
+                this.productEditingProductNames[productNum] = this.productsBottomRow[i - this.productsTopRow.length].name;
+            }
+
+            // Open the product's respective file in product-data
+            let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
+            let jsonContent = JSON.parse(fileContent.toString());
+
+            // Read the product's quantity available
+            this.productEditingProductQuantitiesAvailable[productNum] = jsonContent.quantity;
+
+            // Note if the product quantity is at 0
+            if (this.productEditingProductQuantitiesAvailable[productNum] === 0) {
+                this.productEditingProductQuantitiesAvailableAtMin[productNum] = true;
+            } else {
+                this.productEditingProductQuantitiesAvailableAtMin[productNum] = false;
+            }
+
+            // Note if the product quantity is at 100
+            if (this.productEditingProductQuantitiesAvailable[productNum] === 100) {
+                this.productEditingProductQuantitiesAvailableAtMax[productNum] = true;
+            } else {
+                this.productEditingProductQuantitiesAvailableAtMax[productNum] = false;
+            }
+
+            productNum++;
+            i++;
         }
 
-        // Open the product's respective file in product-data
-        let fileContent = fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
-        let jsonContent = JSON.parse(fileContent.toString());
+        // Set up the page navigation
+        // Set the product editing to start with the first page
+        this.pageChangerAtMin = true;
+        this.productEditingNavCurrentPageNumber = 1;
 
-        // Read the product's quantity available
-        this.productEditingProductQuantitiesAvailable[productNum] = jsonContent.quantity;
-
-        // Note if the product quantity is at 0
-        if (this.productEditingProductQuantitiesAvailable[productNum] === 0) {
-          this.productEditingProductQuantitiesAvailableAtMin[productNum] = true;
+        // Calculate how many pages there will be
+        if (productNum % 5 === 0) {
+            this.productEditingNavTotalPageNumbers = productNum / 5;
         } else {
-          this.productEditingProductQuantitiesAvailableAtMin[productNum] = false;
+            this.productEditingNavTotalPageNumbers = ((productNum - (productNum % 5)) / 5) + 1;
         }
 
-        // Note if the product quantity is at 100
-        if (this.productEditingProductQuantitiesAvailable[productNum] === 100) {
-          this.productEditingProductQuantitiesAvailableAtMax[productNum] = true;
+        // Set pageChangerAtMax depending on whether there is 1 page or more than 1 page
+        if (this.productEditingNavTotalPageNumbers === 1) {
+            this.pageChangerAtMax = true;
         } else {
-          this.productEditingProductQuantitiesAvailableAtMax[productNum] = false;
+            this.pageChangerAtMax = false;
         }
 
-        productNum++;
-        i++;
-      }
+        i = 0;
+        // Assign the information for the products shown on the first page of the product editor
+        while (i < 5 && i < productNum) {
+            if (i < productNum) {
+                this.productEditingCurrentPageProductIDs[i] = this.productEditingProductIDs[i];
+                this.productEditingCurrentPageProductNames[i] = this.productEditingProductNames[i];
+                this.productEditingCurrentPageProductQuantitiesAvailable[i] = this.productEditingProductQuantitiesAvailable[i];
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = this.productEditingProductQuantitiesAvailableAtMin[i];
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = this.productEditingProductQuantitiesAvailableAtMax[i];
+                this.productEditingProductDisplay[i] = "block";
+            } else {
+                this.productEditingCurrentPageProductIDs[i] = "";
+                this.productEditingCurrentPageProductNames[i] = "";
+                this.productEditingCurrentPageProductQuantitiesAvailable[i] = 0;
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = false;
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = false;
+                this.productEditingProductDisplay[i] = "none";
+            }
 
-      // Set up the page navigation
-      // Set the product editing to start with the first page
-      this.pageChangerAtMin = true;
-      this.productEditingNavCurrentPageNumber = 1;
-
-      // Calculate how many pages there will be
-      if (productNum % 5 === 0) {
-        this.productEditingNavTotalPageNumbers = productNum / 5;
-      } else {
-        this.productEditingNavTotalPageNumbers = ((productNum - (productNum % 5)) / 5) + 1;
-      }
-
-      // Set pageChangerAtMax depending on whether there is 1 page or more than 1 page
-      if (this.productEditingNavTotalPageNumbers === 1) {
-        this.pageChangerAtMax = true;
-      } else {
-        this.pageChangerAtMax = false;
-      }
-
-      i = 0;
-      // Assign the information for the products shown on the first page of the product editor
-      while (i < 5 && i < productNum) {
-        if (i < productNum) {
-          this.productEditingCurrentPageProductIDs[i] = this.productEditingProductIDs[i];
-          this.productEditingCurrentPageProductNames[i] = this.productEditingProductNames[i];
-          this.productEditingCurrentPageProductQuantitiesAvailable[i] = this.productEditingProductQuantitiesAvailable[i];
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = this.productEditingProductQuantitiesAvailableAtMin[i];
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = this.productEditingProductQuantitiesAvailableAtMax[i];
-          this.productEditingProductDisplay[i] = "block";
-        } else {
-          this.productEditingCurrentPageProductIDs[i] = "";
-          this.productEditingCurrentPageProductNames[i] = "";
-          this.productEditingCurrentPageProductQuantitiesAvailable[i] = 0;
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i] = false;
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i] = false;
-          this.productEditingProductDisplay[i] = "none";
+            i++;
         }
-
-        i++;
-      }
     }
 
     // Update the quantities available for all products
     updateProductEditingProductQuantitiesAvailable(): void {
-      let i = 0;
-      while (i < this.productEditingProductIDs.length) {
-        let fileContent = fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
-        let jsonContent = JSON.parse(fileContent.toString());
+        let i = 0;
+        while (i < this.productEditingProductIDs.length) {
+            let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
+            let jsonContent = JSON.parse(fileContent.toString());
 
-        jsonContent.quantity = this.productEditingProductQuantitiesAvailable[i];
-        fs.writeFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, JSON.stringify(jsonContent, null, 2));
-        i++;
-      }
+            jsonContent.quantity = this.productEditingProductQuantitiesAvailable[i];
+            this.electron.fs.writeFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, JSON.stringify(jsonContent, null, 2));
+            i++;
+        }
     }
 
     // Handle events of the navigation buttons
@@ -327,20 +391,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                 // If the entire password has been entered...
                 if (this.navPasswordPosition === this.navPasswordSequence.length) {
-                  // Change to entering the user ID
-                  this.enteringUserID = true;
+                    // Change to entering the user ID
+                    this.enteringUserID = true;
 
-                  // Increment the product rotation counters so the products won't rotate
-                  this.productRotationCounterTopRow++;
-                  this.productRotationCounterBottomRow++;
+                    // Increment the product rotation counters so the products won't rotate
+                    this.productRotationCounterTopRow++;
+                    this.productRotationCounterBottomRow++;
 
-                  // Play animations for screen shading and the login area
-                  this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
-                  this.playInAnimation(this.systemConfigLoginAnimation, 750, 750);
+                    // Play animations for screen shading and the login area
+                    this.playInAnimation(this.systemConfigScreenShadingAnimation, 0, 1000);
+                    this.playInAnimation(this.systemConfigLoginAnimation, 750, 750);
 
-                  // Reset the password
-                  this.navPasswordPosition = 0;
-                // Otherwise, if the entire password has not yet been entered...
+                    // Reset the password
+                    this.navPasswordPosition = 0;
+                    // Otherwise, if the entire password has not yet been entered...
                 } else {
                     // Update previous password position
                     let previousPasswordPosition = this.navPasswordPosition - 1;
@@ -353,12 +417,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
                         }
                     }, 5000);
                 }
-            // Otherwise, if the button pressed is not the next one in the sequence...
+                // Otherwise, if the button pressed is not the next one in the sequence...
             } else {
                 // Reset the password
                 this.navPasswordPosition = 0;
             }
-        // Otherwise, if this is a "click" event...
+            // Otherwise, if this is a "click" event...
         } else if (event === "click") {
             // Move the products based on which button is pressed, enable snap, and reset the
             //   product rotation counters (causing product rotation to pause temporarily)
@@ -373,23 +437,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
             this.snapDisabled = "false";
             this.resetProductRotationCounters();
-        // Otherwise, if this is a "reachesBound" event...
+            // Otherwise, if this is a "reachesBound" event...
         } else if (event === "reachesBound") {
             // Enable/Disable the respective nav button
             this.navButtonEnabled[location] = !reachesBound;
-        // Otherwise, if this is a "mousedown" event...
+            // Otherwise, if this is a "mousedown" event...
         } else if (event === "productmousedown") {
             // Increment the product rotation counters (which prevents products from
             //   rotating while the products are being dragged)
             this.productRotationCounterTopRow++;
             this.productRotationCounterBottomRow++;
-        // Otherwise, if this is a "mouseup" event
+            // Otherwise, if this is a "mouseup" event
         } else if (event === "productmouseup") {
             // Decrement the product rotation counters and reset the product rotation counters
             this.productRotationCounterTopRow--;
             this.productRotationCounterBottomRow--;
             this.resetProductRotationCounters();
-        // Otherwise, assign the passed image source to the nav button
+            // Otherwise, assign the passed image source to the nav button
         } else {
             this.navButtonSource[location] = imageSource;
         }
@@ -398,89 +462,91 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Causes product rotation to stop until a given amount of time has passed
     //   without any interaction with the products
     resetProductRotationCounters(): void {
-      // Increment the product rotation counters
-      this.productRotationCounterTopRow++;
-      this.productRotationCounterBottomRow++;
+        // Increment the product rotation counters
+        this.productRotationCounterTopRow++;
+        this.productRotationCounterBottomRow++;
 
-      // After a given amount of time has passed...
-      setTimeout(() => {
-        // Decrement the product rotation counter for top row
-        this.productRotationCounterTopRow--;
+        // After a given amount of time has passed...
+        setTimeout(() => {
+            // Decrement the product rotation counter for top row
+            this.productRotationCounterTopRow--;
 
-        // If it has been the given amount of time since the last time
-        //   productRotationCounterTopRow was incremented...
-        if (this.productRotationCounterTopRow === 0) {
-          // Begin rotating the products in the top row
-          this.rotateProductsTopRow();
-        }
-      }, 10000);
+            // If it has been the given amount of time since the last time
+            //   productRotationCounterTopRow was incremented...
+            if (this.productRotationCounterTopRow === 0) {
+                // Begin rotating the products in the top row
+                this.rotateProductsTopRow();
+            }
+        }, 10000);
 
-      // After a given amount of time has passed...
-      setTimeout(() => {
-        // Decrement the product rotation counter for bottom row
-        this.productRotationCounterBottomRow--;
+        // After a given amount of time has passed...
+        setTimeout(() => {
+            // Decrement the product rotation counter for bottom row
+            this.productRotationCounterBottomRow--;
 
-        // If it has been the given amount of time since the last time
-        //   productRotationCounterBottomRow was incremented...
-        if (this.productRotationCounterBottomRow === 0) {
-          // Begin rotating the products in the bottom row
-          this.rotateProductsBottomRow();
-        }
-      }, 12500);
+            // If it has been the given amount of time since the last time
+            //   productRotationCounterBottomRow was incremented...
+            if (this.productRotationCounterBottomRow === 0) {
+                // Begin rotating the products in the bottom row
+                this.rotateProductsBottomRow();
+            }
+        }, 12500);
     }
 
     // Rotates the products on the top row in given intervals
     rotateProductsTopRow(): void {
-      // Change the direction the products are rotating if the top row is at
-      //   either end of the products
-      if (this.navButtonEnabled["topLeft"] === false) {
-        this.productRotationDirectionTopRow = "right";
-      } else if (this.navButtonEnabled["topRight"] === false) {
-        this.productRotationDirectionTopRow = "left";
-      }
-
-      // Rotate the products in the chosen direction
-      if (this.productRotationDirectionTopRow === "right") {
-        this.topds.moveRight();
-      } else if (this.productRotationDirectionTopRow === "left") {
-        this.topds.moveLeft();
-      }
-
-      // After a given amount of time has passed...
-      setTimeout(() => {
-        // If something hasn't been done that would cause the products to stop rotating...
-        if (this.productRotationCounterTopRow === 0) {
-          // Rotate the products in the top row
-          this.rotateProductsTopRow();
+        // Change the direction the products are rotating if the top row is at
+        //   either end of the products
+        if (this.navButtonEnabled["topLeft"] === false) {
+            this.productRotationDirectionTopRow = "right";
+        } else if (this.navButtonEnabled["topRight"] === false) {
+            this.productRotationDirectionTopRow = "left";
         }
-      }, 5000);
+
+        // Rotate the products in the chosen direction
+        if (this.productRotationDirectionTopRow === "right") {
+            this.topds.moveRight();
+        } else if (this.productRotationDirectionTopRow === "left") {
+            this.topds.moveLeft();
+        }
+
+        // console.log(this.topds);
+
+        // After a given amount of time has passed...
+        setTimeout(() => {
+            // If something hasn't been done that would cause the products to stop rotating...
+            if (this.productRotationCounterTopRow === 0) {
+                // Rotate the products in the top row
+                this.rotateProductsTopRow();
+            }
+        }, 5000);
     }
 
     // Rotates the products on the bottom row in given intervals
     rotateProductsBottomRow(): void {
-      // Change the direction the products are rotating if the bottom row is at
-      //   either end of the products
-      if (this.navButtonEnabled["bottomLeft"] === false) {
-        this.productRotationDirectionBottomRow = "right";
-      } else if (this.navButtonEnabled["bottomRight"] === false) {
-        this.productRotationDirectionBottomRow = "left";
-      }
-
-      // Rotate the products in the chosen direction
-      if (this.productRotationDirectionBottomRow === "right") {
-        this.bottomds.moveRight();
-      } else if (this.productRotationDirectionBottomRow === "left") {
-        this.bottomds.moveLeft();
-      }
-
-      // After a given amount of time has passed...
-      setTimeout(() => {
-        // If something hasn't been done that would cause the products to stop rotating...
-        if (this.productRotationCounterBottomRow === 0) {
-          // Rotate the products in the bottom row
-          this.rotateProductsBottomRow();
+        // Change the direction the products are rotating if the bottom row is at
+        //   either end of the products
+        if (this.navButtonEnabled["bottomLeft"] === false) {
+            this.productRotationDirectionBottomRow = "right";
+        } else if (this.navButtonEnabled["bottomRight"] === false) {
+            this.productRotationDirectionBottomRow = "left";
         }
-      }, 5000);
+
+        // Rotate the products in the chosen direction
+        if (this.productRotationDirectionBottomRow === "right") {
+            this.bottomds.moveRight();
+        } else if (this.productRotationDirectionBottomRow === "left") {
+            this.bottomds.moveLeft();
+        }
+
+        // After a given amount of time has passed...
+        setTimeout(() => {
+            // If something hasn't been done that would cause the products to stop rotating...
+            if (this.productRotationCounterBottomRow === 0) {
+                // Rotate the products in the bottom row
+                this.rotateProductsBottomRow();
+            }
+        }, 5000);
     }
 
     // Play the animation used to transition from the "out" state to the "in" state
@@ -525,13 +591,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.selectedProductQuantityWanted = 0;
             this.selectedProductQuantityWantedAtMax = true;
             this.selectedProductOutOfStock = true;
-        // Otherwise, if the max quantity is not 0...
+            // Otherwise, if the max quantity is not 0...
         } else {
             // If the max quantity is 1...
             if (this.selectedProductMaxQuantity === 1) {
                 // Mark that the quantity wanted is at its max
                 this.selectedProductQuantityWantedAtMax = true;
-            // Otherwise, if the max quantity is greater than 1...
+                // Otherwise, if the max quantity is greater than 1...
             } else {
                 // Mark that the quantity wanted is not at its max...
                 this.selectedProductQuantityWantedAtMax = false;
@@ -634,7 +700,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.selectedProductQuantityWantedAtMin = true;
                 this.selectedProductQuantityWantedAtMax = true;
                 this.selectedProductOutOfStock = true;
-            // Otherwise, if there are still some of this product available...
+                // Otherwise, if there are still some of this product available...
             } else {
                 // If the selected product quantity is now at 1...
                 if (this.selectedProductQuantityWanted === 1) {
@@ -686,7 +752,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.userID.chars[this.userID.length] = character;
                 this.userIDAndPasswordChars[this.userID.length] = "*";
                 this.userID.length++;
-            // Otherwise, if the user is entering the password and the current length is less than the max...
+                // Otherwise, if the user is entering the password and the current length is less than the max...
             } else if (this.enteringPassword === true && this.password.length < this.password.chars.length) {
                 // Mark the password as valid (making the color of the text "white"), and add the character
                 //   to password.chars
@@ -722,7 +788,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.userID.length--;
                 this.userID.chars[this.userID.length] = "";
                 this.userIDAndPasswordChars[this.userID.length] = "";
-            // Otherwise, if the user is entering the password and the current length is greater than 0...
+                // Otherwise, if the user is entering the password and the current length is greater than 0...
             } else if (this.enteringPassword === true && this.password.length > 0) {
                 // Mark the password as valid (making the color of the text "white") and decrement
                 //   password.length
@@ -775,7 +841,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                 // Check if the user id is valid
                 try {
-                    let exists = fs.statSync(`./src/user-data/${this.userID.string}.json`);
+                    let exists = this.electron.fs.statSync(`./src/user-data/${this.userID.string}.json`);
                     this.userID.valid = true;
                 } catch (error) {
                     this.userID.valid = false;
@@ -785,7 +851,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 if (this.userID.valid === true) {
                     // Open the user's user-data file and copy over the values of admin, passwordB,
                     //   passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     if (jsonContent.admin === "true") {
                       this.admin = "block";
@@ -796,7 +862,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.passwordC = jsonContent.passwordC;
                     this.pastInfoPasswordSum = jsonContent.pastInfoPasswordSum;
                     this.pastInfoPasswordCheck = jsonContent.pastInfoPasswordCheck;
-                // Otherwise, if the user id is not valid...
+                    // Otherwise, if the user id is not valid...
                 } else {
                     // Generate a passwordC and passwordB, making sure that the value of
                     //   passwordC is at least 16 characters in length and the value of
@@ -872,7 +938,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.passwordSum.substr(10, 5) + "-" + this.passwordSum.substr(15);
                 this.passwordProduct = this.modHex(this.multiplyHex(this.passwordA, this.passwordB), this.passwordC);
                 this.passwordProduct = this.setLengthOfHex(this.passwordProduct, 20);
-            // Otherwise, if the user is entering the password...
+                // Otherwise, if the user is entering the password...
             } else if (this.enteringPassword === true) {
                 // Clear password.string and copy password.chars over to it
                 this.password.string = "";
@@ -929,13 +995,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                     // Open the user's user-data file, writing to it the values of
                     //   passwordB, passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     jsonContent.passwordB = this.passwordB;
                     jsonContent.passwordC = this.passwordC;
                     jsonContent.pastInfoPasswordSum = this.pastInfoPasswordSum;
                     jsonContent.pastInfoPasswordCheck = this.pastInfoPasswordCheck;
-                    fs.writeFileSync(`./src/user-data/${this.userID.string}.json`, JSON.stringify(jsonContent, null, 2));
+                    this.electron.fs.writeFileSync(`./src/user-data/${this.userID.string}.json`, JSON.stringify(jsonContent, null, 2));
 
                     // Set userID.valid to false and clear passwordA, passwordB, passwordC,
                     //   userID.string, and password.string
@@ -960,8 +1026,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                         i++;
                     }
                     this.password.length = 0;
-                // Otherwise, if the password entered is incorrect or an invalid user id
-                //   was entered...
+                    // Otherwise, if the password entered is incorrect or an invalid user id
+                    //   was entered...
                 } else {
                     // Set password.valid to false
                     this.password.valid = false;
@@ -1005,7 +1071,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     i++;
                 }
                 this.password.length = 0;
-            // Otherwise, if the user is entering the user id...
+                // Otherwise, if the user is entering the user id...
             } else if (this.enteringUserID === true) {
                 // Play animations for the login and screen shading
                 this.playOutAnimation(this.systemConfigLoginAnimation, 0, 1000);
@@ -1098,67 +1164,67 @@ export class HomeComponent implements OnInit, AfterViewInit {
     exitButtonClick(): void {
       // Execute the script that "ends" the program (disables all restrictions)
       cd('~/ScreenManager/src/setup/end');
-      exec('make run', {async:true});
+      exec('make run', {async: true});
     }
 
     // Runs when the decrement button for one of the products being edited is pressed
     decreaseQuantityAvailable(productPosition: number): void {
-      // If the systemConfigProductEditingContentAnimation is finished...
-      if (this.systemConfigProductEditingContentAnimation.in === true) {
-        // If the product whose button is pressed has a quantity greater than 0, decrement it
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
-          this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] -= 1;
-        }
+        // If the systemConfigProductEditingContentAnimation is finished...
+        if (this.systemConfigProductEditingContentAnimation.in === true) {
+            // If the product whose button is pressed has a quantity greater than 0, decrement it
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
+                this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] -= 1;
+            }
 
-        // If the product whose button is pressed has a quantity of 0, mark that it is at the minimum
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 0) {
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = true;
-        }
+            // If the product whose button is pressed has a quantity of 0, mark that it is at the minimum
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 0) {
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = true;
+            }
 
-        // If the product whose button is pressed has a quantity less than 100, mark that it is not at the maximum
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = false;
-        }
+            // If the product whose button is pressed has a quantity less than 100, mark that it is not at the maximum
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = false;
+            }
 
-        // Copy the current page product info over to the overall product info (saved even when pages are changed)
-        let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
-        while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
-          this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-          this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
-          this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-          i++;
+            // Copy the current page product info over to the overall product info (saved even when pages are changed)
+            let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+            while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+                this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+                this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                i++;
+            }
         }
-      }
     }
 
     // Runs when the increment button for one of the products being edited is pressed
     increaseQuantityAvailable(productPosition: number): void {
-      // If the systemConfigProductEditingContentAnimation is finished...
-      if (this.systemConfigProductEditingContentAnimation.in === true) {
-        // If the product whose button is pressed has a quantity less than 100, increment it
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
-          this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] += 1;
-        }
+        // If the systemConfigProductEditingContentAnimation is finished...
+        if (this.systemConfigProductEditingContentAnimation.in === true) {
+            // If the product whose button is pressed has a quantity less than 100, increment it
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] < 100) {
+                this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] += 1;
+            }
 
-        // If the product whose button is pressed has a quantity of 100, mark that it is at the maximum
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 100) {
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = true;
-        }
+            // If the product whose button is pressed has a quantity of 100, mark that it is at the maximum
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] === 100) {
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMax[productPosition] = true;
+            }
 
-        // If the product whose button is pressed has a quantity greater than 0, mark that it is not at the minimum
-        if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
-          this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = false;
-        }
+            // If the product whose button is pressed has a quantity greater than 0, mark that it is not at the minimum
+            if (this.productEditingCurrentPageProductQuantitiesAvailable[productPosition] > 0) {
+                this.productEditingCurrentPageProductQuantitiesAvailableAtMin[productPosition] = false;
+            }
 
-        // Copy the current page product info over to the overall product info (saved even when the pages are changed)
-        let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
-        while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
-          this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-          this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
-          this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-          i++;
+            // Copy the current page product info over to the overall product info (saved even when the pages are changed)
+            let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+            while (i < (this.productEditingNavCurrentPageNumber * 5) && i < this.productEditingProductIDs.length) {
+                this.productEditingProductQuantitiesAvailable[i] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                this.productEditingProductQuantitiesAvailableAtMin[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+                this.productEditingProductQuantitiesAvailableAtMax[i] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                i++;
+            }
         }
-      }
     }
 
     // Runs when the "cancel" button in product editing is pressed
@@ -1188,146 +1254,146 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Runs when the page number is decreased in product editing
     decreasePageNumber(): void {
-      // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
-      //   and systemConfigProductEditingPageChnageRightAnimation are finished...
-      if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
-          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-        // If the page number is greater than 1, decrement it
-        if (this.productEditingNavCurrentPageNumber > 1) {
-          this.productEditingNavCurrentPageNumber -= 1;
-        }
-
-        // If the page number is 1, mark that it is at the minimum
-        if (this.productEditingNavCurrentPageNumber === 1) {
-          this.pageChangerAtMin = true;
-        }
-
-        // If the page number is less than the total number of pages, mark that it is not at the maximum
-        if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
-          this.pageChangerAtMax = false;
-        }
-
-        // Play animation for moving old information out to the right side of the screen
-        this.playInAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 0, 400);
-
-        // After the animation has finished...
-        setTimeout(() => {
-          // Save previous page information and load new page information
-          let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
-          while (i < (this.productEditingNavCurrentPageNumber * 5)) {
-            // If the number of products hasn't been exceeded yet...
-            if (i < this.productEditingProductIDs.length) {
-              // Load new product IDs and names
-              this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
-              this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
-
-              // Save old product quantities and atMin/atMax values and load new product quantities and atMin/atMax values
-              this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
-              this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
-              this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
-
-              // Set the product's display value to "block" (displaying the info and buttons)
-              this.productEditingProductDisplay[i % 5] = "block";
-            // Otherwise, if the number of products has been exceeded (may occur on last page)...
-            } else {
-              // Clear the product IDs and names
-              this.productEditingCurrentPageProductIDs[i % 5] = "";
-              this.productEditingCurrentPageProductNames[i % 5] = "";
-
-              // Save old product quantities and atMin/atMax values and clear them
-              this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
-              this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
-              this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
-
-              // Set the product's display value to "none" (hiding the info and buttons)
-              this.productEditingProductDisplay[i % 5] = "none";
+        // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
+        //   and systemConfigProductEditingPageChnageRightAnimation are finished...
+        if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+            this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+            // If the page number is greater than 1, decrement it
+            if (this.productEditingNavCurrentPageNumber > 1) {
+                this.productEditingNavCurrentPageNumber -= 1;
             }
 
-            i++;
-          }
+            // If the page number is 1, mark that it is at the minimum
+            if (this.productEditingNavCurrentPageNumber === 1) {
+                this.pageChangerAtMin = true;
+            }
 
-          // Play animation for moving new information in from the left side of the screen
-          this.playOutAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 100, 400);
-        }, 400);
-      }
+            // If the page number is less than the total number of pages, mark that it is not at the maximum
+            if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
+                this.pageChangerAtMax = false;
+            }
+
+            // Play animation for moving old information out to the right side of the screen
+            this.playInAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 0, 400);
+
+            // After the animation has finished...
+            setTimeout(() => {
+                // Save previous page information and load new page information
+                let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+                while (i < (this.productEditingNavCurrentPageNumber * 5)) {
+                    // If the number of products hasn't been exceeded yet...
+                    if (i < this.productEditingProductIDs.length) {
+                        // Load new product IDs and names
+                        this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
+                        this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
+
+                        // Save old product quantities and atMin/atMax values and load new product quantities and atMin/atMax values
+                        this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
+                        this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+                        this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
+
+                        // Set the product's display value to "block" (displaying the info and buttons)
+                        this.productEditingProductDisplay[i % 5] = "block";
+                        // Otherwise, if the number of products has been exceeded (may occur on last page)...
+                    } else {
+                        // Clear the product IDs and names
+                        this.productEditingCurrentPageProductIDs[i % 5] = "";
+                        this.productEditingCurrentPageProductNames[i % 5] = "";
+
+                        // Save old product quantities and atMin/atMax values and clear them
+                        this.productEditingProductQuantitiesAvailable[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
+                        this.productEditingProductQuantitiesAvailableAtMin[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
+                        this.productEditingProductQuantitiesAvailableAtMax[i + 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
+
+                        // Set the product's display value to "none" (hiding the info and buttons)
+                        this.productEditingProductDisplay[i % 5] = "none";
+                    }
+
+                    i++;
+                }
+
+                // Play animation for moving new information in from the left side of the screen
+                this.playOutAnimation(this.systemConfigProductEditingPageChangeLeftAnimation, 100, 400);
+            }, 400);
+        }
     }
 
     // Runs when the page number is increased in product editing
     increasePageNumber(): void {
-      // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
-      //   and systemConfigProductEditingPageChnageRightAnimation are finished...
-      if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
-          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-        // If the page number is less than the total number of pages, increment it
-        if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
-          this.productEditingNavCurrentPageNumber += 1;
-        }
-
-        // If the page number is at the number of pages, mark that it is at the maximum
-        if (this.productEditingNavCurrentPageNumber === this.productEditingNavTotalPageNumbers) {
-          this.pageChangerAtMax = true;
-        }
-
-        // If the page number is greater than 1, mark that it is not at the minimum
-        if (this.productEditingNavCurrentPageNumber > 1) {
-          this.pageChangerAtMin = false;
-        }
-
-        // Play animation for moving old information out to the left side of the screen
-        this.playInAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 0, 400);
-
-        // After the animation has finished...
-        setTimeout(() => {
-          // Save previous page information and load new page information
-          let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
-          while (i < (this.productEditingNavCurrentPageNumber * 5)) {
-            // If the number of products hasn't been exceeded yet...
-            if (i < this.productEditingProductIDs.length) {
-              // Load new product IDs and names
-              this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
-              this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
-
-              // Save old product quantities and atMin/atMax values and load new product quantities and atMin/atMax values
-              this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
-              this.productEditingProductQuantitiesAvailableAtMin[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
-              this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
-
-              // Set the product's display value to "block" (displaying the info and buttons)
-              this.productEditingProductDisplay[i % 5] = "block";
-            // Otherwise, if the number of products has been exceeded (may occur on last page)...
-            } else {
-              // Clear the product IDs and names
-              this.productEditingCurrentPageProductIDs[i % 5] = "";
-              this.productEditingCurrentPageProductNames[i % 5] = "";
-
-              // Save old product quantities and atMin/atMax values and clear them
-              this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
-              this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
-              this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
-
-              // Set the product's display value to "none" (hiding the info and buttons)
-              this.productEditingProductDisplay[i % 5] = "none";
+        // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
+        //   and systemConfigProductEditingPageChnageRightAnimation are finished...
+        if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+            this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+            // If the page number is less than the total number of pages, increment it
+            if (this.productEditingNavCurrentPageNumber < this.productEditingNavTotalPageNumbers) {
+                this.productEditingNavCurrentPageNumber += 1;
             }
 
-            i++;
-          }
+            // If the page number is at the number of pages, mark that it is at the maximum
+            if (this.productEditingNavCurrentPageNumber === this.productEditingNavTotalPageNumbers) {
+                this.pageChangerAtMax = true;
+            }
 
-          // Play animation for moving new information in from the right side of the screen
-          this.playOutAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 100, 400);
-        }, 400);
-      }
+            // If the page number is greater than 1, mark that it is not at the minimum
+            if (this.productEditingNavCurrentPageNumber > 1) {
+                this.pageChangerAtMin = false;
+            }
+
+            // Play animation for moving old information out to the left side of the screen
+            this.playInAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 0, 400);
+
+            // After the animation has finished...
+            setTimeout(() => {
+                // Save previous page information and load new page information
+                let i = (this.productEditingNavCurrentPageNumber - 1) * 5;
+                while (i < (this.productEditingNavCurrentPageNumber * 5)) {
+                    // If the number of products hasn't been exceeded yet...
+                    if (i < this.productEditingProductIDs.length) {
+                        // Load new product IDs and names
+                        this.productEditingCurrentPageProductIDs[i % 5] = this.productEditingProductIDs[i];
+                        this.productEditingCurrentPageProductNames[i % 5] = this.productEditingProductNames[i];
+
+                        // Save old product quantities and atMin/atMax values and load new product quantities and atMin/atMax values
+                        this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = this.productEditingProductQuantitiesAvailable[i];
+                        this.productEditingProductQuantitiesAvailableAtMin[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+                        this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = this.productEditingProductQuantitiesAvailableAtMax[i];
+
+                        // Set the product's display value to "block" (displaying the info and buttons)
+                        this.productEditingProductDisplay[i % 5] = "block";
+                        // Otherwise, if the number of products has been exceeded (may occur on last page)...
+                    } else {
+                        // Clear the product IDs and names
+                        this.productEditingCurrentPageProductIDs[i % 5] = "";
+                        this.productEditingCurrentPageProductNames[i % 5] = "";
+
+                        // Save old product quantities and atMin/atMax values and clear them
+                        this.productEditingProductQuantitiesAvailable[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailable[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailable[i % 5] = 0;
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = this.productEditingProductQuantitiesAvailableAtMin[i];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMin[i % 5] = false;
+                        this.productEditingProductQuantitiesAvailableAtMax[i - 5] = this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5];
+                        this.productEditingCurrentPageProductQuantitiesAvailableAtMax[i % 5] = false;
+
+                        // Set the product's display value to "none" (hiding the info and buttons)
+                        this.productEditingProductDisplay[i % 5] = "none";
+                    }
+
+                    i++;
+                }
+
+                // Play animation for moving new information in from the right side of the screen
+                this.playOutAnimation(this.systemConfigProductEditingPageChangeRightAnimation, 100, 400);
+            }, 400);
+        }
     }
 
     // Runs when the "submit" button in product editing is pressed
@@ -1490,17 +1556,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.submitChanges();
                     break;
             }
-        // Otherwise, when the mouse button is pressed over a button...
+            // Otherwise, when the mouse button is pressed over a button...
         } else if (event === "mousedown") {
             // Update the button's source and mark that it is pressed
             this.buttons[this.findButtonPosition(name)].source = source;
             this.buttons[this.findButtonPosition(name)].pressed = true;
-        // Otherwise, when the mouse button is released over a button...
+            // Otherwise, when the mouse button is released over a button...
         } else if (event === "mouseup") {
             // Update the button's source and mark that it is not pressed
             this.buttons[this.findButtonPosition(name)].source = source;
             this.buttons[this.findButtonPosition(name)].pressed = false;
-        // Otherwise, when the mouse has left a button...
+            // Otherwise, when the mouse has left a button...
         } else if (event === "mouseleave") {
             // Update the button's source and mark that it is not pressed
             this.buttons[this.findButtonPosition(name)].source = source;
@@ -1783,15 +1849,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Load the products and execute nav events on initiation
     ngOnInit() {
-      // Load both rows of products
-      this.productsTopRow = this.loadProductsTopRow();
-      this.productsBottomRow = this.loadProductsBottomRow();
+        // Load both rows of products
+        this.productsTopRow = this.loadProductsTopRow('./src');
+        this.productsBottomRow = this.loadProductsBottomRow('./src');
 
-      // Run topLeft and bottomLeft nav events (this causes the automatic product rotations that
-      //   occur when the vending machine has been inactive for a certain period of time to
-      //   start right away without the need for an initial nav button press or product dragging)
-      this.navEvent("click", "topLeft", "", false);
-      this.navEvent("click", "bottomLeft", "", false);
+        // Run topLeft and bottomLeft nav events (this causes the automatic product rotations that
+        //   occur when the vending machine has been inactive for a certain period of time to
+        //   start right away without the need for an initial nav button press or product dragging)
+        this.navEvent("click", "topLeft", "", false);
+        // this.navEvent("click", "bottomLeft", "", false);
     }
 
     ngAfterViewInit() {

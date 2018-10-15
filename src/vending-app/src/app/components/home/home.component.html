@@ -12,7 +12,7 @@
                 #topScroller>
                 <div drag-scroll-item *ngFor="let product of productsTopRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
-                        <img class="product-image" [src]="product.smallImg">
+                        <img class="product-image" [src]="product.smallImgData">
                     </div>
                 </div>
             </drag-scroll>
@@ -27,7 +27,7 @@
                 #bottomScroller>
                 <div drag-scroll-item *ngFor="let product of productsBottomRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
-                        <img class="product-image" [src]="product.smallImg">
+                        <img class="product-image" [src]="product.smallImgData">
                     </div>
                 </div>
             </drag-scroll>
@@ -81,7 +81,7 @@
             <div class="selected-product-image-animations selected-product-image" [class.out]="selectedProductImageAnimation.out"
                 [class.transitionIn]="selectedProductImageAnimation.transitionIn" [class.in]="selectedProductImageAnimation.in"
                 [class.transitionOut]="selectedProductImageAnimation.transitionOut">
-                <img class="selected-product-image-largeImg" [src]="selectedProduct.largeImg">
+                <img class="selected-product-image-largeImg" [src]="selectedProduct.largeImgData">
             </div>
 
             <div class="selected-product-information-animations selected-product-information" [class.out]="selectedProductInformationAnimation.out"

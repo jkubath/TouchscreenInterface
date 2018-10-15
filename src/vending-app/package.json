@@ -40,13 +40,13 @@
     "dinero": "^1.0.1",
     "dinero.js": "^1.4.0",
     "jquery": "^3.3.1",
-    "ngx-drag-scroll": "^2.0.0-beta.4",
+    "ngx-drag-scroll": "^2.0.1",
     "popper.js": "^1.14.3",
     "shelljs": "^0.8.2",
     "typeface-lalezar": "0.0.56"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.6.3",
+    "@angular-devkit/build-angular": "^0.8.3",
     "@angular/cli": "6.0.5",
     "@angular/common": "6.0.5",
     "@angular/compiler": "6.0.5",
