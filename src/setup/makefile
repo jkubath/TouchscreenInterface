@@ -16,8 +16,11 @@ clean:
 	(cd "start"; make clean;)
 	(cd "end"; make clean;)
 
-run:
-	(cd "start"; make run;)
+run1:
+	(cd "start"; make run1;)
+
+run2:
+	(cd "start"; make run2;)
 
 stop:
 	(cd "end"; make run;)

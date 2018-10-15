@@ -5,11 +5,13 @@ clean:
 	rm -rf *.sh
 
 
-run:
+run1:
 	./set_xinput_matrix.sh
 	./enableFirefoxAddons.sh
 	./addFirefoxRestrictions.sh
 	./startEmptyTrash.sh
 	./addCompizRestrictions.sh
+
+run2:
 	./setWindowSizes.sh
 	./startWindowManager.sh
