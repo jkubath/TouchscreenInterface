@@ -14,10 +14,18 @@
 # Finally, changes are made to the extensions.json file that cause the change
 # of the maximum number of tabs to take effect
 
+# Create firefox directory structure
+firefox &
+sleep 5
+killall firefox
+
 # Change to the extensions directory
 PROFDIR=$(cat ~/.mozilla/firefox/profiles.ini | grep 'Path=' | sed s/^Path=//)
-cd ~/.mozilla/firefox/$PROFDIR/extensions
-rm -r *
+cd ~/.mozilla/firefox/$PROFDIR
+rm -r -f extensions
+mkdir extensions
+cd extensions
+rm -r -f *
 
 # Download the Max Tabs .xpi file
 wget "https://addons.mozilla.org/firefox/downloads/file/688364/max_tabs_web_extension-0.1.0-an+fx.xpi"
@@ -38,6 +46,7 @@ cd ".."
 rm -r "$XPINAME"
 cd ".."
 
+touch user.js
 # Cause the following operations to take effect
 sed -i 's/user_pref(\"extensions.pendingOperations\", true);//' user.js
 

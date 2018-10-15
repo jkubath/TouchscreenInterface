@@ -8,6 +8,7 @@
             <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
                 (reachesLeftBound)="navEvent('reachesBound', 'topLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'topRight', '', $event)"
                 (mousedown)="navEvent('productmousedown', '', '', false)" (mouseup)="navEvent('productmouseup', '', '', false)"
+                (touchstart)="navEvent('productmousedown', '', '', false)" (touchend)="navEvent('productmouseup', '', '', false)"
                 #topScroller>
                 <div drag-scroll-item *ngFor="let product of productsTopRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
@@ -22,6 +23,7 @@
             <drag-scroll class="product-carousel" drag-scroll-y-disabled="true" [snap-disabled]="snapDisabled"
                 (reachesLeftBound)="navEvent('reachesBound', 'bottomLeft', '', $event)" (reachesRightBound)="navEvent('reachesBound', 'bottomRight', '', $event)"
                 (mousedown)="navEvent('productmousedown', '', '', false)" (mouseup)="navEvent('productmouseup', '', '', false)"
+                (touchstart)="navEvent('productmousedown', '', '', false)" (touchend)="navEvent('productmouseup', '', '', false)"
                 #bottomScroller>
                 <div drag-scroll-item *ngFor="let product of productsBottomRow; let i = index">
                     <div class="product" (click)="selectProduct(product)">
@@ -40,22 +42,26 @@
             (click)="navEvent('password', 'topLeft', '', '')">
         <img class="top-left-nav-button-on" [src]="navButtonSource['topLeft']" *ngIf="navButtonEnabled['topLeft']"
             (click)="navEvent('click', 'topLeft', '', ''); navEvent('password', 'topLeft', '', '')" (mousedown)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
-            (mouseup)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'topLeft', 'assets/img/Button-On-Left.png', '')">
+            (mouseup)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'topLeft', 'assets/img/Button-On-Left.png', '')"
+            (touchstart)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')" (touchend)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')">
         <img class="top-right-nav-button-off" src="assets/img/Button-Off-Right.png" *ngIf="!navButtonEnabled['topRight']"
             (click)="navEvent('password', 'topRight', '', '')">
         <img class="top-right-nav-button-on" [src]="navButtonSource['topRight']" *ngIf="navButtonEnabled['topRight']"
             (click)="navEvent('click', 'topRight', '', ''); navEvent('password', 'topRight', '', '')" (mousedown)="navEvent('mousedown', 'topRight', 'assets/img/Button-On-Right-Pressed.png', '')"
-            (mouseup)="navEvent('mouseup', 'topRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'topRight', 'assets/img/Button-On-Right.png', '')">
+            (mouseup)="navEvent('mouseup', 'topRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'topRight', 'assets/img/Button-On-Right.png', '')"
+            (touchstart)="navEvent('mousedown', 'topRight', 'assets/img/Button-On-Right-Pressed.png', '')" (touchend)="navEvent('mouseup', 'topRight', 'assets/img/Button-On-Right.png', '')">
         <img class="bottom-left-nav-button-off" src="assets/img/Button-Off-Left.png" *ngIf="!navButtonEnabled['bottomLeft']"
             (click)="navEvent('password', 'bottomLeft', '', '')">
         <img class="bottom-left-nav-button-on" [src]="navButtonSource['bottomLeft']" *ngIf="navButtonEnabled['bottomLeft']"
             (click)="navEvent('click', 'bottomLeft', '', ''); navEvent('password', 'bottomLeft', '', '')" (mousedown)="navEvent('mousedown', 'bottomLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
-            (mouseup)="navEvent('mouseup', 'bottomLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomLeft', 'assets/img/Button-On-Left.png', '')">
+            (mouseup)="navEvent('mouseup', 'bottomLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomLeft', 'assets/img/Button-On-Left.png', '')"
+            (touchstart)="navEvent('mousedown', 'bottomLeft', 'assets/img/Button-On-Left-Pressed.png', '')" (touchend)="navEvent('mouseup', 'bottomLeft', 'assets/img/Button-On-Left.png', '')">
         <img class="bottom-right-nav-button-off" src="assets/img/Button-Off-Right.png" *ngIf="!navButtonEnabled['bottomRight']"
             (click)="navEvent('password', 'bottomRight', '', '')">
         <img class="bottom-right-nav-button-on" [src]="navButtonSource['bottomRight']" *ngIf="navButtonEnabled['bottomRight']"
             (click)="navEvent('click', 'bottomRight', '', ''); navEvent('password', 'bottomRight', '', '')" (mousedown)="navEvent('mousedown', 'bottomRight', 'assets/img/Button-On-Right-Pressed.png', '')"
-            (mouseup)="navEvent('mouseup', 'bottomRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomRight', 'assets/img/Button-On-Right.png', '')">
+            (mouseup)="navEvent('mouseup', 'bottomRight', 'assets/img/Button-On-Right.png', '')" (mouseleave)="navEvent('mouseleave', 'bottomRight', 'assets/img/Button-On-Right.png', '')"
+            (touchstart)="navEvent('mousedown', 'bottomRight', 'assets/img/Button-On-Right-Pressed.png', '')" (touchend)="navEvent('mouseup', 'bottomRight', 'assets/img/Button-On-Right.png', '')">
 
         <!-- Product Selecting -->
         <!-- ngif directive used to only render following code if product was selected. Required to prevent errors caused by accesses to null data-->
@@ -89,29 +95,57 @@
                 <img class="information-separator" src="assets/img/Information-Separator.png">
                 <img class="minus-button" [class.atMin]="selectedProductQuantityWantedAtMin" [src]="buttons[findButtonPosition('minusButton')].source"
                     (click)="buttonEvent('click', 'minusButton', '')" (mousedown)="buttonEvent('mousedown', 'minusButton', 'assets/img/Minus-Button-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'minusButton', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'minusButton', 'assets/img/Minus-Button.png')">
+                    (mouseup)="buttonEvent('mouseup', 'minusButton', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'minusButton', 'assets/img/Minus-Button.png')"
+                    (touchstart)="buttonEvent('mousedown', 'minusButton', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'minusButton', 'assets/img/Minus-Button.png')">
                 <p class="selected-product-quantity-wanted" [class.outOfStock]="selectedProductOutOfStock">{{
                     selectedProductQuantityWanted }}</p>
                 <img class="plus-button" [class.atMax]="selectedProductQuantityWantedAtMax" [src]="buttons[findButtonPosition('plusButton')].source"
                     (click)="buttonEvent('click', 'plusButton', '')" (mousedown)="buttonEvent('mousedown', 'plusButton', 'assets/img/Plus-Button-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'plusButton', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'plusButton', 'assets/img/Plus-Button.png')">
+                    (mouseup)="buttonEvent('mouseup', 'plusButton', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'plusButton', 'assets/img/Plus-Button.png')"
+                    (touchstart)="buttonEvent('mousedown', 'plusButton', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'plusButton', 'assets/img/Plus-Button.png')">
 
                 <p class="selected-product-total-price" [class.outOfStock]="selectedProductOutOfStock">Total: {{
                     (selectedProduct.price.multiply(selectedProductQuantityWanted)).toFormat('$0,0.00') }}</p>
                 <p class="selected-product-out-of-stock" [class.outOfStock]="selectedProductOutOfStock">Out of Stock</p>
                 <img class="selected-product-cancel-button" [src]="buttons[findButtonPosition('selectedProductCancelButton')].source" (click)="buttonEvent('click', 'selectedProductCancelButton', '')"
                     (mousedown)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')">
+                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')"
+                    (touchstart)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')">
                 <p class="selected-product-cancel-text" [class.selected-product-cancel-button-pressed]="buttons[findButtonPosition('selectedProductCancelButton')].pressed"
                     (click)="buttonEvent('click', 'selectedProductCancelButton', '')" (mousedown)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')">Cancel</p>
+                    (mouseup)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'selectedProductCancelButton', 'assets/img/Button-175.png')"
+                    (touchstart)="buttonEvent('mousedown', 'selectedProductCancelButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductCancelButton', 'assets/img/Button-175.png')">Cancel</p>
                 <img class="purchase-button" [class.outOfStock]="selectedProductOutOfStock" [src]="buttons[findButtonPosition('purchaseButton')].source"
                     (click)="buttonEvent('click', 'purchaseButton', '')" (mousedown)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')">
+                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')"
+                    (touchstart)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')">
                 <p class="purchase-text" [class.purchase-button-pressed]="buttons[findButtonPosition('purchaseButton')].pressed"
                     [class.outOfStock]="selectedProductOutOfStock" (click)="buttonEvent('click', 'purchaseButton', '')"
                     (mousedown)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')"
-                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')">Purchase</p>
+                    (mouseup)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseleave', 'purchaseButton', 'assets/img/Button-225.png')"
+                    (touchstart)="buttonEvent('mousedown', 'purchaseButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'purchaseButton', 'assets/img/Button-225.png')">Purchase</p>
+            </div>
+
+            <div class="selected-product-purchase-payment" [class.entering-payment]="enteringPayment">
+                <div class="selected-product-purchase-payment-screen-shading-animations selected-product-purchase-payment-screen-shading"
+                    [class.out]="selectedProductPurchasePaymentScreenShadingAnimation.out" [class.transitionIn]="selectedProductPurchasePaymentScreenShadingAnimation.transitionIn"
+                    [class.in]="selectedProductPurchasePaymentScreenShadingAnimation.in" [class.transitionOut]="selectedProductPurchasePaymentScreenShadingAnimation.transitionOut">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                    <img class="screen-shading" src="assets/img/Screen-Shading.png">
+                </div>
+                <div class="selected-product-purchase-payment-content-animations selected-product-purchase-payment-content"
+                    [class.out]="selectedProductPurchasePaymentContentAnimation.out" [class.transitionIn]="selectedProductPurchasePaymentContentAnimation.transitionIn"
+                    [class.in]="selectedProductPurchasePaymentContentAnimation.in" [class.transitionOut]="selectedProductPurchasePaymentContentAnimation.transitionOut">
+                    <p class="selected-product-purchase-payment-message">Thank you for purchasing a {{ selectedProduct.name }}!</p>
+                    <img class="selected-product-purchase-payment-continue-button" [src]="buttons[findButtonPosition('selectedProductPurchasePaymentContinueButton')].source" (click)="buttonEvent('click', 'selectedProductPurchasePaymentContinueButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')">
+                    <p class="selected-product-purchase-payment-continue-text" [class.selected-product-purchase-payment-continue-button-pressed]="buttons[findButtonPosition('selectedProductPurchasePaymentContinueButton')].pressed"
+                        (click)="buttonEvent('click', 'selectedProductPurchasePaymentContinueButton', '')" (mousedown)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'selectedProductPurchasePaymentContinueButton', 'assets/img/Button-225.png')">Continue</p>
+                </div>
             </div>
         </div>
 
@@ -184,128 +218,167 @@
                 <div class="system-config-login-buttons">
                     <img class="zero-button" [src]="buttons[findButtonPosition('zeroButton')].source" (click)="buttonEvent('click', 'zeroButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')">
                     <p class="zero-text" [class.zero-button-pressed]="buttons[findButtonPosition('zeroButton')].pressed"
                         (click)="buttonEvent('click', 'zeroButton', '')" (mousedown)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')">0</p>
+                        (mouseup)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'zeroButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'zeroButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'zeroButton', 'assets/img/Button-60.png')">0</p>
                     <img class="one-button" [src]="buttons[findButtonPosition('oneButton')].source" (click)="buttonEvent('click', 'oneButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')">
                     <p class="one-text" [class.one-button-pressed]="buttons[findButtonPosition('oneButton')].pressed"
                         (click)="buttonEvent('click', 'oneButton', '')" (mousedown)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')">1</p>
+                        (mouseup)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'oneButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'oneButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'oneButton', 'assets/img/Button-60.png')">1</p>
                     <img class="two-button" [src]="buttons[findButtonPosition('twoButton')].source" (click)="buttonEvent('click', 'twoButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')">
                     <p class="two-text" [class.two-button-pressed]="buttons[findButtonPosition('twoButton')].pressed"
                         (click)="buttonEvent('click', 'twoButton', '')" (mousedown)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')">2</p>
+                        (mouseup)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'twoButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'twoButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'twoButton', 'assets/img/Button-60.png')">2</p>
                     <img class="three-button" [src]="buttons[findButtonPosition('threeButton')].source" (click)="buttonEvent('click', 'threeButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')">
                     <p class="three-text" [class.three-button-pressed]="buttons[findButtonPosition('threeButton')].pressed"
                         (click)="buttonEvent('click', 'threeButton', '')" (mousedown)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')">3</p>
+                        (mouseup)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'threeButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'threeButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'threeButton', 'assets/img/Button-60.png')">3</p>
                     <img class="four-button" [src]="buttons[findButtonPosition('fourButton')].source" (click)="buttonEvent('click', 'fourButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')">
                     <p class="four-text" [class.four-button-pressed]="buttons[findButtonPosition('fourButton')].pressed"
                         (click)="buttonEvent('click', 'fourButton', '')" (mousedown)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')">4</p>
+                        (mouseup)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fourButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fourButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fourButton', 'assets/img/Button-60.png')">4</p>
                     <img class="five-button" [src]="buttons[findButtonPosition('fiveButton')].source" (click)="buttonEvent('click', 'fiveButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')">
                     <p class="five-text" [class.five-button-pressed]="buttons[findButtonPosition('fiveButton')].pressed"
                         (click)="buttonEvent('click', 'fiveButton', '')" (mousedown)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')">5</p>
+                        (mouseup)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'fiveButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fiveButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fiveButton', 'assets/img/Button-60.png')">5</p>
                     <img class="six-button" [src]="buttons[findButtonPosition('sixButton')].source" (click)="buttonEvent('click', 'sixButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')">
                     <p class="six-text" [class.six-button-pressed]="buttons[findButtonPosition('sixButton')].pressed"
                         (click)="buttonEvent('click', 'sixButton', '')" (mousedown)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')">6</p>
+                        (mouseup)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sixButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'sixButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'sixButton', 'assets/img/Button-60.png')">6</p>
                     <img class="seven-button" [src]="buttons[findButtonPosition('sevenButton')].source" (click)="buttonEvent('click', 'sevenButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')">
                     <p class="seven-text" [class.seven-button-pressed]="buttons[findButtonPosition('sevenButton')].pressed"
                         (click)="buttonEvent('click', 'sevenButton', '')" (mousedown)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')">7</p>
+                        (mouseup)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'sevenButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'sevenButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'sevenButton', 'assets/img/Button-60.png')">7</p>
                     <img class="eight-button" [src]="buttons[findButtonPosition('eightButton')].source" (click)="buttonEvent('click', 'eightButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')">
                     <p class="eight-text" [class.eight-button-pressed]="buttons[findButtonPosition('eightButton')].pressed"
                         (click)="buttonEvent('click', 'eightButton', '')" (mousedown)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')">8</p>
+                        (mouseup)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'eightButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'eightButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'eightButton', 'assets/img/Button-60.png')">8</p>
                     <img class="nine-button" [src]="buttons[findButtonPosition('nineButton')].source" (click)="buttonEvent('click', 'nineButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')">
+                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')">
                     <p class="nine-text" [class.nine-button-pressed]="buttons[findButtonPosition('nineButton')].pressed"
                         (click)="buttonEvent('click', 'nineButton', '')" (mousedown)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')">9</p>
+                        (mouseup)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')" (mouseleave)="buttonEvent('mouseleave', 'nineButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'nineButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'nineButton', 'assets/img/Button-60.png')">9</p>
                     <img class="a-button" [src]="buttons[findButtonPosition('aButton')].source" (click)="buttonEvent('click', 'aButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')">
                     <p class="a-text" [class.a-button-pressed]="buttons[findButtonPosition('aButton')].pressed" (click)="buttonEvent('click', 'aButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')">A</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'aButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'aButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'aButton', 'assets/img/Button-60.png')">A</p>
                     <img class="b-button" [src]="buttons[findButtonPosition('bButton')].source" (click)="buttonEvent('click', 'bButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')">
                     <p class="b-text" [class.b-button-pressed]="buttons[findButtonPosition('bButton')].pressed" (click)="buttonEvent('click', 'bButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')">B</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'bButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'bButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'bButton', 'assets/img/Button-60.png')">B</p>
                     <img class="c-button" [src]="buttons[findButtonPosition('cButton')].source" (click)="buttonEvent('click', 'cButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')">
                     <p class="c-text" [class.c-button-pressed]="buttons[findButtonPosition('cButton')].pressed" (click)="buttonEvent('click', 'cButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')">C</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'cButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'cButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'cButton', 'assets/img/Button-60.png')">C</p>
                     <img class="d-button" [src]="buttons[findButtonPosition('dButton')].source" (click)="buttonEvent('click', 'dButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')">
                     <p class="d-text" [class.d-button-pressed]="buttons[findButtonPosition('dButton')].pressed" (click)="buttonEvent('click', 'dButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')">D</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'dButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'dButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'dButton', 'assets/img/Button-60.png')">D</p>
                     <img class="e-button" [src]="buttons[findButtonPosition('eButton')].source" (click)="buttonEvent('click', 'eButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')">
                     <p class="e-text" [class.e-button-pressed]="buttons[findButtonPosition('eButton')].pressed" (click)="buttonEvent('click', 'eButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')">E</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'eButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'eButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'eButton', 'assets/img/Button-60.png')">E</p>
                     <img class="f-button" [src]="buttons[findButtonPosition('fButton')].source" (click)="buttonEvent('click', 'fButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')">
+                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')">
                     <p class="f-text" [class.f-button-pressed]="buttons[findButtonPosition('fButton')].pressed" (click)="buttonEvent('click', 'fButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (mouseup)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')"
-                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')">F</p>
+                        (mouseleave)="buttonEvent('mouseleave', 'fButton', 'assets/img/Button-60.png')"
+                        (touchstart)="buttonEvent('mousedown', 'fButton', 'assets/img/Button-60-Pressed.png')" (touchend)="buttonEvent('mouseup', 'fButton', 'assets/img/Button-60.png')">F</p>
 
                     <img class="delete-button" [src]="buttons[findButtonPosition('deleteButton')].source" (click)="buttonEvent('click', 'deleteButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">
+                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')"
+                        (touchstart)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')" (touchend)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">
                     <p class="delete-text" [class.delete-button-pressed]="buttons[findButtonPosition('deleteButton')].pressed"
                         (click)="buttonEvent('click', 'deleteButton', '')" (mousedown)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">Delete</p>
+                        (mouseup)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')"
+                        (touchstart)="buttonEvent('mousedown', 'deleteButton', 'assets/img/Button-312-Pressed.png')" (touchend)="buttonEvent('mouseup', 'deleteButton', 'assets/img/Button-312.png')">Delete</p>
                     <img class="enter-button" [src]="buttons[findButtonPosition('enterButton')].source" (click)="buttonEvent('click', 'enterButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">
+                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')"
+                        (touchstart)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')" (touchend)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">
                     <p class="enter-text" [class.enter-button-pressed]="buttons[findButtonPosition('enterButton')].pressed"
                         (click)="buttonEvent('click', 'enterButton', '')" (mousedown)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">Enter</p>
+                        (mouseup)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')" (mouseleave)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')"
+                        (touchstart)="buttonEvent('mousedown', 'enterButton', 'assets/img/Button-312-Pressed.png')" (touchend)="buttonEvent('mouseup', 'enterButton', 'assets/img/Button-312.png')">Enter</p>
                     <img class="login-back-button" [src]="buttons[findButtonPosition('loginBackButton')].source"
                         (click)="buttonEvent('click', 'loginBackButton', '')" (mousedown)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">
+                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')"
+                        (touchstart)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">
                     <p class="login-back-text" [class.login-back-button-pressed]="buttons[findButtonPosition('loginBackButton')].pressed"
                         (click)="buttonEvent('click', 'loginBackButton', '')" (mousedown)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">Back</p>
+                        (mouseup)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')"
+                        (touchstart)="buttonEvent('mousedown', 'loginBackButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'loginBackButton', 'assets/img/Button-175.png')">Back</p>
                     <img class="past-info-button" [src]="buttons[findButtonPosition('pastInfoButton')].source"
                         [class.entering-password]="enteringPassword" (click)="buttonEvent('click', 'pastInfoButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">
                     <p class="past-info-text" [class.past-info-button-pressed]="buttons[findButtonPosition('pastInfoButton')].pressed"
                         [class.entering-password]="enteringPassword" (click)="buttonEvent('click', 'pastInfoButton', '')"
                         (mousedown)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">Past
-                        Info</p>
+                        (mouseup)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pastInfoButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pastInfoButton', 'assets/img/Button-225.png')">Past Info</p>
                 </div>
             </div>
 
@@ -325,11 +398,13 @@
                     <img class="past-info-back-button" [src]="buttons[findButtonPosition('pastInfoBackButton')].source"
                         (click)="buttonEvent('click', 'pastInfoBackButton', '')" (mousedown)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')"
                         (mouseup)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
-                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">
+                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">
                     <p class="past-info-back-text" [class.past-info-back-button-pressed]="buttons[findButtonPosition('pastInfoBackButton')].pressed"
                         (click)="buttonEvent('click', 'pastInfoBackButton', '')" (mousedown)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')"
                         (mouseup)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
-                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">Back</p>
+                        (mouseleave)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pastInfoBackButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pastInfoBackButton', 'assets/img/Button-175.png')">Back</p>
                 </div>
             </div>
 
@@ -344,12 +419,14 @@
                     [class.out]="systemConfigPasswordCheckContentAnimation.out" [class.transitionIn]="systemConfigPasswordCheckContentAnimation.transitionIn"
                     [class.in]="systemConfigPasswordCheckContentAnimation.in" [class.transitionOut]="systemConfigPasswordCheckContentAnimation.transitionOut">
                     <p class="system-config-password-check-code">{{ passwordCheck }}</p>
-                    <img class="continue-button" [src]="buttons[findButtonPosition('continueButton')].source" (click)="buttonEvent('click', 'continueButton', '')"
-                        (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">
-                    <p class="continue-text" [class.continue-button-pressed]="buttons[findButtonPosition('continueButton')].pressed"
-                        (click)="buttonEvent('click', 'continueButton', '')" (mousedown)="buttonEvent('mousedown', 'continueButton', 'assets/img/Button-225-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'continueButton', 'assets/img/Button-225.png')">Continue</p>
+                    <img class="system-config-password-check-continue-button" [src]="buttons[findButtonPosition('systemConfigPasswordCheckContinueButton')].source" (click)="buttonEvent('click', 'systemConfigPasswordCheckContinueButton', '')"
+                        (mousedown)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')">
+                    <p class="system-config-password-check-continue-text" [class.system-config-password-check-continue-button-pressed]="buttons[findButtonPosition('systemConfigPasswordCheckContinueButton')].pressed"
+                        (click)="buttonEvent('click', 'systemConfigPasswordCheckContinueButton', '')" (mousedown)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')"
+                        (mouseup)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')" (mouseleave)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')"
+                        (touchstart)="buttonEvent('mousedown', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225-Pressed.png')" (touchend)="buttonEvent('mouseup', 'systemConfigPasswordCheckContinueButton', 'assets/img/Button-225.png')">Continue</p>
                 </div>
             </div>
 
@@ -364,70 +441,94 @@
                   <p class="product-editing-product-name-1" [style.display]="productEditingProductDisplay[0]">{{ productEditingCurrentPageProductNames[0] }}</p>
                   <img class="product-editing-minus-button-1" [style.display]="productEditingProductDisplay[0]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[0]" [src]="buttons[findButtonPosition('productEditingMinusButton1')].source"
                       (click)="buttonEvent('click', 'productEditingMinusButton1', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton1', 'assets/img/Minus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingMinusButton1', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingMinusButton1', 'assets/img/Minus-Button.png')">
                   <p class="product-editing-product-quantity-available-1" [style.display]="productEditingProductDisplay[0]">{{ productEditingCurrentPageProductQuantitiesAvailable[0] }}</p>
                   <img class="product-editing-plus-button-1" [style.display]="productEditingProductDisplay[0]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[0]" [src]="buttons[findButtonPosition('productEditingPlusButton1')].source"
                       (click)="buttonEvent('click', 'productEditingPlusButton1', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton1', 'assets/img/Plus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingPlusButton1', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingPlusButton1', 'assets/img/Plus-Button.png')">
                   <p class="product-editing-product-name-2" [style.display]="productEditingProductDisplay[1]">{{ productEditingCurrentPageProductNames[1] }}</p>
                   <img class="product-editing-minus-button-2" [style.display]="productEditingProductDisplay[1]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[1]" [src]="buttons[findButtonPosition('productEditingMinusButton2')].source"
                       (click)="buttonEvent('click', 'productEditingMinusButton2', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton2', 'assets/img/Minus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingMinusButton2', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingMinusButton2', 'assets/img/Minus-Button.png')">
                   <p class="product-editing-product-quantity-available-2" [style.display]="productEditingProductDisplay[1]">{{ productEditingCurrentPageProductQuantitiesAvailable[1] }}</p>
                   <img class="product-editing-plus-button-2" [style.display]="productEditingProductDisplay[1]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[1]" [src]="buttons[findButtonPosition('productEditingPlusButton2')].source"
                       (click)="buttonEvent('click', 'productEditingPlusButton2', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton2', 'assets/img/Plus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingPlusButton2', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingPlusButton2', 'assets/img/Plus-Button.png')">
                   <p class="product-editing-product-name-3" [style.display]="productEditingProductDisplay[2]">{{ productEditingCurrentPageProductNames[2] }}</p>
                   <img class="product-editing-minus-button-3" [style.display]="productEditingProductDisplay[2]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[2]" [src]="buttons[findButtonPosition('productEditingMinusButton3')].source"
                       (click)="buttonEvent('click', 'productEditingMinusButton3', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton3', 'assets/img/Minus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingMinusButton3', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingMinusButton3', 'assets/img/Minus-Button.png')">
                   <p class="product-editing-product-quantity-available-3" [style.display]="productEditingProductDisplay[2]">{{ productEditingCurrentPageProductQuantitiesAvailable[2] }}</p>
                   <img class="product-editing-plus-button-3" [style.display]="productEditingProductDisplay[2]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[2]" [src]="buttons[findButtonPosition('productEditingPlusButton3')].source"
                       (click)="buttonEvent('click', 'productEditingPlusButton3', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton3', 'assets/img/Plus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingPlusButton3', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingPlusButton3', 'assets/img/Plus-Button.png')">
                   <p class="product-editing-product-name-4" [style.display]="productEditingProductDisplay[3]">{{ productEditingCurrentPageProductNames[3] }}</p>
                   <img class="product-editing-minus-button-4" [style.display]="productEditingProductDisplay[3]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[3]" [src]="buttons[findButtonPosition('productEditingMinusButton4')].source"
                       (click)="buttonEvent('click', 'productEditingMinusButton4', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton4', 'assets/img/Minus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingMinusButton4', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingMinusButton4', 'assets/img/Minus-Button.png')">
                   <p class="product-editing-product-quantity-available-4" [style.display]="productEditingProductDisplay[3]">{{ productEditingCurrentPageProductQuantitiesAvailable[3] }}</p>
                   <img class="product-editing-plus-button-4" [style.display]="productEditingProductDisplay[3]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[3]" [src]="buttons[findButtonPosition('productEditingPlusButton4')].source"
                       (click)="buttonEvent('click', 'productEditingPlusButton4', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton4', 'assets/img/Plus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingPlusButton4', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingPlusButton4', 'assets/img/Plus-Button.png')">
                   <p class="product-editing-product-name-5" [style.display]="productEditingProductDisplay[4]">{{ productEditingCurrentPageProductNames[4] }}</p>
                   <img class="product-editing-minus-button-5" [style.display]="productEditingProductDisplay[4]" [class.atMin]="productEditingCurrentPageProductQuantitiesAvailableAtMin[4]" [src]="buttons[findButtonPosition('productEditingMinusButton5')].source"
                       (click)="buttonEvent('click', 'productEditingMinusButton5', '')" (mousedown)="buttonEvent('mousedown', 'productEditingMinusButton5', 'assets/img/Minus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingMinusButton5', 'assets/img/Minus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingMinusButton5', 'assets/img/Minus-Button.png')">
                   <p class="product-editing-product-quantity-available-5" [style.display]="productEditingProductDisplay[4]">{{ productEditingCurrentPageProductQuantitiesAvailable[4] }}</p>
                   <img class="product-editing-plus-button-5" [style.display]="productEditingProductDisplay[4]" [class.atMax]="productEditingCurrentPageProductQuantitiesAvailableAtMax[4]" [src]="buttons[findButtonPosition('productEditingPlusButton5')].source"
                       (click)="buttonEvent('click', 'productEditingPlusButton5', '')" (mousedown)="buttonEvent('mousedown', 'productEditingPlusButton5', 'assets/img/Plus-Button-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingPlusButton5', 'assets/img/Plus-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingPlusButton5', 'assets/img/Plus-Button.png')">
                 </div>
 
                 <div class="product-editing-navigation">
+                  <img class="exit-button" [src]="buttons[findButtonPosition('exitButton')].source" [style.display]="admin" (click)="buttonEvent('click', 'exitButton', '')"
+                      (mousedown)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'exitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')">
+                  <p class="exit-text" [style.display]="admin" [class.exit-button-pressed]="buttons[findButtonPosition('exitButton')].pressed"
+                      (click)="buttonEvent('click', 'exitButton', '')" (mousedown)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')"
+                      (mouseup)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'exitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'exitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'exitButton', 'assets/img/Button-175.png')">Exit</p>
 
                   <img class="product-editing-cancel-button" [src]="buttons[findButtonPosition('productEditingCancelButton')].source" (click)="buttonEvent('click', 'productEditingCancelButton', '')"
                       (mousedown)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')">
+                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')">
                   <p class="product-editing-cancel-text" [class.product-editing-cancel-button-pressed]="buttons[findButtonPosition('productEditingCancelButton')].pressed"
                       (click)="buttonEvent('click', 'productEditingCancelButton', '')" (mousedown)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')">Cancel</p>
+                      (mouseup)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'productEditingCancelButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'productEditingCancelButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'productEditingCancelButton', 'assets/img/Button-175.png')">Cancel</p>
 
                   <div class="page-changer">
                     <img class="page-left-button" [class.atMin]="pageChangerAtMin" [src]="buttons[findButtonPosition('pageLeftButton')].source"
                         (click)="buttonEvent('click', 'pageLeftButton', '')" (mousedown)="buttonEvent('mousedown', 'pageLeftButton', 'assets/img/Page-Left-Button-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'pageLeftButton', 'assets/img/Page-Left-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageLeftButton', 'assets/img/Page-Left-Button.png')">
+                        (mouseup)="buttonEvent('mouseup', 'pageLeftButton', 'assets/img/Page-Left-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageLeftButton', 'assets/img/Page-Left-Button.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pageLeftButton', 'assets/img/Page-Left-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pageLeftButton', 'assets/img/Page-Left-Button.png')">
                     <p class="page-number">{{ productEditingNavCurrentPageNumber }} of {{ productEditingNavTotalPageNumbers }}</p>
                     <img class="page-right-button" [class.atMax]="pageChangerAtMax" [src]="buttons[findButtonPosition('pageRightButton')].source"
                         (click)="buttonEvent('click', 'pageRightButton', '')" (mousedown)="buttonEvent('mousedown', 'pageRightButton', 'assets/img/Page-Right-Button-Pressed.png')"
-                        (mouseup)="buttonEvent('mouseup', 'pageRightButton', 'assets/img/Page-Right-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageRightButton', 'assets/img/Page-Right-Button.png')">
+                        (mouseup)="buttonEvent('mouseup', 'pageRightButton', 'assets/img/Page-Right-Button.png')" (mouseleave)="buttonEvent('mouseleave', 'pageRightButton', 'assets/img/Page-Right-Button.png')"
+                        (touchstart)="buttonEvent('mousedown', 'pageRightButton', 'assets/img/Page-Right-Button-Pressed.png')" (touchend)="buttonEvent('mouseup', 'pageRightButton', 'assets/img/Page-Right-Button.png')">
                   </div>
 
                   <img class="submit-button" [src]="buttons[findButtonPosition('submitButton')].source" (click)="buttonEvent('click', 'submitButton', '')"
                       (mousedown)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')">
+                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')">
                   <p class="submit-text" [class.submit-button-pressed]="buttons[findButtonPosition('submitButton')].pressed"
                       (click)="buttonEvent('click', 'submitButton', '')" (mousedown)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')"
-                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')">Submit</p>
+                      (mouseup)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')" (mouseleave)="buttonEvent('mouseleave', 'submitButton', 'assets/img/Button-175.png')"
+                      (touchstart)="buttonEvent('mousedown', 'submitButton', 'assets/img/Button-175-Pressed.png')" (touchend)="buttonEvent('mouseup', 'submitButton', 'assets/img/Button-175.png')">Submit</p>
                 </div>
             </div>
         </div>

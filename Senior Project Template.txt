@@ -1,0 +1,101 @@
+23. Senior Project Reports
+
+Attend 2 talks and write a report on the one
+	One talk must be Computer Science
+
+Introduction - Professional evaluation of the presentation
+	******Audience - Kapenga
+	******What this is about
+		This is a technical evaluation of the presentation given
+	What the pieces are
+	Explain unknown terms
+	Date, place, title of the talk
+	Sections
+		Content
+			Background - history of company, size of IT, current software / hardware
+			Problem - define it
+				Define the actors
+				rough use cases
+			Design decisions
+				Framework - OS, hardware, language
+				Decisions - options - reasons (maintainable, secure, testable)
+			Design - how things fit together
+			Implementation - convince the actors have a useable interface for the problem
+			Maintenance
+			Security
+			Testing
+		Style
+			Confident
+			Posture
+
+			Powerpoint
+				Color
+				Text Size
+				Bullet points
+				Amount of text
+				Graphs
+
+			Demo
+				record it ahead of time
+
+			Look around
+			Volume
+			Dynamics
+				Use some hand gestures
+				Enthusiasm
+			Ahs + Errs
+			Presented as third person - the project
+			Speed of talking
+			Time
+
+		Summary
+
+
+What does it need to accomplish? (Accomplish)
+	They understood the problem
+	solution met the clients needs
+	is maintainable
+	is secure
+	has been tested
+	Evaluation on design
+
+
+Who is it written to? (Audience)
+
+
+My Paper
+	Beginning
+		time, place, summary
+	Introduction
+		content, style
+	Content
+		Did they present enough information to convince me of the problem
+		was it appropriate for the audience
+		what were they trying to accomplish
+		testing, maintainable, security
+	Style
+		A few strong points and a few weak points
+		appropriate slides, good graphics, font, colors
+		speak clearly, pace, sound, posture
+	Three recommendations - constructive criticism
+		major or minor problem?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

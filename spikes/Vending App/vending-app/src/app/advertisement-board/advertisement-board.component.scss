@@ -3,6 +3,8 @@
     width: 100%;
     .advert-frame {
         .advert {
+          max-height: 640px;
+          max-width: 1080px;
         }
     }
 }

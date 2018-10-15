@@ -59,6 +59,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productSelectingScreenLightingAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public selectedProductImageAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public selectedProductInformationAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public selectedProductPurchasePaymentScreenShadingAnimation = { out: true, transitionIn: false, in: false, transitionOut: false };
+    public selectedProductPurchasePaymentContentAnimation = { out: true, transitionIn: false, in: false, transitionOut: false };
     // System Configuration
     public systemConfigScreenShadingAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
     public systemConfigLoginAnimation: Animation = { out: true, transitionIn: false, in: false, transitionOut: false };
@@ -91,11 +93,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public userIDAndPasswordChars = [...Array(23).fill('')];      // Current characters in the User ID/Password entry area
     public enteringUserID = false;
     public enteringPassword = false;
+    public enteringPayment = false;
     public viewingPastInfo = false;
     public checkingPassword = false;
     public editingProduct = false;
 
     // Hexadecimal Calculations
+    public admin = "none";
     public passwordA = "";
     public passwordB = "";
     public passwordC = "";
@@ -713,7 +717,28 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     this.selectedProductQuantityWantedAtMax = false;
                 }
             }
+
+            // Bring up payment entry
+            this.enteringPayment = true;
+
+            // Play animations for screen shading and content
+            this.playInAnimation(this.selectedProductPurchasePaymentScreenShadingAnimation, 0, 1000);
+            this.playInAnimation(this.selectedProductPurchasePaymentContentAnimation, 500, 1500);
         }
+    }
+
+    // Runs when you click the "continue" button after purchasing a product
+    selectedProductPurchasePaymentContinueButtonClick(): void {
+      // Play animations for canceling a product, screen shading, and content
+      this.cancelProduct();
+      this.playOutAnimation(this.selectedProductPurchasePaymentContentAnimation, 0, 1500);
+      this.playOutAnimation(this.selectedProductPurchasePaymentScreenShadingAnimation, 0, 2000);
+
+      // After the animation has finished...
+      setTimeout(() => {
+          // Mark that the user is no longer entering a payment
+          this.enteringPayment = false;
+      }, 2000);
     }
 
     // Adds the passed character to the current entry
@@ -824,10 +849,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                 // If the user id is valid...
                 if (this.userID.valid === true) {
-                    // Open the user's user-data file and copy over the values of passwordB,
+                    // Open the user's user-data file and copy over the values of admin, passwordB,
                     //   passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
                     let fileContent = this.electron.fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
+                    if (jsonContent.admin === "true") {
+                      this.admin = "block";
+                    } else {
+                      this.admin = "none";
+                    }
                     this.passwordB = jsonContent.passwordB;
                     this.passwordC = jsonContent.passwordC;
                     this.pastInfoPasswordSum = jsonContent.pastInfoPasswordSum;
@@ -1020,7 +1050,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.password.valid = true;
                 this.userID.valid = false;
 
-                // Clear passwordA, passwordB, passwordC, and userID.string
+                // Clear admin, passwordA, passwordB, passwordC, and userID.string
+                this.admin = "none";
                 this.passwordA = "";
                 this.passwordB = "";
                 this.passwordC = "";
@@ -1085,10 +1116,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
             // Play animations for screen shading and past info
             this.playInAnimation(this.systemConfigPastInfoScreenShadingAnimation, 0, 1000);
             this.playInAnimation(this.systemConfigPastInfoContentAnimation, 750, 750);
-
-            // Execute the script that "ends" the program (disables all restrictions)
-            // cd('~/ScreenManager/src/setup/end');
-            // exec('make run', {async:true});
         }
     }
 
@@ -1110,7 +1137,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     // Continues from password check info
-    continueButtonClick(): void {
+    systemConfigPasswordCheckContinueButtonClick(): void {
         // If the systemConfigPasswordCheckContentAnimation is finished...
         if (this.systemConfigPasswordCheckContentAnimation.in === true) {
             // Change to editing products
@@ -1131,6 +1158,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 this.checkingPassword = false;
             }, 2000);
         }
+    }
+
+    // Regain access to Ubuntu
+    exitButtonClick(): void {
+      // Execute the script that "ends" the program (disables all restrictions)
+      cd('~/ScreenManager/src/setup/end');
+      exec('make run', {async: true});
     }
 
     // Runs when the decrement button for one of the products being edited is pressed
@@ -1195,22 +1229,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Runs when the "cancel" button in product editing is pressed
     cancelChanges(): void {
-        // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
-        //   and systemConfigProductEditingPageChnageRightAnimation are finished...
-        if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
-            this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-            // Change to no longer editing products
-            this.editingProduct = false;
+      // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
+      //   and systemConfigProductEditingPageChnageRightAnimation are finished...
+      if (this.systemConfigProductEditingContentAnimation.in === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
 
-            // Play animation for product editing content and screen shading
-            this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
-            this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+        // Play animation for product editing content and screen shading
+        this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
+        this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-            // Decrement the product rotation counters and reset the product rotation counters
-            this.productRotationCounterTopRow--;
-            this.productRotationCounterBottomRow--;
-            this.resetProductRotationCounters();
-        }
+        // After the animation has finished...
+        setTimeout(() => {
+          // Change to no longer editing products and clear admin status
+          this.editingProduct = false;
+          this.admin = "none";
+
+          // Decrement the product rotation counters and reset the product rotation counters
+          this.productRotationCounterTopRow--;
+          this.productRotationCounterBottomRow--;
+          this.resetProductRotationCounters();
+        }, 2000);
+      }
     }
 
     // Runs when the page number is decreased in product editing
@@ -1359,25 +1398,29 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Runs when the "submit" button in product editing is pressed
     submitChanges(): void {
-        // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
-        //   and systemConfigProductEditingPageChnageRightAnimation are finished...
-        if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
-            this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
-            // Change to no longer editing products
-            this.editingProduct = false;
+      // If the systemConfigProductEditingContentAnimation, systemConfigProductEditingPageChangeLeftAnimation,
+      //   and systemConfigProductEditingPageChnageRightAnimation are finished...
+      if (this.systemConfigPasswordCheckScreenShadingAnimation.out === true && this.systemConfigProductEditingPageChangeLeftAnimation.out === true &&
+          this.systemConfigProductEditingPageChangeRightAnimation.out === true) {
+        // Update all the current product quantities
+        this.updateProductEditingProductQuantitiesAvailable();
 
-            // Update all the current product quantities
-            this.updateProductEditingProductQuantitiesAvailable();
+        // Play animation for product editing content and screen shading
+        this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
+        this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
 
-            // Play animation for product editing content and screen shading
-            this.playOutAnimation(this.systemConfigProductEditingContentAnimation, 0, 1000);
-            this.playOutAnimation(this.systemConfigScreenShadingAnimation, 0, 2000);
+        // After the animation has finished...
+        setTimeout(() => {
+          // Change to no longer editing products and clear admin status
+          this.editingProduct = false;
+          this.admin = "none";
 
-            // Decrement the product rotation counters and reset the product rotation counters
-            this.productRotationCounterTopRow--;
-            this.productRotationCounterBottomRow--;
-            this.resetProductRotationCounters();
-        }
+          // Decrement the product rotation counters and reset the product rotation counters
+          this.productRotationCounterTopRow--;
+          this.productRotationCounterBottomRow--;
+          this.resetProductRotationCounters();
+        }, 2000);
+      }
     }
 
     // Handles button events
@@ -1397,6 +1440,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     break;
                 case "purchaseButton":
                     this.purchaseProduct();
+                    break;
+                case "selectedProductPurchasePaymentContinueButton":
+                    this.selectedProductPurchasePaymentContinueButtonClick();
                     break;
                 case "zeroButton":
                     this.hexButtonClick("0");
@@ -1461,8 +1507,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 case "pastInfoBackButton":
                     this.pastInfoBackButtonClick();
                     break;
-                case "continueButton":
-                    this.continueButtonClick();
+                case "systemConfigPasswordCheckContinueButton":
+                    this.systemConfigPasswordCheckContinueButtonClick();
+                    break;
+                case "exitButton":
+                    this.exitButtonClick();
                     break;
                 case "productEditingMinusButton1":
                     this.decreaseQuantityAvailable(0);

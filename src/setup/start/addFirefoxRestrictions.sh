@@ -91,12 +91,14 @@ echo "@namespace xul url(http://www.mozilla.org/keymaster/gatekeeper/there.is.on
 echo "#PanelUI-menu-button { display: none !important; }" >> userChrome.css
 echo "#star-button {display: none !important; }" >> userChrome.css
 echo "#pageActionButton {display: none !important; }" >> userChrome.css
+echo "#PersonalToolbar { display: block !important; }" >> userChrome.css
 # Hide the context menu on toolbar, tabs, content area, and url bar
 echo "#toolbar-context-menu { display: none !important; }" >> userChrome.css
 echo "#tabContextMenu { display: none !important; }" >> userChrome.css
 echo "#contentAreaContextMenu { display: none !important; }" >> userChrome.css
 echo "#urlbar .textbox-contextmenu { display: none !important; }" >> userChrome.css
 
-
+#Restart firefox to apply changes
+firefox &
 
 echo "Mozilla Firefox browser set up"

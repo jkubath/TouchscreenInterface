@@ -632,6 +632,199 @@
           top: 10%;
         }
       }
+
+      .selected-product-purchase-payment {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        display: none;
+        z-index: 5;
+
+        &.entering-payment {
+          display: block;
+        }
+
+        .selected-product-purchase-payment-screen-shading {
+          position: fixed;
+          left: 0px;
+          top: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 1;
+
+          /* Positioning for the screen shading */
+          .screen-shading {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+          }
+        }
+
+        /* Screen Shading Animations */
+        .selected-product-purchase-payment-screen-shading-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: selected-product-purchase-payment-screen-shading-animations-transitionIn 1s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: selected-product-purchase-payment-screen-shading-animations-transitionOut 2s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes selected-product-purchase-payment-screen-shading-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes selected-product-purchase-payment-screen-shading-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+
+        .selected-product-purchase-payment-content {
+          position: fixed;
+          top: 0px;
+          left: 0px;
+          height: 640px;
+          width: 1080px;
+          z-index: 2;
+
+          .selected-product-purchase-payment-message {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 0px;
+            top: 250px;
+            width: 1080px;
+            text-align: center;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 1;
+          }
+
+          .selected-product-purchase-payment-continue-button {
+            position: absolute;
+            margin: auto;
+            top: 445px;
+            left: 0px;
+            right: 0px;
+            z-index: 1;
+          }
+
+          .selected-product-purchase-payment-continue-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            top: 450px;
+            left: 0px;
+            width: 1080px;
+            font-size: 3em;
+            text-align: center;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.selected-product-purchase-payment-continue-button-pressed {
+              color: #DDDDDD;
+            }
+          }
+        }
+
+        .selected-product-purchase-payment-content-animations {
+          &.out {
+            display: none;
+            opacity: 0;
+          }
+
+          &.transitionIn {
+            display: block;
+            transform: scale(1);
+            opacity: 1;
+            animation: selected-product-purchase-payment-content-animations-transitionIn 1.5s ease-in-out;
+          }
+
+          &.in {
+            display: block;
+            opacity: 1;
+          }
+
+          &.transitionOut {
+            display: block;
+            transform: scale(1);
+            opacity: 0;
+            animation: selected-product-purchase-payment-content-animations-transitionOut 1.5s ease-in-out;
+          }
+        }
+
+        /* Screen Shading transitionIn Animation */
+        @keyframes selected-product-purchase-payment-content-animations-transitionIn {
+          0% {
+            display: none;
+            opacity: 0;
+          }
+          1% {
+            display: block;
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        /* Screen Shading transitionOut Animation */
+        @keyframes selected-product-purchase-payment-content-animations-transitionOut {
+          0% {
+            opacity: 1;
+            display: block;
+          }
+
+          99% {
+            opacity: 0;
+            display: block;
+          }
+
+          100% {
+            display: none;
+          }
+        }
+      }
     }
 
 
@@ -1573,7 +1766,7 @@
             z-index: 1;
           }
 
-          .continue-button {
+          .system-config-password-check-continue-button {
             position: absolute;
             margin: auto;
             top: 445px;
@@ -1582,7 +1775,7 @@
             z-index: 1;
           }
 
-          .continue-text {
+          .system-config-password-check-continue-text {
             position: absolute;
             margin: auto;
             color: white;
@@ -1594,7 +1787,7 @@
             font-family: Lalezar;
             z-index: 2;
 
-            &.continue-button-pressed {
+            &.system-config-password-check-continue-button-pressed {
               color: #DDDDDD;
             }
           }
@@ -1736,27 +1929,27 @@
 
           .product-editing-product-name-1, .product-editing-minus-button-1,
           .product-editing-product-quantity-available-1, .product-editing-plus-button-1 {
-            top: 100px;
+            top: 125px;
           }
 
           .product-editing-product-name-2, .product-editing-minus-button-2,
           .product-editing-product-quantity-available-2, .product-editing-plus-button-2 {
-            top: 175px;
+            top: 200px;
           }
 
           .product-editing-product-name-3, .product-editing-minus-button-3,
           .product-editing-product-quantity-available-3, .product-editing-plus-button-3 {
-            top: 250px;
+            top: 275px;
           }
 
           .product-editing-product-name-4, .product-editing-minus-button-4,
           .product-editing-product-quantity-available-4, .product-editing-plus-button-4 {
-            top: 325px;
+            top: 350px;
           }
 
           .product-editing-product-name-5, .product-editing-minus-button-5,
           .product-editing-product-quantity-available-5, .product-editing-plus-button-5 {
-            top: 400px;
+            top: 425px;
           }
         }
 
@@ -1928,14 +2121,38 @@
           position: fixed;
           height: 120px;
           width: 1080px;
-          top: 520px;
+          top: 20px;
           left: 0px;
           z-index: 1;
+
+          .exit-button {
+            position: absolute;
+            margin: auto;
+            top: 0px;
+            left: 20px;
+            z-index: 1;
+          }
+
+          .exit-text {
+            position: absolute;
+            margin: auto;
+            color: white;
+            left: 75px;
+            top: 5px;
+            width: 175px;
+            font-size: 3em;
+            font-family: Lalezar;
+            z-index: 2;
+
+            &.exit-button-pressed {
+              color: #DDDDDD;
+            }
+          }
 
           .product-editing-cancel-button {
             position: absolute;
             margin: auto;
-            top: 20px;
+            top: 520px;
             left: 20px;
             z-index: 1;
           }
@@ -1945,7 +2162,7 @@
             margin: auto;
             color: white;
             left: 47px;
-            top: 25px;
+            top: 525px;
             width: 175px;
             font-size: 3em;
             font-family: Lalezar;
@@ -1959,7 +2176,7 @@
           .page-changer {
             position: absolute;
             margin: auto;
-            top: 30px;
+            top: 530px;
             left: 0px;
             z-index: 1;
 
@@ -2006,7 +2223,7 @@
           .submit-button {
             position: absolute;
             margin: auto;
-            top: 20px;
+            top: 520px;
             right: 20px;
             z-index: 1;
           }
@@ -2016,7 +2233,7 @@
             margin: auto;
             color: white;
             right: 12px;
-            top: 25px;
+            top: 525px;
             width: 175px;
             font-size: 3em;
             font-family: Lalezar;
@@ -2102,8 +2319,6 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      max-height: 100%;
-      width: 100%;
       text-align: center;
       left: 0px;
       right: 0px;

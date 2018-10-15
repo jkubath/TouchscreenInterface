@@ -1,3 +1,3 @@
-# Documents directory
-The documents directory holds any relevant documents for the Screen Manager application.  This includes: legal, programming
-standards, and version control.
+# docs
+This directory holds any relevant documents for the Touchscreen Interface Project,
+including things like legal documents, NDAs, programming standards, and version control.

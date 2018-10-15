@@ -37,6 +37,7 @@ cd chrome
 touch userContent.css
 touch userChrome.css
 
-
+#End the firefox process
+killall firefox
 
 echo "Mozilla Firefox browser reverted to previous settings"
