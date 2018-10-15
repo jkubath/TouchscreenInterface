@@ -3,3 +3,6 @@ run:
 	## then run start shell scripts and restart firefox
 	(cd "setup"; make run;)
 	(cd "vending-app"; npm start;)
+
+stop:
+	(cd "setup"; make stop;)

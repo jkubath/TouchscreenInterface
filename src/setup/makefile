@@ -19,5 +19,5 @@ clean:
 run:
 	(cd "start"; make run;)
 
-end:
+stop:
 	(cd "end"; make run;)
