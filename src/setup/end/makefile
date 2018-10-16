@@ -12,5 +12,11 @@ run:
 	./removeFirefoxRestrictions.sh
 	./endEmptyTrash.sh
 	
+run2:
+	./removeCompizRestrictions.sh
+	./disableFirefoxAddons.sh
+	./removeFirefoxRestrictions.sh
+	./endEmptyTrash.sh
+
 	
 	

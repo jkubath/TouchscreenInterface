@@ -7,3 +7,6 @@ run:
 
 stop:
 	(cd "setup"; make stop;)
+
+stop1:
+	(cd "setup/end"; make run2;)
