@@ -7,21 +7,21 @@
 # grep dimensions - returns the dimensions attribute
 # sed -r - uses regular expressions to get the value from the dimensions attribute
 # return example: 1920x1080
-dims=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
+#dims=$(xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\1/')
 
 # Split the returned value into x and y values
 # return the number on the left side of the 'x' (1920)
-x=$(cut -d 'x' -f1 <<<$dims)
+#x=$(cut -d 'x' -f1 <<<$dims)
 # return the number on the right side of the 'x' (1080)
-y=$(cut -d 'x' -f2 <<<$dims)
+#y=$(cut -d 'x' -f2 <<<$dims)
 
 # Make the y value take 1/3 of the screen
-let y=y/3
-let yTimes2=y*2
+#let y=y/3
+#let yTimes2=y*2
 
 # Set the size and location of FireFox
-wmctrl -r "Mozilla Firefox" -e 0,0,0,$x,$y
-wmctrl -r "Firefox" -e 0,0,0,$x,$y
+#wmctrl -r "Mozilla Firefox" -e 0,0,0,$x,$y
+#wmctrl -r "Firefox" -e 0,0,0,$x,$y
 
 # Set the size and location of the Vending Machine/Advertisements
-wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
+#wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
