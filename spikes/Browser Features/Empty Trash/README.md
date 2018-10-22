@@ -1,6 +1,5 @@
 # Empty Trash
-
-The Empty Trash directory contains shell files used for starting/ending an infinite loop
+This directory contains shell files used for starting/ending an infinite loop
 that removes anything that is put in the Trash directory.
 
 ## startEmptyTrash.sh

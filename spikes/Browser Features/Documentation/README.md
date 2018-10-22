@@ -1,6 +1,5 @@
 # Documentation
-
-The Documentation directory contains descriptions of the commands that were put in the
+This directory contains descriptions of the commands that were put in the
 shell files and the sources from which those commands were found.
 
 ## Blacklisting Sites

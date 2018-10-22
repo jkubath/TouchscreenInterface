@@ -1,8 +1,10 @@
 # spikes
-This directory contains all the research and development done in the making
-of the Touchscreen Interface Project, including things like figuring out how
-to embed a browser in a program, choosing the best touchscreen keyboard to
-use, and looking into how to control the window size of a running application. 
+This directory contains all of the research and testing that went into
+creating the Touchscreen Interface Project.  It includes everything
+that went into the final product as well as other ideas that came up
+during the development process.  A few of them are getting the touchscreen
+to work properly, choosing an operating system, and example code for
+embedding a browser inside an application.
 
 ## App Controller
 Allows you to specify where windows are located on the screen, how big they are,
