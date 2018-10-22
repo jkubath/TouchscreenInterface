@@ -1,12 +1,16 @@
 # Browser Features
-
-The Browser Features directory is for placing a variety of restrictions on what
+This directory looks into placing a variety of restrictions on what
 the user is able to do in the Firefox browser.  It prevents the user from closing
 all of the tabs, using features outside of the basic ones (Ex. Back, Forward, Home,
 Refresh), accessing any of the about: pages, and more.
 
 ## Documentation
-Explanations of what the shell scripts  do and their sources
+Contains descriptions of the commands that were put in the shell files and the
+sources from which those commands were found.
+
+## Empty Trash
+Pair of shells that can be run in order to start/end a check for files in the Trash
+and delete them (checks every 0.01 seconds).
 
 ## Firefox Addons
 Set of three shells that can be run in order to add and enable/disable Max Tabs.
@@ -14,10 +18,6 @@ Set of three shells that can be run in order to add and enable/disable Max Tabs.
 ## Firefox Restrictions
 Pair of shells that can be run in order to place/remove a variety of restrictions
 on Firefox.
-
-## Empty Trash
-Pair of shells that can be run in order to start/end a check for files in the Trash
-and delete them (checks every 0.01 seconds).
 
 ## Window Manager
 Pair of shells that can be run in order to start/end a check of the number of windows

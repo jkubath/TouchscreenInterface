@@ -1,0 +1,11 @@
+{
+    "id": "MccD8je4jK",
+    "name": "Coka Cola",
+    "smallImg": "Small-Green-Bar.png",
+    "largeImg": "Large-Green-Bar.png",
+    "price": {
+        "amount": 150,
+        "currency": "USD"
+    },
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

@@ -1,0 +1,17 @@
+0o89Dul55i: invalid price
+81Qw84JfCc: id / directory name mismatch
+okeDkejslk: direcotry name / product-setup.json entry mismatch
+Cvn2o3iRTd: missing large image file
+my62Fzsd8l: missing small image file
+oawR14neB: mimssing product id
+Xw8Trk7Ikj: missing product name
+tw6ffKG34a: missing product smallImg
+oc82jDo8Ok: missing product largeImg
+o20skj2aza: missing product price
+mwkLkjsWi8: missing product price.amount
+MtRjeKidjl: missing product price.currency
+mMgG8sl1wT: missing product nutrition
+MccD8je4jK: missing product description
+Jtrk2Kerrj: missing data.json
+jF4Ll82wr6: bad json file
+jco3keTwk3: perfect

@@ -1,11 +1,10 @@
-# Touch Screen Troubleshooting Directory
+# Touchscreen Calibration
 This directory holds all the spikes and testing that
 was done in order to have the touch screen work properly.
 
-## Failed - Directory
-This directory contains spikes and commands that were used
-during the troubleshooting.  In the end, these commands were
-found to not impact the touch screen functionality.
+## Failed
+Contains spikes and commands that were used during the troubleshooting.  In the
+end, these commands were found to not impact the touch screen functionality.
 
 ## Coordinate Transformation Matrix
 This file contains the information about the property that

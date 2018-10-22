@@ -11,8 +11,6 @@ import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
 import { DomSanitizer } from '@angular/platform-browser';
-import { cd } from 'shelljs';
-import { exec } from 'shelljs';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 import { ElectronService } from '../../providers/electron.service';
 
@@ -249,7 +247,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 i++;
             }
         } catch (err) {
-            console.log(err);
+           console.log(err);
         }
 
         return productsTopRow;
@@ -257,14 +255,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Get the quantity available for the selected product
     getSelectedProductMaxQuantity(): void {
-        let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fs.readFileSync(`./src/../product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         this.selectedProductMaxQuantity = jsonContent.quantity;
     }
 
     // Update the quantity available for the selected product
     updateSelectedProductMaxQuantity(): void {
-        let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fs.readFileSync(`./src/../product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         jsonContent.quantity -= this.selectedProductQuantityWanted;
         this.selectedProductMaxQuantity = jsonContent.quantity;
@@ -274,7 +272,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             this.selectedProductQuantityWanted = this.selectedProductMaxQuantity;
         }
 
-        this.electron.fs.writeFileSync(`./src/product-data/${this.selectedProduct.id}.json`, JSON.stringify(jsonContent, null, 2));
+        this.electron.fs.writeFileSync(`./src/../product-data/${this.selectedProduct.id}.json`, JSON.stringify(jsonContent, null, 2));
     }
 
     // Get the quantities available for all products
@@ -301,7 +299,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
 
             // Open the product's respective file in product-data
-            let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
+            let fileContent = this.electron.fs.readFileSync(`./src/../product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
             let jsonContent = JSON.parse(fileContent.toString());
 
             // Read the product's quantity available
@@ -371,11 +369,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     updateProductEditingProductQuantitiesAvailable(): void {
         let i = 0;
         while (i < this.productEditingProductIDs.length) {
-            let fileContent = this.electron.fs.readFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
+            let fileContent = this.electron.fs.readFileSync(`./src/../product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
             let jsonContent = JSON.parse(fileContent.toString());
 
             jsonContent.quantity = this.productEditingProductQuantitiesAvailable[i];
-            this.electron.fs.writeFileSync(`./src/product-data/${this.productEditingProductIDs[i]}.json`, JSON.stringify(jsonContent, null, 2));
+            this.electron.fs.writeFileSync(`./src/../product-data/${this.productEditingProductIDs[i]}.json`, JSON.stringify(jsonContent, null, 2));
             i++;
         }
     }
@@ -841,7 +839,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                 // Check if the user id is valid
                 try {
-                    let exists = this.electron.fs.statSync(`./src/user-data/${this.userID.string}.json`);
+                    let exists = this.electron.fs.statSync(`./src/../user-data/${this.userID.string}.json`);
                     this.userID.valid = true;
                 } catch (error) {
                     this.userID.valid = false;
@@ -851,7 +849,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 if (this.userID.valid === true) {
                     // Open the user's user-data file and copy over the values of admin, passwordB,
                     //   passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = this.electron.fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fs.readFileSync(`./src/../user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     if (jsonContent.admin === "true") {
                       this.admin = "block";
@@ -995,13 +993,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                     // Open the user's user-data file, writing to it the values of
                     //   passwordB, passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = this.electron.fs.readFileSync(`./src/user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fs.readFileSync(`./src/../user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     jsonContent.passwordB = this.passwordB;
                     jsonContent.passwordC = this.passwordC;
                     jsonContent.pastInfoPasswordSum = this.pastInfoPasswordSum;
                     jsonContent.pastInfoPasswordCheck = this.pastInfoPasswordCheck;
-                    this.electron.fs.writeFileSync(`./src/user-data/${this.userID.string}.json`, JSON.stringify(jsonContent, null, 2));
+                    this.electron.fs.writeFileSync(`./src/../user-data/${this.userID.string}.json`, JSON.stringify(jsonContent, null, 2));
 
                     // Set userID.valid to false and clear passwordA, passwordB, passwordC,
                     //   userID.string, and password.string
@@ -1163,8 +1161,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Regain access to Ubuntu
     exitButtonClick(): void {
       // Execute the script that "ends" the program (disables all restrictions)
-      cd('~/ScreenManager/src/setup/end');
-      exec('make run', {async: true});
+      this.electron.cd('~/ScreenManager/src/setup/end');
+      this.electron.exec('make run', {async: true});
     }
 
     // Runs when the decrement button for one of the products being edited is pressed

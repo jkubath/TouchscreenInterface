@@ -1,5 +1,5 @@
 run:
-	(cd "src"; make run1;)
+	(cd "src"; make run;)
 
 stop:
 	(cd "src"; make stop;)
