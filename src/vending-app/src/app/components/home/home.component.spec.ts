@@ -15,8 +15,8 @@ import { cd } from 'shelljs';
 import { exec } from 'shelljs';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 import { ElectronService } from '../../providers/electron.service';
-import * as data1 from '../../../test-docs/top-row';
-import * as data2 from '../../../test-docs/bottom-row';
+// import * as data1 from '../../../test-docs/top-row';
+// import * as data2 from '../../../test-docs/bottom-row';
 
 
 import { HomeComponent } from './home.component';
@@ -51,8 +51,8 @@ describe('HomeComponent', () => {
 
     // ensure products wont rotate for at least ten seconds after resetProductRotationCounters is called
     it('should stop product rotation', () => {
-        this.rotateProductsTopRow = data1;
-        this.rotateProductsBottomRow = data2;
+        // this.rotateProductsTopRow = data1;
+        // this.rotateProductsBottomRow = data2;
         this.resetProductRotationCounters();
         let top_start = this.topds.currIndex;
         let bottom_start = this.bottomds.currIndex;
@@ -64,8 +64,8 @@ describe('HomeComponent', () => {
 
     // ensure products rotate when functions called
     it('should rotate products', () => {
-        this.rotateProductsTopRow = data1;
-        this.rotateProductsBottomRow = data2;
+        // this.rotateProductsTopRow = data1;
+        // this.rotateProductsBottomRow = data2;
         let top_start = this.topds.currIndex;
         this.rotateProductsBottomRow();
         expect(this.topds.currIndex).not.toEqual(top_start);

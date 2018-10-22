@@ -11,8 +11,6 @@ import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent, DragScrollModule } from 'ngx-drag-scroll';
 import Money from 'dinero.js';
 import { DomSanitizer } from '@angular/platform-browser';
-import { cd } from 'shelljs';
-import { exec } from 'shelljs';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 import { ElectronService } from '../../providers/electron.service';
 import * as data1 from '../../../test-docs/top-row';
@@ -29,7 +27,13 @@ describe('HomeComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            providers: [ElectronService, DomSanitizer],
+            providers: [ElectronService, DomSanitizer, {
+                provide: DomSanitizer,
+                useValue: {
+                    sanitize: () => 'safeString',
+                    bypassSecurityTrustHtml: () => 'safeString'
+                }
+            }],
             declarations: [HomeComponent, AdvertisementBoardComponent],
             imports: [
                 TranslateModule.forRoot(),
@@ -42,6 +46,8 @@ describe('HomeComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
+        component.productsTopRow = JSON.parse(JSON.stringify(data1));
+        component.productsBottomRow = JSON.parse(JSON.stringify(data2));
         fixture.detectChanges();
     });
 
@@ -50,28 +56,31 @@ describe('HomeComponent', () => {
     });
 
     // ensure products wont rotate for at least ten seconds after resetProductRotationCounters is called
-    it('should stop product rotation', () => {
-        this.rotateProductsTopRow = data1;
-        this.rotateProductsBottomRow = data2;
-        this.resetProductRotationCounters();
-        let top_start = this.topds.currIndex;
-        let bottom_start = this.bottomds.currIndex;
-        setTimeout(() => {
-            expect(this.topds.currIndex).toEqual(top_start);
-            expect(this.bottomds.currIndex).toEqual(bottom_start);
-        }, 10000);
+    it('should stop product rotation', async () => {
+        component.productsTopRow = JSON.parse(JSON.stringify(data1));
+        component.productsBottomRow = JSON.parse(JSON.stringify(data2));
+        component.resetProductRotationCounters();
+        let top_start = component.topds.currIndex;
+        let bottom_start = component.bottomds.currIndex;
+        await new Promise(resolve => {
+            setTimeout(()=> {
+                resolve(true);
+            }, 2000);
+        });
+        expect(component.topds.currIndex).toEqual(top_start);
+        expect(component.bottomds.currIndex).toEqual(bottom_start);
     });
 
     // ensure products rotate when functions called
     it('should rotate products', () => {
-        this.rotateProductsTopRow = data1;
-        this.rotateProductsBottomRow = data2;
-        let top_start = this.topds.currIndex;
-        this.rotateProductsBottomRow();
-        expect(this.topds.currIndex).not.toEqual(top_start);
-        let bottom_start = this.bottomds.currIndex;
-        this.rotateProductsTopRow();
-        expect(this.bottomds.currIndex).not.toEqual(bottom_start);
+        component.productsTopRow = JSON.parse(JSON.stringify(data1));
+        component.productsBottomRow = JSON.parse(JSON.stringify(data2));
+        let top_start = component.topds.currIndex;
+        component.rotateProductsBottomRow();
+        expect(component.topds.currIndex).not.toEqual(top_start);
+        let bottom_start = component.bottomds.currIndex;
+        component.rotateProductsTopRow();
+        expect(component.bottomds.currIndex).not.toEqual(bottom_start);
     });
 
     /*

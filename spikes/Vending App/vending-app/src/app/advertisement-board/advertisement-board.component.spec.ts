@@ -8,8 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { cd } from 'shelljs';
 import { exec } from 'shelljs';
 import { ElectronService } from '../providers/electron.service';
-import * as data1 from '../../test-docs/top-row';
-import * as data2 from '../../test-docs/bottom-row';
+// import * as data1 from '../../test-docs/top-row';
+// import * as data2 from '../../test-docs/bottom-row';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { AdvertisementBoardComponent } from './advertisement-board.component';

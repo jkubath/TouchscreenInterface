@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { ipcRenderer, webFrame, remote } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import { exec, cd } from 'shelljs';
 
 @Injectable()
 export class ElectronService {
@@ -15,6 +16,8 @@ export class ElectronService {
     remote: typeof remote;
     childProcess: typeof childProcess;
     fs: typeof fs;
+    exec: typeof exec;
+    cd: typeof cd;
 
     constructor() {
 
@@ -26,19 +29,24 @@ export class ElectronService {
 
             this.childProcess = window.require('child_process');
             this.fs = window.require('fs');
+            this.exec = window.require('shelljs').exec;
+            this.cd = window.require('shelljs').cd;
         } else {
             this.fs = {
                 writeFile: () => {},
-                writeFileSync: () => { },
+                writeFileSync: () => {},
                 readFile: () => { },
                 readFileSync: () => {
-                    return '{}';
+                    return '{"topRow": [], "bottomRow": []}';
                 },
                 readdir: () => { },
                 readdirSync: () => {
-                    return '';
+                    return '[]';
                 }
             } as any;
+
+            this.exec = (st: string, ob: any) => {};
+            this.cd = (st: string) => {};
         }
     }
 
