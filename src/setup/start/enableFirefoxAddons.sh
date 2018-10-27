@@ -13,4 +13,8 @@ sed -i 's/\(.*\"defaultLocale\":{\"name\":\"Max Tabs (Web Extension)\".*\"active
 
 sed -i 's/\(.*\"defaultLocale\":{\"name\":\"Max Tabs (Web Extension)\".*\"userDisabled\":\)\(.*\)\(,\"appDisabled\".*\"locales\":\[{\"name\":\"Max Tabs (Web Extension)\".*\)/\1false\3/' extensions.json
 
+# Restart firefox
+killall firefox
+firefox &
+
 echo "Done"

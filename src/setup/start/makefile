@@ -7,8 +7,8 @@ clean:
 
 run1:
 	./set_xinput_matrix.sh
-	./enableFirefoxAddons.sh
 	./addFirefoxRestrictions.sh
+	./enableFirefoxAddons.sh
 	./startEmptyTrash.sh
 	./addCompizRestrictions.sh
 
