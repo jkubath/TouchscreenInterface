@@ -1,12 +1,12 @@
 {
     "id": "oc82jDo8Ok",
-    "name": "Coka Cola",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Munch",
+    "smallImg": "Small-Munch.png",
+    "largeImg": "Large-Munch.png",
     "price": {
-        "amount": 150,
+        "amount": 125,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

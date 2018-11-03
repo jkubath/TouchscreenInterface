@@ -1,12 +1,12 @@
 {
     "id": "mwkLkjsWi8",
-    "name": "Coka Cola",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Lie's Sour Cream & Onion",
+    "smallImg": "Small-Lie's-Sour-Cream-&-Onion.png",
+    "largeImg": "Large-Lie's-Sour-Cream-&-Onion.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

@@ -1,12 +1,12 @@
 {
     "id": "o20skj2aza",
-    "name": "Coka Cola",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Cheatas Puffs",
+    "smallImg": "Small-Cheatas-Puffs.png",
+    "largeImg": "Large-Cheatas-Puffs.png",
     "price": {
         "amount": 150,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

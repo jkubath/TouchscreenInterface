@@ -1,12 +1,12 @@
 {
     "id": "gb30lz2x9p",
-    "name": "Fanta Grape",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Popsi",
+    "smallImg": "Small-Popsi.png",
+    "largeImg": "Large-Popsi.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Grape flavored Franta brand cola. The sweet, fruity taste you know and love!",
+    "description": "It's good.",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }

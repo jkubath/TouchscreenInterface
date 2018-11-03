@@ -1,12 +1,12 @@
 {
     "id": "tw6ffKG34a",
-    "name": "Fanta Orange",
-    "smallImg": "Small-Green-Bar.png",
-    "largeImg": "Large-Green-Bar.png",
+    "name": "4 Musketeers",
+    "smallImg": "Small-4-Musketeers.png",
+    "largeImg": "Large-4-Musketeers.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Orange flavored Franta brand cola. The sweet, fruity taste you know and love!",
+    "description": "It's good.",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }
