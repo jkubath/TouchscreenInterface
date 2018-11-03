@@ -1,12 +1,12 @@
 {
     "id": "okeDkejslk",
-    "name": "Coka Cola",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Sit Cat",
+    "smallImg": "Small-Sit-Cat.png",
+    "largeImg": "Large-Sit-Cat.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

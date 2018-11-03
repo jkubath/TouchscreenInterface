@@ -1,12 +1,12 @@
 {
     "id": "oawR14neB",
-    "name": "Fanta Pineapple",
-    "smallImg": "Small-Green-Bar.png",
-    "largeImg": "Large-Green-Bar.png",
+    "name": "Her's & She's",
+    "smallImg": "Small-Her's-&-She's.png",
+    "largeImg": "Large-Her's-&-She's.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Pineapple flavored Franta brand cola. The sweet, fruity taste you know and love!",
+    "description": "It's good.",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }

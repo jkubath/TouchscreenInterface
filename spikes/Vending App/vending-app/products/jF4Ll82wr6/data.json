@@ -1,12 +1,12 @@
 {
     "id": "jF4Ll82wr6",
-    "name": "Coka Cola Zero",
-    "smallImg": "Small-Green-Bar.png",
-    "largeImg": "Large-Green-Bar.png",
+    "name": "Popsi Wild Cherry",
+    "smallImg": "Small-Popsi-Wild-Cherry.png",
+    "largeImg": "Large-Popsi-Wild-Cherry.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love, now with 0 calories!",
+    "description": "It's good.",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }

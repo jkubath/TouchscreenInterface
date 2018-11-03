@@ -1,12 +1,12 @@
 {
     "id": "my62Fzsd8l",
-    "name": "Pepsi MAX Cola",
-    "smallImg": "Small-Yellow-Bag.png",
-    "largeImg": "Large-Yellow-Bag.png",
+    "name": "Cheatas Crunchy",
+    "smallImg": "Small-Cheatas-Crunchy.png",
+    "largeImg": "Large-Cheatas-Crunchy.png",
     "price": {
         "amount": 150,
         "currency": "USD"
     },
-    "description": "Pepsi brand cola. The sweet, smooth taste you love, now with 0 calories!",
+    "description": "It's good.",
     "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
 }

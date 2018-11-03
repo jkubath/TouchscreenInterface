@@ -1,12 +1,12 @@
 {
     "id": "MtRjeKidjl",
-    "name": "Coka Cola",
-    "smallImg": "Small-Yellow-Bag.png",
-    "largeImg": "Large-Yellow-Bag.png",
+    "name": "Lie's Classic",
+    "smallImg": "Small-Lie's-Classic.png",
+    "largeImg": "Large-Lie's Classic.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

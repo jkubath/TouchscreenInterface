@@ -1,12 +1,12 @@
 {
     "id": "Cvn2o3iRTd",
-    "name": "Coka Cola",
-    "smallImg": "Small-Red-Bottle.png",
-    "largeImg": "Large-Red-Bottle.png",
+    "name": "Mr. Pepper",
+    "smallImg": "Small-Mr.-Pepper.png",
+    "largeImg": "Large-Mr.-Pepper.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

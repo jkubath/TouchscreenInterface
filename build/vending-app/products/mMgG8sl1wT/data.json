@@ -1,12 +1,12 @@
 {
     "id": "mMgG8sl1wT",
-    "name": "Coka Cola",
-    "smallImg": "Small-Green-Bar.png",
-    "largeImg": "Large-Green-Bar.png",
+    "name": "Sprito Zero",
+    "smallImg": "Small-Sprito-Zero.png",
+    "largeImg": "Large-Sprito-Zero.png",
     "price": {
         "amount": 150,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

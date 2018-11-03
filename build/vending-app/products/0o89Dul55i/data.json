@@ -1,12 +1,12 @@
 {
     "id":"0o89Dul55i",
-    "name":"Tested",
-    "smallImg":"Small-Red-Bottle.png",
-    "largeImg":"Large-Red-Bottle.png",
+    "name":"7-Down",
+    "smallImg":"Small-7-Down.png",
+    "largeImg":"Large-7-Down.png",
     "price": {
         "amount":150,
         "currency":"USD"
     },
-    "description":"Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description":"It's good.",
     "nutrition":"alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }

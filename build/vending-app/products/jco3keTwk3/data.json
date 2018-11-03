@@ -1,12 +1,12 @@
 {
     "id": "jco3keTwk3",
-    "name": "Coka Cola",
-    "smallImg": "Small-Yellow-Bag.png",
-    "largeImg": "Large-Yellow-Bag.png",
+    "name": "Diet Popsi",
+    "smallImg": "Small-Diet-Popsi.png",
+    "largeImg": "Large-Diet-Popsi.png",
     "price": {
-        "amount": 150,
+        "amount": 100,
         "currency": "USD"
     },
-    "description": "Coka-Cola brand cola. The sweet, smooth taste you love.",
+    "description": "It's good.",
     "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
 }
