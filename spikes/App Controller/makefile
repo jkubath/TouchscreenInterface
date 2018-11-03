@@ -16,7 +16,7 @@ test:
 
 deploy:
 	(cd "Compiz Restrictions"; make deploy;)
-	cp setWindowSizes.sh ../../src/setup/start;
+	cp setWindowSizes.sh ../../build/setup/start;
 
 
 cleanAll:

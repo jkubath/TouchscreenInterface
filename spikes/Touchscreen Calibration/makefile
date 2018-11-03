@@ -12,6 +12,6 @@ run:
 	#cp foutput.o ../../build
 
 deploy:
-	cp set_xinput_matrix.sh ../../src/setup/start;
+	cp set_xinput_matrix.sh ../../build/setup/start;
 
 
