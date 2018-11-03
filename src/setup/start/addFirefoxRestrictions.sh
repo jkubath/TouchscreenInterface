@@ -47,7 +47,7 @@ touch user.js
 # browser.formfill.enable       Browser won't remember search and form history
 # browser.startup.homepage	Sets the browser home page
 # browser.sessionstore.resume_from_crash	Previous browser session can't be reloaded
-echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", false);" >> user.js 
+# echo "user_pref(\"browser.tabs.closeWindowWithLastTab\", false);" >> user.js 
 echo "user_pref(\"full-screen-api.enabled\", false);" >> user.js 
 echo "user_pref(\"extensions.pocket.enabled\", false);" >> user.js
 echo "user_pref(\"browser.tabs.remote.separateFileUriProcess\", false);" >> user.js

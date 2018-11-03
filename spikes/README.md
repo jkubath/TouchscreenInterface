@@ -16,6 +16,9 @@ Limits what you are able to do in the Firefox web browser.
 ## Deprecated
 Previous ideas that are not part of the final product.
 
+## JavaScript Testing
+Testing the browser against various forms of pop ups.
+
 ## Keyboard
 Possibilities for a virtual keyboard to be used on the touchscreen.
 

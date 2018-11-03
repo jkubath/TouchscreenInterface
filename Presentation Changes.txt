@@ -15,7 +15,7 @@ libraries
 describe the content
 	Talk about what the person is touching during the videos
 
-define actors and use cases
+define actors and use cases are
 
 define how the browser is used
 	Chromium vs Firefox
