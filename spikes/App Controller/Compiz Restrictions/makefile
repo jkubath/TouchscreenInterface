@@ -14,7 +14,7 @@ end:
 	#cp foutput.o ../../build
 
 deploy:
-	cp addCompizRestrictions.sh ../../../src/setup/start;
-	cp removeCompizRestrictions.sh ../../../src/setup/end;
+	cp addCompizRestrictions.sh ../../../build/setup/start;
+	cp removeCompizRestrictions.sh ../../../build/setup/end;
 
 

@@ -14,13 +14,13 @@ end:
 	#cp foutput.o ../../build
 
 deploy:
-	(cd "Empty Trash"; cp startEmptyTrash.sh ../../../src/setup/start;)
-	(cd "Empty Trash"; cp endEmptyTrash.sh ../../../src/setup/end;)
-	(cd "Firefox Addons"; cp addFirefoxAddons.sh enableFirefoxAddons.sh ../../../src/setup/start)
-	(cd "Firefox Addons"; cp disableFirefoxAddons.sh ../../../src/setup/end;)
-	(cd "Firefox Restrictions"; cp addFirefoxRestrictions.sh ../../../src/setup/start;)
-	(cd "Firefox Restrictions"; cp removeFirefoxRestrictions.sh ../../../src/setup/end;)
-	(cd "Window Manager"; cp startWindowManager.sh ../../../src/setup/start;)
-	(cd "Window Manager"; cp endWindowManager.sh ../../../src/setup/end;)
+	(cd "Empty Trash"; cp startEmptyTrash.sh ../../../build/setup/start;)
+	(cd "Empty Trash"; cp endEmptyTrash.sh ../../../build/setup/end;)
+	(cd "Firefox Addons"; cp addFirefoxAddons.sh enableFirefoxAddons.sh ../../../build/setup/start)
+	(cd "Firefox Addons"; cp disableFirefoxAddons.sh ../../../build/setup/end;)
+	(cd "Firefox Restrictions"; cp addFirefoxRestrictions.sh ../../../build/setup/start;)
+	(cd "Firefox Restrictions"; cp removeFirefoxRestrictions.sh ../../../build/setup/end;)
+	(cd "Window Manager"; cp startWindowManager.sh ../../../build/setup/start;)
+	(cd "Window Manager"; cp endWindowManager.sh ../../../build/setup/end;)
 
 
