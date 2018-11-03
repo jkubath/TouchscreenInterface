@@ -1,0 +1,12 @@
+{
+    "id": "Cvn2o3iRTd",
+    "name": "Mr. Pepper",
+    "smallImg": "Small-Mr.-Pepper.png",
+    "largeImg": "Large-Mr.-Pepper.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

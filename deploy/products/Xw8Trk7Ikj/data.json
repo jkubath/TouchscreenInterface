@@ -1,0 +1,12 @@
+{
+    "id": "Xw8Trk7Ikj",
+    "name": "Twik",
+    "smallImg": "Small-Twik.png",
+    "largeImg": "Large-Twik.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

@@ -1,0 +1,12 @@
+{
+    "id": "MccD8je4jK",
+    "name": "Sprito",
+    "smallImg": "Small-Sprito.png",
+    "largeImg": "Large-Sprito.png",
+    "price": {
+        "amount": 150,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

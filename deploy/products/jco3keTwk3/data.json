@@ -1,0 +1,12 @@
+{
+    "id": "jco3keTwk3",
+    "name": "Diet Popsi",
+    "smallImg": "Small-Diet-Popsi.png",
+    "largeImg": "Large-Diet-Popsi.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

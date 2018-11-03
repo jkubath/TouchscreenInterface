@@ -1,0 +1,12 @@
+{
+  "id": "Jtrk2Kerrj",
+  "name": "Mildew",
+  "smallImg": "Small-Mildew.png",
+  "largeImg": "Large-Mildew.png",
+  "price": {
+	"amount": 125,
+        "currency": "USD"
+  },
+  "description": "It's good.",
+  "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

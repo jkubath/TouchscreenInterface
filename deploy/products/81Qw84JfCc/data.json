@@ -1,0 +1,12 @@
+{
+    "id":"81Qw84JfCc",
+    "name":"Diet Mr. Pepper",
+    "smallImg":"Small-Diet-Mr.-Pepper.png",
+    "largeImg":"Large-Diet-Mr.-Pepper.png",
+    "price": {
+        "amount":100,
+        "currency":"USD"
+    },
+    "description":"It's good.",
+    "nutrition":"alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

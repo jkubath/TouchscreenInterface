@@ -1,0 +1,12 @@
+{
+    "id": "gb30lz2x9p",
+    "name": "Popsi",
+    "smallImg": "Small-Popsi.png",
+    "largeImg": "Large-Popsi.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
+}

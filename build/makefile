@@ -17,8 +17,8 @@ deploy:
 	mkdir ../deploy
 	#(cd "vending-app"; npm run electron:linux;)
 	(cd "vending-app/app-builds"; cp VendaTron-1.1.3-x86_64.AppImage ../../../deploy/TouchscreenApp.AppImage;)
-	(cd "vending-app/"; cp adverts ../../deploy;)
-	(cd "vending-app/"; cp product-data ../../deploy;)
-	(cd "vending-app/"; cp user-data ../../deploy;)
-	(cd "vending-app/"; cp products ../../deploy;)
+	(cd "vending-app"; cp -r adverts ../../deploy;)
+	(cd "vending-app"; cp -r product-data ../../deploy;)
+	(cd "vending-app"; cp -r user-data ../../deploy;)
+	(cd "vending-app"; cp -r products ../../deploy;)
 	

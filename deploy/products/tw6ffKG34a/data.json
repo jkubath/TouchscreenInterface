@@ -1,0 +1,12 @@
+{
+    "id": "tw6ffKG34a",
+    "name": "4 Musketeers",
+    "smallImg": "Small-4-Musketeers.png",
+    "largeImg": "Large-4-Musketeers.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "sljdfksj fkld klsj kfs jkls jklskjlfskl fksfdj."
+}

@@ -1,0 +1,12 @@
+{
+    "id": "oc82jDo8Ok",
+    "name": "Munch",
+    "smallImg": "Small-Munch.png",
+    "largeImg": "Large-Munch.png",
+    "price": {
+        "amount": 125,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}

@@ -1,0 +1,12 @@
+{
+    "id": "okeDkejslk",
+    "name": "Sit Cat",
+    "smallImg": "Small-Sit-Cat.png",
+    "largeImg": "Large-Sit-Cat.png",
+    "price": {
+        "amount": 100,
+        "currency": "USD"
+    },
+    "description": "It's good.",
+    "nutrition": "alksjdf aslkfjzskldfj klsjf ladjflkasjfkldwj f"
+}
