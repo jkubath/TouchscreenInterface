@@ -32,8 +32,10 @@
     ]
   },
   "linux": {
-    "icon": "dist",
+    "icon": "dist/assets/icons/icon.icns",
+    "category": "Graphics",
     "target": [
+      "deb",
       "AppImage"
     ]
   }

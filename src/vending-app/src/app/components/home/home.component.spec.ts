@@ -19,7 +19,7 @@ import * as data2 from '../../../test-docs/bottom-row';
 
 import { HomeComponent } from './home.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdvertisementBoardComponent } from '../../advertisement-board/advertisement-board.component';
+import { AdvertisementBoardComponent } from '../advertisement-board/advertisement-board.component';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -43,12 +43,17 @@ describe('HomeComponent', () => {
             .compileComponents();
     }));
 
-    beforeEach(() => {
+    beforeEach( async () => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
         component.productsTopRow = JSON.parse(JSON.stringify(data1));
         component.productsBottomRow = JSON.parse(JSON.stringify(data2));
         fixture.detectChanges();
+        await new Promise(resolve => {
+            setTimeout(()=> {
+                resolve(true);
+            }, 2000);
+        });
     });
 
     it('should create', () => {
@@ -72,9 +77,14 @@ describe('HomeComponent', () => {
     });
 
     // ensure products rotate when functions called
-    it('should rotate products', () => {
+    it('should rotate products', async () => {
         component.productsTopRow = JSON.parse(JSON.stringify(data1));
         component.productsBottomRow = JSON.parse(JSON.stringify(data2));
+        await new Promise(resolve => {
+            setTimeout(()=> {
+                resolve(true);
+            }, 2000);
+        });
         let top_start = component.topds.currIndex;
         component.rotateProductsBottomRow();
         expect(component.topds.currIndex).not.toEqual(top_start);

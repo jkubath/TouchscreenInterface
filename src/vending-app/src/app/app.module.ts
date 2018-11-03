@@ -22,7 +22,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { AdvertisementBoardComponent } from './advertisement-board/advertisement-board.component';
+import { AdvertisementBoardComponent } from './components/advertisement-board/advertisement-board.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

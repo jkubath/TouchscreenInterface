@@ -36,7 +36,7 @@ vending-app
 
 e2e
 
-    <Ask Michael for description>
+    Contains files used by Protractor for end-to-end testing
 
 
 
@@ -95,8 +95,7 @@ configs
 
 directives
 
-    <Ask Michael for description>
-
+    can be used to attatch custom behaviors to the DOM. (unused in this project)
 
 
 models
@@ -107,7 +106,7 @@ models
 
 providers
 
-    <Ask Michael for description>
+    Contains instructions on how to obtain a value for a dependency i.e. NodeJS fs, NodeJS shelljs.exec, etc.
 
 
 
@@ -119,7 +118,7 @@ assets
 
 environments
 
-    <Ask Michael for description>
+    Contains files used for running program in different enviroments e.g. developement, build, etc.
 
 
 

@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public loadImageSafeResourceURL(path: string): any {
         try {
             let imageType: string;
-            let bitmap = this.electron.fs.readFileSync(path);
+            let bitmap = this.electron.fileSystem.readFileSync(path);
             // determine file type so that data url can specify it
             if (!bitmap) {
                 return false;
@@ -158,9 +158,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Load the products on the top row of the vending machine
     public loadProductsTopRow(path: string): Product[] {
         let productsTopRow = [] as Product[];
-        let contents = this.electron.fs.readdirSync(`${path}/products`);
+        let contents = this.electron.fileSystem.readdirSync(`${path}/products`);
         try {
-            let fileContent = this.electron.fs.readFileSync(`${path}/products/product-setup.json`);
+            let fileContent = this.electron.fileSystem.readFileSync(`${path}/products/product-setup.json`);
             let jsonContent = JSON.parse(fileContent.toString());
             let i = 0;
             while (i < jsonContent.topRow.length) {
@@ -169,7 +169,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     if (jsonContent.topRow[i] === content) {
                         let product = {} as Product;
                         try {
-                            product = JSON.parse(this.electron.fs.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
+                            product = JSON.parse(this.electron.fileSystem.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
                         } catch (error) {
                             console.log(`Error reading product files: ${error}`);
                             hadNoError = false;
@@ -207,9 +207,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Load the products on the bottom row of the vending machine
     public loadProductsBottomRow(path: string): Product[] {
         let productsTopRow = [] as Product[];
-        let contents = this.electron.fs.readdirSync(`${path}/products`);
+        let contents = this.electron.fileSystem.readdirSync(`${path}/products`);
         try {
-            let fileContent = this.electron.fs.readFileSync(`${path}/products/product-setup.json`);
+            let fileContent = this.electron.fileSystem.readFileSync(`${path}/products/product-setup.json`);
             let jsonContent = JSON.parse(fileContent.toString());
             let i = 0;
             while (i < jsonContent.bottomRow.length) {
@@ -218,7 +218,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                     if (jsonContent.bottomRow[i] === content) {
                         let product = {} as Product;
                         try {
-                            product = JSON.parse(this.electron.fs.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
+                            product = JSON.parse(this.electron.fileSystem.readFileSync(`${path}/products/${content}/data.json`, 'utf8')) as Product;
                         } catch (error) {
                             console.log(`Error reading product files: ${error}`);
                             hadNoError = false;
@@ -255,14 +255,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Get the quantity available for the selected product
     getSelectedProductMaxQuantity(): void {
-        let fileContent = this.electron.fs.readFileSync(`./product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fileSystem.readFileSync(`./product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         this.selectedProductMaxQuantity = jsonContent.quantity;
     }
 
     // Update the quantity available for the selected product
     updateSelectedProductMaxQuantity(): void {
-        let fileContent = this.electron.fs.readFileSync(`./product-data/${this.selectedProduct.id}.json`, "utf8");
+        let fileContent = this.electron.fileSystem.readFileSync(`./product-data/${this.selectedProduct.id}.json`, "utf8");
         let jsonContent = JSON.parse(fileContent.toString());
         jsonContent.quantity -= this.selectedProductQuantityWanted;
         this.selectedProductMaxQuantity = jsonContent.quantity;
@@ -299,7 +299,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             }
 
             // Open the product's respective file in product-data
-            let fileContent = this.electron.fs.readFileSync(`./product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
+            let fileContent = this.electron.fileSystem.readFileSync(`./product-data/${this.productEditingProductIDs[productNum]}.json`, "utf8");
             let jsonContent = JSON.parse(fileContent.toString());
 
             // Read the product's quantity available
@@ -369,7 +369,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     updateProductEditingProductQuantitiesAvailable(): void {
         let i = 0;
         while (i < this.productEditingProductIDs.length) {
-            let fileContent = this.electron.fs.readFileSync(`./product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
+            let fileContent = this.electron.fileSystem.readFileSync(`./product-data/${this.productEditingProductIDs[i]}.json`, "utf8");
             let jsonContent = JSON.parse(fileContent.toString());
 
             jsonContent.quantity = this.productEditingProductQuantitiesAvailable[i];
@@ -849,7 +849,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
                 if (this.userID.valid === true) {
                     // Open the user's user-data file and copy over the values of admin, passwordB,
                     //   passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = this.electron.fs.readFileSync(`./user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fileSystem.readFileSync(`./user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     if (jsonContent.admin === "true") {
                       this.admin = "block";
@@ -993,7 +993,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
                     // Open the user's user-data file, writing to it the values of
                     //   passwordB, passwordC, pastInfoPasswordSum, and pastInfoPasswordCheck
-                    let fileContent = this.electron.fs.readFileSync(`./user-data/${this.userID.string}.json`, "utf8");
+                    let fileContent = this.electron.fileSystem.readFileSync(`./user-data/${this.userID.string}.json`, "utf8");
                     let jsonContent = JSON.parse(fileContent.toString());
                     jsonContent.passwordB = this.passwordB;
                     jsonContent.passwordC = this.passwordC;
@@ -1848,8 +1848,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Load the products and execute nav events on initiation
     ngOnInit() {
         // Load both rows of products
-        this.productsTopRow = this.loadProductsTopRow('./src');
-        this.productsBottomRow = this.loadProductsBottomRow('./src');
+        this.productsTopRow = this.loadProductsTopRow('.');
+        this.productsBottomRow = this.loadProductsBottomRow('.');
 
         // Run topLeft and bottomLeft nav events (this causes the automatic product rotations that
         //   occur when the vending machine has been inactive for a certain period of time to

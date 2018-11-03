@@ -13,13 +13,11 @@ import Money from 'dinero.js';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 import { ElectronService } from '../../providers/electron.service';
-import * as data1 from '../../../test-docs/top-row';
-import * as data2 from '../../../test-docs/bottom-row';
 
 
 import { HomeComponent } from './home.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AdvertisementBoardComponent } from '../../advertisement-board/advertisement-board.component';
+import { AdvertisementBoardComponent } from '../advertisement-board/advertisement-board.component';
 
 describe('HomeComponent', () => {
     let component: HomeComponent;
@@ -46,8 +44,6 @@ describe('HomeComponent', () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
-        component.productsTopRow = JSON.parse(JSON.stringify(data1));
-        component.productsBottomRow = JSON.parse(JSON.stringify(data2));
         fixture.detectChanges();
     });
 
@@ -57,8 +53,6 @@ describe('HomeComponent', () => {
 
     // ensure products wont rotate for at least ten seconds after resetProductRotationCounters is called
     it('should stop product rotation', async () => {
-        component.productsTopRow = JSON.parse(JSON.stringify(data1));
-        component.productsBottomRow = JSON.parse(JSON.stringify(data2));
         component.resetProductRotationCounters();
         let top_start = component.topds.currIndex;
         let bottom_start = component.bottomds.currIndex;
@@ -72,9 +66,17 @@ describe('HomeComponent', () => {
     });
 
     // ensure products rotate when functions called
-    it('should rotate products', () => {
-        component.productsTopRow = JSON.parse(JSON.stringify(data1));
+    it('should rotate products', async () => {
+        await new Promise(resolve => {
+            setTimeout(()=> {
+                resolve(true);
+            }, 2000);
+        });
+        
+        /*
+        component.productsTopRow = data1 as Product[];
         component.productsBottomRow = JSON.parse(JSON.stringify(data2));
+        */
         let top_start = component.topds.currIndex;
         component.rotateProductsBottomRow();
         expect(component.topds.currIndex).not.toEqual(top_start);
