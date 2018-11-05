@@ -1,7 +1,7 @@
 CC = gcc
 CFlags = -Wall -pedantic -std=c11
 
-deploy:
+build:
 	# remove existing vending-app folder
 	rm -d -r -f ../../build/vending-app
 
