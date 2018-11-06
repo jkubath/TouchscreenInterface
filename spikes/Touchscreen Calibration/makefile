@@ -11,7 +11,7 @@ run:
 #build: clean foutput.o
 	#cp foutput.o ../../build
 
-deploy:
+build:
 	cp set_xinput_matrix.sh ../../build/setup/start;
 
 

@@ -13,7 +13,7 @@ end:
 #build: clean foutput.o
 	#cp foutput.o ../../build
 
-deploy:
+build:
 	cp addCompizRestrictions.sh ../../../build/setup/start;
 	cp removeCompizRestrictions.sh ../../../build/setup/end;
 

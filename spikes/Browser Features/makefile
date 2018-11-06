@@ -13,7 +13,7 @@ end:
 #build: clean foutput.o
 	#cp foutput.o ../../build
 
-deploy:
+build:
 	(cd "Empty Trash"; cp startEmptyTrash.sh ../../../build/setup/start;)
 	(cd "Empty Trash"; cp endEmptyTrash.sh ../../../build/setup/end;)
 	(cd "Firefox Addons"; cp addFirefoxAddons.sh enableFirefoxAddons.sh ../../../build/setup/start)
