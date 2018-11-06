@@ -4,8 +4,8 @@ run:
 	## Make sure to start firefox and run the add ins
 	## then run start shell scripts and restart firefox
 	(cd "setup"; make run1;)
-	(./TouchscreenApp.AppImage)
-	sleep 30
+	(./TouchscreenApp.AppImage) &
+	sleep 10
 	(cd "setup"; make run2;)
 
 stop:

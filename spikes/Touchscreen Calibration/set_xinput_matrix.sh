@@ -5,7 +5,7 @@
 
 echo "Script to set the Coordinate Matrix"
 
-if [ $(xinput | grep "E&T INC. E&T IR SCREEN") ]; then
+if [[ $(xinput | grep "E&T INC. E&T IR SCREEN") ]]; then
 	xinput set-prop "pointer:E&T INC. E&T IR SCREEN" "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 	echo "Matrix has been set"
 else

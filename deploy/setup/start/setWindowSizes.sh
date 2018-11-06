@@ -20,8 +20,16 @@ let y=y/3
 let yTimes2=y*2
 
 # Set the size and location of FireFox
-wmctrl -r "Mozilla Firefox" -e 0,0,0,$x,$y
-wmctrl -r "Firefox" -e 0,0,0,$x,$y
+if [[ $(ps aux | grep "Mozilla Firefox") || $(ps aux | grep "Firefox") ]]; then
+	wmctrl -r "Mozilla Firefox" -e 0,0,0,$x,$y
+	wmctrl -r "Firefox" -e 0,0,0,$x,$y
+else
+	echo "Firefox not running"
+fi
 
 # Set the size and location of the Vending Machine/Advertisements
-wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
+if [[ $(ps aux | grep "AngularElectron") ]]; then
+	wmctrl -r "AngularElectron" -e 0,0,$y,$x,$yTimes2
+else
+	echo "Touchscreen App not running"
+fi

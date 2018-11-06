@@ -1,8 +1,8 @@
 run:
-	(cd "build"; make run;)
+	(cd "deploy"; make run;)
 
 stop:
-	(cd "build"; make stop;)
+	(cd "deploy"; make stop;)
 
 deploy1:
 	(cd "spikes"; make build;)

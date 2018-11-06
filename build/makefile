@@ -24,4 +24,5 @@ deploy:
 	(cd "vending-app"; cp -r products ../../deploy;)
 
 	cp -r setup ../deploy
+	cp ../spikes/Compiled\ App/makefile ./deploy
 	
