@@ -1161,7 +1161,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Regain access to Ubuntu
     exitButtonClick(): void {
       // Execute the script that "ends" the program (disables all restrictions)
-      this.electron.cd('~/Desktop/TouchscreenInterface');
+      this.electron.cd('~/TouchscreenInterface');
       this.electron.exec('make stop', {async: true});
     }
 
