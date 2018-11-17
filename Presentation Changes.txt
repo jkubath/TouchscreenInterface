@@ -1,38 +1,12 @@
 Presentation Changes
 
-bullet points
 text size
 
-where the project is at now
-	We have secured the browser by removing certain features.  We have also blocked features that would allow the browser to expand outside
-	1/3 of the screen.
-
-internal formatting
-	How angular and electron work together with the chromium and OS
-
-darken gradient
-libraries
-describe the content
-	Talk about what the person is touching during the videos
-
-define actors and use cases are
-
-define how the browser is used
-	Chromium vs Firefox
-
 browser not safe for windows
-ubuntu generally more secure
-
-which browser is picked
 
 what electron does
-angular pushes mvc onto client
-what an mvc is
 
 more detail for screen division
-explain version control
-what are spikes
-	individual tests to show the pro's and con's of the design choices
 
 explain npm
 	Node Package Manager
