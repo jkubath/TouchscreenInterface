@@ -1,0 +1,4 @@
+
+The Touchscreen Vending Machine Interface is owned and controlled by Dr. Johnson Asumadu.
+
+Any use or distribution of the project or its features needs to be authorized through Dr. Asumadu.

@@ -2,3 +2,7 @@ Git is our primary source of version control.
 
 Beyond that, we're using tags to mark major milestones in the design process.
 Each member performs a pull before pushing to guarantee no data is overwritten.
+
+clone
+testing
+pusing to branches

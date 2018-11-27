@@ -1,4 +1,5 @@
 Here is a link to the Electron documentation
+Electron's documentation can help with setup and building the project.
 	https://electronjs.org/docs
 
 Checklist: Security Recommendations
