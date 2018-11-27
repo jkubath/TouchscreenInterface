@@ -41,7 +41,7 @@
         <img class="top-left-nav-button-off" src="assets/img/Button-Off-Left.png" *ngIf="!navButtonEnabled['topLeft']"
             (click)="navEvent('password', 'topLeft', '', '')">
         <img class="top-left-nav-button-on" [src]="navButtonSource['topLeft']" *ngIf="navButtonEnabled['topLeft']"
-            (click)="navEvent('click', 'topLeft', '', ''); navEvent('password', 'topLeft', '', ''); buttonEvent('click', 'exitButton', '')" (mousedown)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
+            (click)="navEvent('click', 'topLeft', '', ''); navEvent('password', 'topLeft', '', '')" (mousedown)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')"
             (mouseup)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')" (mouseleave)="navEvent('mouseleave', 'topLeft', 'assets/img/Button-On-Left.png', '')"
             (touchstart)="navEvent('mousedown', 'topLeft', 'assets/img/Button-On-Left-Pressed.png', '')" (touchend)="navEvent('mouseup', 'topLeft', 'assets/img/Button-On-Left.png', '')">
         <img class="top-right-nav-button-off" src="assets/img/Button-Off-Right.png" *ngIf="!navButtonEnabled['topRight']"
