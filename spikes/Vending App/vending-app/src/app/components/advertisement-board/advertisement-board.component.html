@@ -1,5 +1,8 @@
 <div class="advert-board">
     <div class="advert-frame">
-        <img class="advert" *ngIf=currentAdvert [src]="currentAdvert"/>
+        <img *ngIf="currentAdvert && isImage(currentAdvert.path)" class="advert" [src]="currentAdvert.source"/>
+        <video id="video-player" *ngIf="currentAdvert && isVideo(currentAdvert.path)" class="advert" controls autoplay>
+            <source [src]="currentAdvert.source" type="video/{{getVideoType(currentAdvert.path)}}">
+        </video>
     </div>
 </div>

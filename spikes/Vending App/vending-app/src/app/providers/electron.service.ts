@@ -86,7 +86,7 @@ export class ElectronService {
                         return Buffer.from(image.imageName.data);
                     } else {
                         let data = require('../test-docs/fileRead.json');
-                        if (data[path].type && data[path].type === 'Buffer') {
+                        if (data[path] && data[path].type && data[path].type === 'Buffer') {
                             data[path] = Buffer.from(data[path].data);
                         }
                         return data[path];
