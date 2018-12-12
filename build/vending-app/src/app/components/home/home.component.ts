@@ -9,8 +9,8 @@ import { promisify } from 'util';
 import { TouchBarSlider } from 'electron';
 import { stripGeneratedFileSuffix } from '@angular/compiler/src/aot/util';
 import { DragScrollComponent } from 'ngx-drag-scroll';
-import Money from 'dinero.js';
-import { DomSanitizer } from '@angular/platform-browser';
+import * as Money from 'dinero.js';
+import { DomSanitizer, BrowserModule } from '@angular/platform-browser';
 import { Buttons as ButtonsSet } from '../../configs/buttons.config';
 import { ElectronService } from '../../providers/electron.service';
 
@@ -18,7 +18,7 @@ import { ElectronService } from '../../providers/electron.service';
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss']
+    styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     // Top and Bottom DragScrollComponents
@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     public productEditingNavTotalPageNumbers = 1;
 
 
-    constructor(private electron: ElectronService, private sanitizer: DomSanitizer) { }
+    constructor(public electron: ElectronService, private sanitizer: DomSanitizer) { }
 
 
     // read and sanitize image file as SafeResourceURL
@@ -1161,8 +1161,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     // Regain access to Ubuntu
     exitButtonClick(): void {
       // Execute the script that "ends" the program (disables all restrictions)
-      this.electron.cd('~/Desktop/TouchscreenInterface');
-      this.electron.exec('make stop', {async: true});
+      this.electron.cd('~/TouchscreenInterface/src/setup/end');
+      this.electron.exec('make run', {async: true});
     }
 
     // Runs when the decrement button for one of the products being edited is pressed
@@ -1620,6 +1620,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             case 15:
                 return "F";
         }
+        return '0';
     }
 
     // Convert a hexadecimal character to a decimal character
@@ -1658,6 +1659,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
             case "F":
                 return 15;
         }
+        return 0;
     }
 
     // Add two hexadecimals (hexA and hexB)
@@ -1822,6 +1824,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     // Compare two hexadecimal values
     compareHex(hexA: string, hexB: string): number {
+
+        // Make both hex uppercase
+        hexA = hexA.toUpperCase();
+        hexB = hexB.toUpperCase();
+
+        // confirm both are actually hex
+        let isHex = (h) => {
+            let a = parseInt(h,16);
+            return (a.toString(16).toUpperCase() === h);
+        };
+        if (!isHex(hexA) && isHex(hexB)) {
+            return -1;
+        }
+        if (!isHex(hexB)) {
+            if (isHex(hexA)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
         // Make both hexadecimals the same length
         if (hexA.length < hexB.length) {
             hexA = this.setLengthOfHex(hexA, hexB.length);
